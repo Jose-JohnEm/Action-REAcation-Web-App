@@ -1,0 +1,15 @@
+{
+  "name": "area_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Back_API.js",
+  "scripts": {
+    "start": "node Back_API.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
