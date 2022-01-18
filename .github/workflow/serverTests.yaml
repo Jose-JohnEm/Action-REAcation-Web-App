@@ -1,7 +1,7 @@
 name: Server Units Tests
-on: [push, pull request]
+on: [push, pull_request]
 jobs:
-  Testing Launching Tests:
+  Testing-Launching-Tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
