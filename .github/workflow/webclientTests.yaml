@@ -8,5 +8,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'latest'
-      - run: cd server && yarn
+      - run: cd client_web && yarn
       - run: yarn test
