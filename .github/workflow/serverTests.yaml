@@ -1,0 +1,12 @@
+name: Server Units Tests
+on: [push, pull request]
+jobs:
+  Testing Launching Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Init modules
+      - run: cd server && yarn
+      - name: Lauch tests
+      - run: yarn test
