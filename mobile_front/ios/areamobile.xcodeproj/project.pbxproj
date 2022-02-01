@@ -145,7 +145,6 @@
 				6BB7C853BB3502C8A5B64E2A /* Pods-areamobile-areamobileTests.debug.xcconfig */,
 				CF64DE12E835FC51FD3900B9 /* Pods-areamobile-areamobileTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
