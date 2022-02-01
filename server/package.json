@@ -4,13 +4,14 @@
   "description": "",
   "main": "dist/Back_API.js",
   "scripts": {
-    "start": "tsc && node dist/Back_API.js",
+    "start": "nodemon Back_API.ts",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "mongoose": "^6.1.9",
     "ts-node": "^10.4.0"
   },
   "devDependencies": {
