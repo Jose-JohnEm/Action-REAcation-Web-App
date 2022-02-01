@@ -33,3 +33,5 @@ app.use((req, res, next) => {
 app.get('/', about_json)
 app.get('/about.json', about_json)
 app.use('/auth', authenticator)
+
+export default app
