@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text} from 'react-native';
-import { Caption, TextInput, Title } from 'react-native-paper';
+import { Button, Caption, TextInput, Title } from 'react-native-paper';
 import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
 import SocialButtonGroup from '../components/SocialButtonGroup';
@@ -28,9 +28,8 @@ const SignInForm = () => {
         style={{marginBottom: 10}}
       />
       <LargeButton onPress={() => console.log('Sign Up')} mode="contained">
-          Sign Up
+          Sign In
       </LargeButton>
-      <Caption>Forgot password ?</Caption>
     </View>
   );
 };
@@ -47,6 +46,7 @@ const SignIn = ({navigation}) => {
           Please sign in to your account
         </Caption>
         <SignInForm />
+        <Button mode="text" onPress={() => navigation.push('Reset Passwd')}>Forgot password ?</Button>
         <SocialButtonGroup />
         <Caption style={{textAlign: 'center'}}>
           {'Don\'t have an account? '}
