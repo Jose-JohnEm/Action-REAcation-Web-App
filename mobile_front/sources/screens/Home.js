@@ -14,7 +14,7 @@ const Home = ({navigation}) => {
         </Headline>
       </View>
       <View style={styles.containerBtn}>
-        <LargeButton onPress={() => navigation.push('Sign Up')} mode="contained">
+        <LargeButton onPress={() => navigation.push('Sign In')} mode="contained">
           Sign In
         </LargeButton>
         <LargeButton onPress={() => navigation.push('Sign Up')} mode="outlined">
