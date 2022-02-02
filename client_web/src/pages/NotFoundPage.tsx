@@ -5,12 +5,12 @@ const NotFoundPage = () => {
     return (
         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100vh' }}>
             <Grid item>
-                <Typography variant="h1" color={COLORS.BLUE} align="center">
+                <Typography variant='h1' color={COLORS.BLUE} align='center'>
                     404
                 </Typography>
             </Grid>
             <Grid item>
-                <Typography variant="subtitle1" color={COLORS.BLUE} align="center">
+                <Typography variant='subtitle1' color={COLORS.BLUE} align='center'>
                     Page Not Found
                 </Typography>
             </Grid>

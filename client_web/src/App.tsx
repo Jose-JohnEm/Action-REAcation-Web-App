@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage'
 import SignUpPage from './pages/SignUpPage'
 import VerifyAccountPage from './pages/VerifyAccountPage'
@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
   typography: {
-    "fontFamily": "Open Sans"
+    'fontFamily': 'Open Sans'
   }
 });
 
