@@ -7,6 +7,7 @@ import ProfilePage from './pages/ProfilePage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Header from './components/Header'
 
 const theme = createTheme({
   typography: {
@@ -17,6 +18,7 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <Header />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={< HomePage />} />
