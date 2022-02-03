@@ -1,14 +1,14 @@
-import { SET_USER_LOGGED_IN, SET_USER_LOGGED_OUT } from './actions/auth';
+import { AuthType, Action } from './actions/auth';
 
 const initialState = {
   isLogged: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-  case SET_USER_LOGGED_IN:
+  case AuthType.SET_USER_LOGGED_IN:
     return { ...state, isLogged: action.payload };
-  case SET_USER_LOGGED_OUT:
+  case AuthType.SET_USER_LOGGED_OUT:
     return { ...state, isLogged: action.payload };
   default:
     return state;
