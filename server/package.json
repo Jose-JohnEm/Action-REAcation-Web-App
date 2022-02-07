@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/Back_API.js",
   "scripts": {
-    "start": "nodemon Back_API.ts",
+    "build": "tsc",
+    "start": "tsc && node dist/Back_API.js",
+    "dev": "nodemon Back_API.ts",
     "test": "jest"
   },
   "author": "",
