@@ -3,8 +3,9 @@ FROM node:16
 # Create app directory
 WORKDIR /server
 
-COPY package.json ./
-
-RUN yarn
-
 COPY . .
+
+RUN yarn install
+
+EXPOSE 8081
+CMD ["yarn", "start"]

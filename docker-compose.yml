@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-
   server:
     container_name: server
     build:
@@ -9,7 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    command: yarn start
 
   web:
     container_name: web
@@ -18,6 +16,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
-    command: yarn start
     depends_on:
       - server
