@@ -1,20 +1,16 @@
-import { networkInterfaces } from 'os'
-
 var about_json = (req, res) => {
-    const nets = networkInterfaces();
-    const results : object = {};
-  
-    for (const name of Object.keys(nets)) {
-        for (const net of nets[name]) {
-            if (net.family === 'IPv4' && !net.internal) {
-                if (!results[name]) {
-                    results[name] = [];
-                }
-                results[name].push(net.address);
-            }
-        }
-    }
-    res.send({client: results['eth0'][0]})
+    let output = {
+        client: {
+            host: undefined
+        },
+        server: {
+            current_time: undefined
+        },
+    };
+
+    output.client.host = req.ip.slice(7);
+    output.server.current_time = Math.floor(new Date().getTime() / 1000);
+    res.status(200).json(output);
 }
 
 
