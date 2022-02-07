@@ -16,6 +16,11 @@ const randomCodeGenerator = (length :number) => {
     return result;
 }
 
+const uToken = {
+    service: String,
+    token: String,
+}
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -35,13 +40,13 @@ const userSchema = new Schema({
         }
     },
     certification: {
-        verified: {
-            default: false,
-            type: Boolean,
-        },
-        code: {
-            default: randomCodeGenerator(16),
+        accessToken: {
             type: String,
+            required: true,
+            default: randomCodeGenerator(16)
+        },
+        oauth: {
+            type: Array<typeof uToken>(),
         }
     }
 }, { timestamps: true });
