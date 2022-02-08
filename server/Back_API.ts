@@ -1,5 +1,5 @@
 import express from 'express'
-import about_json from './src/about_json'
+import aboutJson from './src/aboutJson'
 import mongoose from 'mongoose'
 import authenticator from './src/auth/authenticator'
 
@@ -29,8 +29,8 @@ app.use((req, res, next) => {
 
 ///// Routes /////
 
-app.get('/', about_json)
-app.get('/about.json', about_json)
+app.get('/', aboutJson)
+app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
 
 export default app
