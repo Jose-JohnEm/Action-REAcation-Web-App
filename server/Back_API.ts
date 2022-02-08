@@ -3,6 +3,10 @@ import aboutJson from './src/aboutJson'
 import mongoose from 'mongoose'
 import authenticator from './src/auth/authenticator'
 import webhooks from './src/webhooks/webhooks'
+import dotenv from 'dotenv'
+import startDiscord from "./src/event/reaction/Discord/discord";
+
+dotenv.config()
 
 const app = express()
 const port = (parseInt(process.argv[2]) < 65536) ? parseInt(process.argv[2]) : 8080
@@ -27,7 +31,6 @@ app.use((req, res, next) => {
     next()
 })
 
-
 ///// Routes /////
 
 app.get('/', (req, res) => {
@@ -36,5 +39,8 @@ app.get('/', (req, res) => {
 app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
 app.use('/webhooks', webhooks)
+
+///// Start Discord /////
+startDiscord();
 
 export default app
