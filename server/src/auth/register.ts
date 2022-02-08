@@ -10,7 +10,7 @@ const tryIfEmailAlreadyExists = (req, res, next) => {
     })
     .catch((err : object) => next())
 }
-  
+
 const addAccount = (req, res) => {
   try {
     const user = new UserData(req.query)

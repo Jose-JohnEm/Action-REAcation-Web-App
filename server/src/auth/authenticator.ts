@@ -2,17 +2,13 @@ import UserData from '../../models/users'
 
 import registerAccount from './register'
 import connectAccount from './connect'
+import deleteAccount from './delete'
 
 import express from 'express'
 const router = express.Router()
 
 
 const editAccount = (req, res) => {
-
-}
-
-
-const deleteAccount = (req, res) => {
 
 }
 
