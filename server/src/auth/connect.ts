@@ -2,7 +2,6 @@ import { json } from 'express'
 import UserData from '../../models/users'
 
 const getUserData = (req, res, next) => {
-  console.log(req.header('Bearer'))
   if (!req.header('Bearer')) {
     next()
     return
@@ -11,7 +10,6 @@ const getUserData = (req, res, next) => {
     "certification.accessToken": req.header('Bearer')
   })
   .then((user) => {
-    console.log("User :\n", user)
     res.json(user)
   })
   .catch((err) => {
