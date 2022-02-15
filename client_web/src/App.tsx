@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage'
+import SignUpPage from './pages/SignUpPage'
+import VerifyAccountPage from './pages/VerifyAccountPage'
+import SignInPage from './pages/SignInPage'
+import ProfilePage from './pages/ProfilePage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
+import NotFoundPage from './pages/NotFoundPage'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Header from './components/Header'
 
-function App() {
+const theme = createTheme({
+  typography: {
+    'fontFamily': 'Open Sans'
+  }
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={< HomePage />} />
+          <Route path='/signup' element={< SignUpPage />} />
+          <Route path='/verifyaccount' element={< VerifyAccountPage />} />
+          <Route path='/signin' element={< SignInPage />} />
+          <Route path='/profile' element={< ProfilePage />} />
+          <Route path='/resetpassword' element={< ResetPasswordPage />} />
+          <Route path='*' element={< NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
