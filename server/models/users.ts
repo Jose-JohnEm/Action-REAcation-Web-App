@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema;
 
 const emailValidation = (email) => {
@@ -6,11 +7,11 @@ const emailValidation = (email) => {
     return emailRegex.test(email);
 }
 
-const randomCodeGenerator = (length :number) => {
+const randomCodeGenerator = (length: number) => {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
-    for (let i = 0; i < length; i++ ) {
+    for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
@@ -19,6 +20,19 @@ const randomCodeGenerator = (length :number) => {
 const uToken = {
     service: String,
     token: String,
+}
+
+const action = {
+    name: String
+}
+
+const reaction = {
+    name: String
+}
+const uEvent = {
+    name: String,
+    action: action,
+    reaction: reaction,
 }
 
 const userSchema = new Schema({
@@ -48,8 +62,11 @@ const userSchema = new Schema({
         oauth: {
             type: Array<typeof uToken>(),
         }
+    },
+    events: {
+        type: Array<typeof uEvent>(),
     }
-}, { timestamps: true });
+}, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);
 
