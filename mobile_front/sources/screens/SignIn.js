@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 import SocialButtonGroup from '../components/SocialButtonGroup';
 import LogoContainer from '../components/LogoContainer';
 
-const SignInForm = () => {
+const SignInForm = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPasswd] = React.useState('');
 
+  console.log(navigation);
   return (
     <View>
       <TextInput
@@ -27,7 +28,7 @@ const SignInForm = () => {
         onChangeText={text => setPasswd(text)}
         style={{marginBottom: 10}}
       />
-      <LargeButton onPress={() => console.log('Sign Up')} mode="contained">
+      <LargeButton onPress={() => navigation.navigate('Profile')} mode="contained">
           Sign In
       </LargeButton>
     </View>
@@ -45,7 +46,7 @@ const SignIn = ({navigation}) => {
         <Caption>
           Please sign in to your account
         </Caption>
-        <SignInForm />
+        <SignInForm navigation={navigation}/>
         <Button mode="text" onPress={() => navigation.push('Reset Passwd')}>Forgot password ?</Button>
         <SocialButtonGroup />
         <Caption style={{textAlign: 'center'}}>
@@ -67,6 +68,10 @@ const styles = StyleSheet.create({
 });
 
 SignIn.propTypes = {
+  navigation: PropTypes.object,
+};
+
+SignInForm.propTypes = {
   navigation: PropTypes.object,
 };
 
