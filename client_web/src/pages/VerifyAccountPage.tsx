@@ -8,7 +8,7 @@ const VerifyAccountForm = () => {
       const body = {
         validation_code: data.get('validation_code')
       };
-      console.log(body);
+      // console.log(body);
     };
 
     return (
