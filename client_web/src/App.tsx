@@ -18,8 +18,8 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Header />
       <BrowserRouter>
+      <Header />
         <Routes>
           <Route path='/' element={< HomePage />} />
           <Route path='/signup' element={< SignUpPage />} />
