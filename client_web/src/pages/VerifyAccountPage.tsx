@@ -24,13 +24,13 @@ const VerifyAccountForm = () => {
 const VerifyAccountPage = () => {
     return (
         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100vh' }}>
-        <Grid item>
-            <Typography variant='h3' color={COLORS.DARKGRAY} align='center'>
-                Validate your account
-            </Typography>
-            <VerifyAccountForm />
+            <Grid item>
+                <Typography variant='h3' color={COLORS.DARKGRAY} align='center'>
+                    Validate your account
+                </Typography>
+                <VerifyAccountForm />
+            </Grid>
         </Grid>
-    </Grid>
     )
 }
 
