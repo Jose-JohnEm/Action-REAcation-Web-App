@@ -13,7 +13,7 @@ const VerifyAccountForm = () => {
 
     return (
       <Box component='form' onSubmit={handleSubmit}>
-        <TextField margin='normal' required fullWidth label='Enter the validation code' name='validation_code' sx={{ mt: 5, mb: 5 }}/>
+        <TextField margin='normal' required fullWidth label='Enter the validation code' name='validation_code' sx={{ mt: 5, mb: 5 }} inputProps={{ pattern: '[0-9A-Z]{5}' }}/>
         <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
           Validate
         </Button>
