@@ -1,24 +1,40 @@
 [
   {
-    "name": "facebook",
+    "name": "github",
     "actions": [
       {
-        "name": "new_message_in_group",
-        "description": "A new message is posted in the group"
+        "name": "new_star",
+        "description": "A star has been added to a repository"
       },
       {
-        "name": "new_message_inbox",
-        "description": "A new private message is received by the user"
+        "name": "new_fork",
+        "description": "A repository has been forked"
       },
       {
-        "name": "new_like",
-        "description": "The user gains a like from one of their messages"
+        "name": "new_commit",
+        "description": "A commit has been made to a repository"
+      },
+      {
+        "name": "new_pull_request",
+        "description": "A new pull request has been created"
+      },
+      {
+        "name": "new_push",
+        "description": "A new push has been made to a repository"
       }
     ],
     "reactions": [
+    ]
+  },
+  {
+    "name": "discord",
+    "actions": [
+
+    ],
+    "reactions": [
       {
-        "name": "like_message",
-        "description": "The user likes a message"
+        "name": "send_a_private_message",
+        "description": "Send you a private message"
       }
     ]
   },

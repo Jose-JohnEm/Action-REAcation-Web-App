@@ -1,4 +1,6 @@
 import express from 'express'
+import {getGithubUser} from '../auth/connect'
+
 import {gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
 
 const router = express.Router()
@@ -17,6 +19,8 @@ router.route('/github')
         console.log("GitHub event received: " + req.headers['x-github-event'] + " - " + body.action);
 
         const sender = body.sender.login;
+        // console log the getGithubUser(sender)
+        console.log(getGithubUser(sender));
         // TODO; Verify if the sender is in our database
 
 

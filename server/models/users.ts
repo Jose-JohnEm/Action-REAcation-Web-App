@@ -51,7 +51,10 @@ const userSchema = new Schema({
         },
         lastname: {
             type: String,
-        }
+        },
+        githubUsername: {
+            type: String,
+        },
     },
     certification: {
         accessToken: {
