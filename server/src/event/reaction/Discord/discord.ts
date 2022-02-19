@@ -5,7 +5,7 @@ const client = new Discord.Client({
 });
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Discord: Logged in as ${client.user.tag}!`);
 });
 
 // send a private message to a user
