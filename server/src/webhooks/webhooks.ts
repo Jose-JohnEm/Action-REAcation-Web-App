@@ -12,11 +12,15 @@ router.route('/github')
             res.status(400).send('Webhook Error: Invalid event type')
             return;
         }
-        res.status(200).send('Webhook received')
 
-        // convert the body to JSON
         const body = JSON.parse(req.body.payload);
         console.log("GitHub event received: " + req.headers['x-github-event'] + " - " + body.action);
+
+        const sender = body.sender.login;
+        // TODO; Verify if the sender is in our database
+
+
+        res.status(200).send('Webhook received')
 
         // Get the event type and call the associated function
         switch (req.headers['x-github-event']) {
