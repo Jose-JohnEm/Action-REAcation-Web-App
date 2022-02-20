@@ -27,7 +27,8 @@ const SignUpForm = () => {
       last_name: data.get('last_name'),
       first_name: data.get('first_name'),
       email: data.get('email'),
-      password: data.get('password')
+      password: data.get('password'),
+      avatar: imageUrl
     };
     // console.log(body);
   };
