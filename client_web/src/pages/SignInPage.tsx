@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox, Grid, Link, Divider, Chip } from '@mui/material';
 import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -45,19 +46,31 @@ const SignInForm = () => {
 };
 
 const SignInPage = () => {
+  const navigate = useNavigate();
+  const handleClick = (path: string) => navigate(path);
+
   return (
     <Container sx={{ height: '100vh' }} component='main' maxWidth='sm'>
-      <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ pt: '50%' }}>
+      <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ pt: '50%', pb: '10%' }}>
         Log in
       </Typography>
+      <Divider>
+        <Chip label='OR' />
+      </Divider>
       <SignInForm />
+      <Grid container justifyContent='center'>
+        <Grid item sx={{ mt: '5%' }}>
+          <Link href='#' variant='body2' onClick={() => { handleClick('/forgotpassword'); }}>
+            Forgot password ?
+          </Link>
+        </Grid>
+      </Grid>
     </Container>
   )
 }
 
 export default SignInPage;
 
-//TODO: forgot password link
 //TODO: OAuth2 Github
 //TODO: OAuth2 Discord
 //TODO: OAuth2 Office365
