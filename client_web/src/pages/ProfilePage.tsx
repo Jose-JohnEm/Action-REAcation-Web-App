@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Grid, Typography, Box, TextField, Button, InputAdornment, IconButton, Avatar, Link, FormControlLabel, Checkbox } from '@mui/material';
-import Divider from '@mui/material/Divider';
+import { Switch, Link, Container, Typography, Box, TextField, Button, IconButton, Avatar } from '@mui/material';
 import COLORS from '../constants/colors';
-import SelectTimezoneMaterialUi from 'select-timezone-material-ui';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { height } from '@mui/system';
+import Divider from '@mui/material/Divider';
+import { Icon } from '@iconify/react';
 
-const ProfilePageForm = () => {
+const ProfileForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState<string>('null');
@@ -21,77 +20,106 @@ const ProfilePageForm = () => {
     }
   }, [selectedImage]);
 
-  const handleTimeZone = (timezoneName: string, timezoneOffset: number) => {
-    console.log(timezoneName);
+  const [stateSwitch, setStateSwitch] = useState({
+    discord: true,
+    github: false,
+    office: true,
+  });
+
+  const handleChangeSwitch = (event: React.ChangeEvent<any>) => {
+    setStateSwitch({
+      ...stateSwitch,
+      [event.target.name]: event.target.checked,
+    });
   };
 
   const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body = {
-      username: data.get('username'),
+      last_name: data.get('last_name'),
+      first_name: data.get('first_name'),
+      email: data.get('email'),
       password: data.get('password'),
       avatar: imageUrl
     };
-    };
+    // console.log(body);
+  };
 
   return (
-    <Box component='form' onSubmit={handleSubmit} sx={{ ml: 20, mr: 20 }}>
+    <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <input accept='image/*' id='icon-button-file' type='file' style={{ display: 'none' }} onChange={handleChange} />
       <label htmlFor='icon-button-file'>
-        <IconButton component='span' style={{ left: '50%', height: '30%'}}>
+        <IconButton component='span'>
         {
           (imageUrl === 'null' &&
-            <Avatar sx={{bgcolor: COLORS.DARKGRAY, transform: 'scale(2.5)' }}><AddAPhotoIcon /></Avatar>
+            <Avatar sx={{ bgcolor: COLORS.DARKGRAY, transform: 'scale(2.5)' }}><AddAPhotoIcon /></Avatar>
           ) || (
             <Avatar sx={{ transform: 'scale(2.5)' }} src={imageUrl} />
           )
         }
         </IconButton>
       </label>
+      <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <TextField defaultValue='Hereismyusername' label='Username' margin='normal' required fullWidth name='username' helperText='Only alphabetic characters and spaces/dashes' inputProps={{ pattern: '^[a-zA-Z -]+$' }} sx={{ mt: 6 }}/>
+        <TextField defaultValue='hahahaha' variant='standard' margin='normal' required fullWidth type={'password'} label='Password' name='password' sx={{ mb: 2 }} inputProps={{ pattern: '[a-zA-Z0-9]{8,}' }} InputProps={{ readOnly: true}}/>
+        <Box mb={2}>
+          <Link href="/resetpassword" color="inherit" variant='subtitle2'>
+            {'Change Password'}
+          </Link>
+        </Box>
 
-      <Typography variant='h5' color={COLORS.DARKGRAY}> Account </Typography>
-      <TextField defaultValue='Hereismyusername' label='Username' margin='normal' required fullWidth name='username' helperText='Only alphabetic characters and spaces/dashes' inputProps={{ pattern: '^[a-zA-Z -]+$' }} sx={{ mt: 6 }}/>
-      <TextField defaultValue='hahahaha' variant='standard' margin='normal' required fullWidth type={'password'} label='Password' name='password' sx={{ mb: 2 }} inputProps={{ pattern: '[a-zA-Z0-9]{8,}' }} InputProps={{ readOnly: true}}/>
-      <Box mb={2}>
-        <Link href="/resetpassword" color="inherit" variant='subtitle2'>
-          {'Change Password'}
-        </Link>
+        <TextField defaultValue='hahahaha@lol.com' margin='normal' required fullWidth label='Email' name='email' inputProps={{ pattern: '^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$' }}/>
+
+        <Box mb={2} mt={2}>
+          <IconButton aria-label="Example">
+            <Icon icon="akar-icons:github-fill" style={{ color: COLORS.DARKGRAY}}/>
+            <Switch
+              checked={stateSwitch.discord}
+              onChange={handleChangeSwitch}
+              name="discord"
+              inputProps={{ 'aria-label': 'controlled' }}
+              />
+          </IconButton>
+          <IconButton aria-label="Example">
+            <Icon icon="bi:discord" style={{ color: COLORS.DARKGRAY}}/>
+          <Switch
+            checked={stateSwitch.github}
+            onChange={handleChangeSwitch}
+            name="github"
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          </IconButton>
+          <IconButton aria-label="Example">
+            <Icon icon="mdi:microsoft-office" style={{ color: COLORS.DARKGRAY}}/>
+          <Switch
+            checked={stateSwitch.office}
+            onChange={handleChangeSwitch}
+            name="office"
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          </IconButton>
+
+        </Box>
+
+        <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
+          Save Settings
+        </Button>
       </Box>
-      <TextField defaultValue='hahahaha@lol.com' margin='normal' required fullWidth label='Email' name='email' inputProps={{ pattern: '^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$' }}/>
-
-      <Box mb={2} mt={2}>
-      <SelectTimezoneMaterialUi
-          label="Timezone"
-          helperText="Please select a timezone from the list"
-          onChange={handleTimeZone}
-        />
-      </Box>
-
-      <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
-        Validate
-      </Button>
     </Box>
   );
 };
 
 const ProfilePage = () => {
-    return (
-        <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '80vh' }}>
-            <Typography variant='h3' color={COLORS.DARKGRAY} align='center'>
-            Account Settings
-            </Typography>
-            <Divider style={{width:'40%', height: '2%'}} />
-            <Grid item>
-                <Typography variant='h4' color={COLORS.DARKGRAY} align='center'>
-                    Profile
-                </Typography>
-            </Grid>
-            <ProfilePageForm />
-        </Grid>
-    )
+  return (
+    <Container component='main' maxWidth='sm'>
+      <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ mt: 15 }}>
+        Account Settings
+      </Typography>
+      <Divider style={{marginTop: '3%'}} />
+      <ProfileForm />
+    </Container>
+  )
 }
 
 export default ProfilePage;
-
-// TODO: upload avatar

@@ -4,9 +4,11 @@ import COLORS from '../constants/colors';
 
 const HomePage = () => {
     return (
-        <div className="HomePage" >
-            <h2 style={{padding: "550px 20px 0px", marginBottom: 0, textAlign: "center", color: "#272727", fontSize: "90px"}}>Automation platform of his digital life.</h2>
-        </div>
+        <Box mb={2} mt={50}>
+            <Typography variant='h1' color={COLORS.DARKGRAY} align='center'>
+            Automation platform of his digital life.
+            </Typography>
+        </Box>
     )
 }
 
