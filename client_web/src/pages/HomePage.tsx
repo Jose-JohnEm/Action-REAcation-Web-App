@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Container, Typography, Box, TextField, Button } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import COLORS from '../constants/colors';
 
 const HomePage = () => {

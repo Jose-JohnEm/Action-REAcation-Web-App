@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox } from '@mui/material';
+import { Grid, Typography, Box, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

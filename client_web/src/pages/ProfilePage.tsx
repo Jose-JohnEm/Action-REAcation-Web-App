@@ -6,9 +6,6 @@ import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
 
 const ProfileForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState<string>('null');
   const handleChange = (event: React.ChangeEvent<any>) => {
