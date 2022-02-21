@@ -20,7 +20,7 @@ const ResetPasswordPageForm = () => {
     };
 
   return (
-    <Box component='form' onSubmit={handleSubmit} sx={{ ml: 20, mr: 20 }}>
+    <Box component='form' onSubmit={handleSubmit} sx={{ ml: 20, mr: 20, pt: 5 }}>
       <TextField margin='normal' required fullWidth type={showPassword ? 'text' : 'password'} label='Current Password' name='current_password' sx={{ mb: 5 }} helperText='Only alphanumeric characters. Minimum 8 characters' inputProps={{ pattern: '[a-zA-Z0-9]{8,}' }}
         InputProps={{ endAdornment: (
           <InputAdornment position='end'>
