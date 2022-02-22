@@ -17,19 +17,29 @@ const randomCodeGenerator = (length: number) => {
     return result;
 }
 
+const uParam = {
+    name: String,
+    type: String
+}
+
 const uToken = {
     service: String,
     token: String,
 }
 
-const action = {
-    name: String
+export const action = {
+    service: String,
+    name: String,
+    params: Array<typeof uParam>()
 }
 
-const reaction = {
-    name: String
+export const reaction = {
+    service: String,
+    name: String,
+    params: Array<typeof uParam>()
 }
-const uEvent = {
+
+export const uEvent = {
     name: String,
     action: action,
     reaction: reaction,

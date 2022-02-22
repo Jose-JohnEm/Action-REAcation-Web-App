@@ -4,23 +4,38 @@
     "actions": [
       {
         "name": "new_star",
-        "description": "A star has been added to a repository"
+        "description": "A star has been added to a repository",
+        "params": {
+          "repository": "string"
+        }
       },
       {
         "name": "new_fork",
-        "description": "A repository has been forked"
+        "description": "A repository has been forked",
+        "params": {
+          "repository": "string"
+        }
       },
       {
         "name": "new_commit",
-        "description": "A commit has been made to a repository"
+        "description": "A commit has been made to a repository",
+        "params": {
+          "repository": "string"
+        }
       },
       {
         "name": "new_pull_request",
-        "description": "A new pull request has been created"
+        "description": "A new pull request has been created",
+        "params": {
+          "repository": "string"
+        }
       },
       {
         "name": "new_push",
-        "description": "A new push has been made to a repository"
+        "description": "A new push has been made to a repository",
+        "params": {
+          "repository": "string"
+        }
       }
     ],
     "reactions": [
@@ -29,7 +44,6 @@
   {
     "name": "discord",
     "actions": [
-
     ],
     "reactions": [
       {
