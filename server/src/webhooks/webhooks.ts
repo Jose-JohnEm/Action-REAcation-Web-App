@@ -11,17 +11,13 @@ router.route('/github').post((req, res) => {
         res.status(400).send('Webhook Error: Invalid event type')
         return;
     }
+    res.status(200).send('Webhook received')
 
     const body = JSON.parse(req.body.payload);
     const event = req.headers['x-github-event'].toString();
-
-    console.log("GitHub event received: " + event + " - " + body.action);
-
     const sender = body.sender.login;
-    // TODO; Verify if the sender is in our database
-
-    res.status(200).send('Webhook received')
-
+    const repo = body.repository.full_name;
+    console.log("GitHub event received: " + event + " - " + body.action);
 
     // Create list of event and call the corresponding function
     let events = {
@@ -36,7 +32,7 @@ router.route('/github').post((req, res) => {
         console.error('Github, Unsupported event type!');
         return;
     }
-    events[event](body);
+    events[event](body, sender, repo);
 });
 
 
