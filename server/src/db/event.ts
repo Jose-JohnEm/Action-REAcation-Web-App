@@ -2,19 +2,37 @@ import UserData from '../../models/users'
 
 // TODO: save an event to the database
 
+const haveSameData = (l1, l2) => {
+
+    if (l1.length === l2.length) {
+        for (let i = 0; i < l1.length; i++) {
+            var obj1 = l1[i]
+            var obj2 = l1[i]
+        
+            const obj1Length = Object.keys(obj1).length;
+            const obj2Length = Object.keys(obj2).length;
+        
+            if (obj1Length === obj2Length) {
+                return Object.keys(obj1).every(
+                    key => obj2.hasOwnProperty(key)
+                        && obj2[key] === obj1[key]);
+            }
+        }
+    }
+    return false;
+}
+
 // --- Global ---
-export function getUserReaction(user, service, name, params: []) { // TODO Fix and try before use
-    // verify if user is not null
+export function getUserReaction(user, service, name, params: Array<{}>) {
     if (!user)
-        return null
+        return undefined
 
     const reaction = user.events.find(event => {
         return event.action.service === service &&
             event.action.name === name &&
-            event.action.params === params
+            haveSameData(event.action.params, params)
     })
-    console.log(reaction);
-    return reaction
+    return reaction.reaction
 }
 
 

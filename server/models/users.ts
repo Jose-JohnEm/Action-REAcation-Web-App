@@ -17,10 +17,10 @@ const randomCodeGenerator = (length: number) => {
     return result;
 }
 
-const uParam = {
-    name: String,
-    type: String
-}
+// const uParam = {
+//     name: String,
+//     type: String
+// }
 
 const uToken = {
     service: String,
@@ -30,13 +30,13 @@ const uToken = {
 export const action = {
     service: String,
     name: String,
-    params: Array<typeof uParam>()
+    params: Array<{}>()
 }
 
 export const reaction = {
     service: String,
     name: String,
-    params: Array<typeof uParam>()
+    params: Array<{}>()
 }
 
 export const uEvent = {

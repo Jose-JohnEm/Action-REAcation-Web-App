@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import authenticator from './src/auth/authenticator'
 import webhooks from './src/webhooks/webhooks'
 import dotenv from 'dotenv'
+import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
 
 dotenv.config()
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 })
 app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
+app.use('/area', area)
 app.use('/webhooks', webhooks)
 
 ///// Start Discord /////
