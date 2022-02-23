@@ -3,12 +3,20 @@
 
 import {getUserFromGithubAction} from "../../../db/event";
 
-const gh_push = function (headers, body) {
-    console.log("Headers: " + JSON.stringify(headers) + "\nBody: " + JSON.stringify(body));
+const gh_push = async function (body, sender, repo) {
     console.log("Github push event received.");
+    // Get the user getUserFromGithubAction("new_push", sender, repo); and save it to a const
+    const user = await getUserFromGithubAction("new_push", sender, repo);
+    if (!user) {
+        console.log("No user found for this push event: " + sender + " | " + repo);
+        return;
+    }
+    // Get the name of the person who pushed, the name of the repository, and the number of commits, the tille of the head commit, and the url of the head commit
+    const {pusher, repository, commits} = body;
+    const {name, url} = repository;
 };
 
-const gh_pull_request = function (headers, body) {
+const gh_pull_request = function (body, sender, repo) {
     // console.log(headers);
     // console.log(body);
 };
@@ -18,18 +26,16 @@ const gh_star = function (body, sender, repo) {
         getUserFromGithubAction("new_star", sender, repo)
         console.log("The user " + body.sender.login + " starred the repo " + repo);
     } else if (body.action == "deleted") {
-        console.log(body);
         console.log("The user " + body.sender.login + " unstarred the repo " + body.repository.full_name + " :(");
     }
 
 };
 
-const gh_commit = function (body) {
+const gh_commit = function (body, sender, repo) {
 
 }
 
-
-const gh_fork = function (body) {
+const gh_fork = function (body, sender, repo) {
     console.log("Fork !!");
 }
 

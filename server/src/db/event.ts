@@ -19,21 +19,18 @@ export function getUserReaction(user, service, name, params: []) { // TODO Fix a
 
 
 // --- Github ---
-export function getUserFromGithubAction(action, sender, repo) {
+export async function getUserFromGithubAction(action, sender, repo) {
     console.log(action + " / " + sender + " / " + repo);
-    UserData.findOne({
+    // Find the user and wait for the response before returning
+    const user = await UserData.findOne({
         'events.action.service': 'github',
         'events.action.name': action,
         'data.githubUsername': sender,
         'events.action.params.repository': repo
-    }, (err, user) => {
-        if (err) {
-            console.log(err)
-        } else {
-            return JSON.parse(JSON.stringify(user))
-        }
     })
-    return null
+    if (!user)
+        return null
+    return JSON.parse(JSON.stringify(user))
 }
 
 export default {

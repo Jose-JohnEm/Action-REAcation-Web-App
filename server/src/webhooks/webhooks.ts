@@ -17,21 +17,23 @@ router.route('/github').post((req, res) => {
     const event = req.headers['x-github-event'].toString();
     const sender = body.sender.login;
     const repo = body.repository.full_name;
+
     console.log("GitHub event received: " + event + " - " + body.action);
 
-    // Create list of event and call the corresponding function
+
     let events = {
-        'pull_request': gh_pull_request,
-        'push': gh_push,
         'star': gh_star,
-        'fork': gh_fork,
+        'push': gh_push,
         'commit': gh_commit,
+        'pull_request': gh_pull_request,
+        'fork': gh_fork,
     }
 
     if (!events[event]) {
         console.error('Github, Unsupported event type!');
         return;
     }
+    console.log("Sender: " + sender + " - Repo: " + repo);
     events[event](body, sender, repo);
 });
 

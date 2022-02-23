@@ -32,7 +32,6 @@ app.use((req, res, next) => {
 })
 
 ///// Routes /////
-
 app.get('/', (req, res) => {
     res.send('Welcome !')
 })
@@ -41,6 +40,6 @@ app.use('/auth', authenticator)
 app.use('/webhooks', webhooks)
 
 ///// Start Discord /////
-startDiscord();
+// startDiscord();
 
 export default app
