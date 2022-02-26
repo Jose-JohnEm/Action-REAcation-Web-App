@@ -10,6 +10,13 @@
         }
       },
       {
+        "name": "rm_star",
+        "description": "A star has been removed on a repository",
+        "params": {
+          "repository": "string"
+        }
+      },
+      {
         "name": "new_fork",
         "description": "A repository has been forked",
         "params": {

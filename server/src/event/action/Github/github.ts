@@ -24,18 +24,27 @@ const gh_pull_request = async function (body, sender, repo) {
 };
 
 const gh_star = async function (body, sender, repo) {
+    let action = null;
     if (body.action == "created") {
-        const users = await getUserFromGithubAction("new_star", repo)
-        const message = "The user " + sender + " starred " + repo;
-        let actionParams = {"repository": repo};
-        let reaction;
-        users.forEach(user => {
-            reaction = getUserReaction(user, "github", "new_star", actionParams)
-            handleReactions(reaction.service, reaction.name, {"message": message})
-        });
+        action = "new_star"
     } else if (body.action == "deleted") {
-        console.log("The user " + body.sender.login + " unstarred the repo " + body.repository.full_name + " :(");
+        action = "rm_star"
     }
+    const users = await getUserFromGithubAction(action, repo)
+
+    if (!users)
+        return
+
+    let message = "The user " + sender + " starred " + repo;
+    if (action == "rm_star")
+        message = "The user " + sender + " unstarred " + repo;
+
+    let actionParams = {"repository": repo};
+    let reaction;
+    users.forEach(user => {
+        reaction = getUserReaction(user, "github", action, actionParams)
+        handleReactions(reaction.service, reaction.name, {"message": message})
+    });
 
 };
 
