@@ -38,6 +38,13 @@
         }
       },
       {
+        "name": "closed_pull_request",
+        "description": "A pull request has been closed",
+        "params": {
+          "repository": "string"
+        }
+      },
+      {
         "name": "new_push",
         "description": "A new push has been made to a repository",
         "params": {
