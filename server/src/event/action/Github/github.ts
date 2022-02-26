@@ -5,18 +5,21 @@ import {getUserFromGithubAction, getUserReaction} from "../../../db/event";
 import handleReactions from "../../reaction/msg_sender";
 
 const gh_push = async function (body, sender, repo) {
-    // const user = await getUserFromGithubAction("new_push", sender, repo);
-    // if (!user) {
-    //     console.log("No user found for this push event: " + sender + " | " + repo);
-    //     return;
-    // }
-    // const {pusher, repository, commits} = body;
-    // console.log("Pusher: " + pusher);
-    // console.log("Repository: " + repository);
-    // console.log("Commits: " + commits);
-    // const {name, url} = repository;
+    const users = await getUserFromGithubAction("new_push", repo)
+    if (!users) {
+        console.log("No user found for this push event: " + repo);
+        return;
+    }
 
+    const {pusher, repository, commits} = body;
 
+    const message = pusher.name + " push " + commits.length + " commit(s) on " + repo + "\nHead commit is \"" + body.head_commit.message + "\""
+
+    let reaction;
+    users.forEach(user => {
+        reaction = getUserReaction(user, "github", "new_push", {"repository": repo})
+        handleReactions(reaction.service, reaction.name, {"message": message})
+    });
 };
 
 const gh_pull_request = async function (body, sender, repo) {
@@ -39,10 +42,9 @@ const gh_star = async function (body, sender, repo) {
     if (action == "rm_star")
         message = "The user " + sender + " unstarred " + repo;
 
-    let actionParams = {"repository": repo};
     let reaction;
     users.forEach(user => {
-        reaction = getUserReaction(user, "github", action, actionParams)
+        reaction = getUserReaction(user, "github", action, {"repository": repo})
         handleReactions(reaction.service, reaction.name, {"message": message})
     });
 
