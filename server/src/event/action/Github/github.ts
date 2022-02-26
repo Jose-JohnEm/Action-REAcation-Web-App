@@ -26,7 +26,6 @@ const gh_push = async function (body, sender, repo) {
 
 const gh_pull_request = async function (body, sender, repo) {
     const state = body.action;
-    console.log(JSON.parse(JSON.stringify(body)))
 
     let action;
     if (state == "open")
@@ -82,8 +81,21 @@ const gh_star = async function (body, sender, repo) {
 
 };
 
-const gh_fork = function (body, sender, repo) {
-    console.log("Fork !!");
+const gh_fork = async function (body, sender, repo) {
+    console.log(JSON.parse(JSON.stringify(body)))
+    const users = await getUserFromGithubAction("new_fork", repo);
+
+    if (!users)
+        return
+
+    const {forkee} = body;
+    let message = forkee.owner.login + " forked " + repo + " repository to " + forkee.full_name;
+
+    let reaction;
+    users.forEach(user => {
+        reaction = getUserReaction(user, "github", "new_fork", {"repository": repo})
+        handleReactions(reaction.service, reaction.name, {"message": message})
+    });
 }
 
 export {gh_push, gh_pull_request, gh_star, gh_fork};
