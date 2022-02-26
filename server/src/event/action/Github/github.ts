@@ -1,6 +1,3 @@
-// When receiving a push event from GitHub, we want to update the
-// corresponding repository's status.
-
 import {getUserFromGithubAction, getUserReaction} from "../../../db/event";
 import handleReactions from "../../reaction/msg_sender";
 
@@ -14,7 +11,7 @@ const gh_push = async function (body, sender, repo) {
         return;
     }
 
-    const {pusher, repository, commits} = body;
+    const {pusher, commits} = body;
     const message = pusher.name + " push " + commits.length + " commit(s) on " + repo + "\nHead commit is \"" + body.head_commit.message + "\""
 
     let reaction;
