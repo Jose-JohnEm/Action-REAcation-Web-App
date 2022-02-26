@@ -4,26 +4,19 @@ import UserData from '../../models/users'
 
 const haveSameData = (l1, l2) => {
 
-    if (l1.length === l2.length) {
-        for (let i = 0; i < l1.length; i++) {
-            var obj1 = l1[i]
-            var obj2 = l1[i]
-        
-            const obj1Length = Object.keys(obj1).length;
-            const obj2Length = Object.keys(obj2).length;
-        
-            if (obj1Length === obj2Length) {
-                return Object.keys(obj1).every(
-                    key => obj2.hasOwnProperty(key)
-                        && obj2[key] === obj1[key]);
-            }
-        }
+    const obj1Length = Object.keys(l1).length;
+    const l2Length = Object.keys(l2).length;
+
+    if (obj1Length === l2Length) {
+        return Object.keys(l1).every(
+            key => l2.hasOwnProperty(key)
+                && l2[key] === l1[key]);
     }
     return false;
 }
 
 // --- Global ---
-export function getUserReaction(user, service, name, params: Array<{}>) {
+export function getUserReaction(user, service, name, params: {}) {
     if (!user)
         return undefined
 
@@ -37,13 +30,12 @@ export function getUserReaction(user, service, name, params: Array<{}>) {
 
 
 // --- Github ---
-export async function getUserFromGithubAction(action, sender, repo) {
-    console.log(action + " / " + sender + " / " + repo);
+export async function getUserFromGithubAction(action, repo) {
+    console.log(action + " / " + repo);
     // Find the user and wait for the response before returning
-    const user = await UserData.findOne({
+    const user = await UserData.find({
         'events.action.service': 'github',
         'events.action.name': action,
-        'data.githubUsername': sender,
         'events.action.params.repository': repo
     })
     if (!user)
