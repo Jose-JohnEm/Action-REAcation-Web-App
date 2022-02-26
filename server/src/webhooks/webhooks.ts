@@ -1,5 +1,5 @@
 import express from 'express'
-import {gh_commit, gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
+import {gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
 
 const router = express.Router()
 const bodyParser = require('body-parser');
@@ -24,7 +24,6 @@ router.route('/github').post((req, res) => {
     let events = {
         'star': gh_star,
         'push': gh_push,
-        'commit': gh_commit,
         'pull_request': gh_pull_request,
         'fork': gh_fork,
     }
