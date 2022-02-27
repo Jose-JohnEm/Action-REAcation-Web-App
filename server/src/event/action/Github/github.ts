@@ -1,5 +1,5 @@
 import {getUserFromGithubAction, getUserReaction} from "../../../db/event";
-import handleReactions from "../../reaction/msg_sender";
+import handleReactions from "../../reaction/reaction";
 
 const gh_push = async function (body, sender, repo) {
     if (body.commits.length == 0)
@@ -17,7 +17,7 @@ const gh_push = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", "new_push", {"repository": repo})
-        handleReactions(reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction.service, reaction.name, {"message": message})
     });
 };
 
@@ -50,7 +50,7 @@ const gh_pull_request = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", action, {"repository": repo})
-        handleReactions(reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction.service, reaction.name, {"message": message})
     });
 };
 
@@ -73,7 +73,7 @@ const gh_star = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", action, {"repository": repo})
-        handleReactions(reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction.service, reaction.name, {"message": message})
     });
 
 };
@@ -91,7 +91,7 @@ const gh_fork = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", "new_fork", {"repository": repo})
-        handleReactions(reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction.service, reaction.name, {"message": message})
     });
 }
 

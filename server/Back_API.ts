@@ -24,9 +24,10 @@ mongoose.connect(dbURI)
     .then((result) => app.listen(port, successServerStarted))
     .catch((error) => console.log(error));
 
+///// Start Discord /////
+startDiscord().then(r => console.log("Area: Discord started"));
 
 ///// Add custom debug middleware /////
-
 app.use((req, res, next) => {
     console.log(req.url)
     next()
@@ -40,8 +41,5 @@ app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
 app.use('/area', area)
 app.use('/webhooks', webhooks)
-
-///// Start Discord /////
-// startDiscord();
 
 export default app
