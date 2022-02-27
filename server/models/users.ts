@@ -17,11 +17,6 @@ const randomCodeGenerator = (length: number) => {
     return result;
 }
 
-// const uParam = {
-//     name: String,
-//     type: String
-// }
-
 const uToken = {
     service: String,
     token: String,
@@ -62,9 +57,15 @@ const userSchema = new Schema({
         lastname: {
             type: String,
         },
-        githubUsername: {
-            type: String,
-        },
+        // list of user names
+        username: {
+            github: {
+                type: String,
+            },
+            discord: {
+                type: String,
+            },
+        }
     },
     certification: {
         accessToken: {
