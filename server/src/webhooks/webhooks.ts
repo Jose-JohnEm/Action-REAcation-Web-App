@@ -1,10 +1,10 @@
 import express from 'express'
 import {gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
+import pt_story_create from "../event/action/PivotalTracker/pivotal";
 
 const router = express.Router()
 
 router.use(express.json());
-
 router.route('/github').post((req, res) => {
     if (!req.headers['x-github-event']) {
         console.error('Not a GitHub event !');
@@ -34,9 +34,15 @@ router.route('/github').post((req, res) => {
 
 router.route('/pivotal').post((req, res) => {
     res.status(200).send('Webhook received')
-    // We receive a POST request application/json
-    // display the summary
-    console.log(req.body);
+
+    if (!req.body)
+        return;
+    const activity = req.body;
+
+    let events = {
+        'story_create_activity': pt_story_create
+    }
+    events[activity.kind](activity);
 });
 
 router.route('/teams').post((req, res) => {

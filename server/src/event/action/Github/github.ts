@@ -6,7 +6,7 @@ const gh_push = async function (body, sender, repo) {
         return;
 
     const users = await getUserFromGithubAction("new_push", repo)
-    if (!users) {
+    if (users.length == 0) {
         console.log("No user found for this push event: " + repo);
         return;
     }
@@ -33,7 +33,7 @@ const gh_pull_request = async function (body, sender, repo) {
         return;
 
     const users = await getUserFromGithubAction(action, repo)
-    if (!users) {
+    if (users.length == 0) {
         console.log("No user found for this pull_request event: " + repo);
         return;
     }
@@ -63,7 +63,7 @@ const gh_star = async function (body, sender, repo) {
     }
     const users = await getUserFromGithubAction(action, repo)
 
-    if (!users)
+    if (users.length == 0)
         return
 
     let message = "The user " + sender + " starred " + repo;
@@ -82,7 +82,7 @@ const gh_fork = async function (body, sender, repo) {
     console.log(JSON.parse(JSON.stringify(body)))
     const users = await getUserFromGithubAction("new_fork", repo);
 
-    if (!users)
+    if (users.length == 0)
         return
 
     const {forkee} = body;
