@@ -24,13 +24,6 @@
         }
       },
       {
-        "name": "new_commit",
-        "description": "A commit has been made to a repository",
-        "params": {
-          "repository": "string"
-        }
-      },
-      {
         "name": "new_pull_request",
         "description": "A new pull request has been created",
         "params": {
@@ -62,26 +55,10 @@
     "reactions": [
       {
         "name": "send_a_private_message",
-        "description": "Send you a private message"
-      }
-    ]
-  },
-  {
-    "name": "intra",
-    "actions": [
-      {
-        "name": "new_project_subscription",
-        "description": "The user signs up for a project"
-      }
-    ],
-    "reactions": [
-      {
-        "name": "activity_subscribe",
-        "description": "The user signs up for an activity"
-      },
-      {
-        "name": "module_subscribe",
-        "description": "The user signs up for a unit"
+        "description": "Send you a private message",
+        "params": {
+          "username": "string"
+        }
       }
     ]
   }
