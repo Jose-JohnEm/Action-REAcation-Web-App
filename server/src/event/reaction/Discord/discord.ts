@@ -10,9 +10,9 @@ export async function searchUser(guildId: string, userTag: string) {
 }
 
 export async function discordPrivateMsg(user, params) {
-    const discordUser = await searchUser(process.env.DISCORD_GUILD_ID, user.data.username.discord);
+    const discordUser = await searchUser(process.env.DISCORD_GUILD_ID, params.username);
     if (!discordUser) {
-        console.error(`User ${user.data.username.discord} not found`)
+        console.error(`User ${params.username} not found`)
         return;
     }
     sendPrivateMessage(discordUser, params.message);

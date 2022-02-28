@@ -7,11 +7,11 @@ const handleDiscordReactions = (reaction: string, user, params) => {
     reactions[reaction](user, params)
 }
 
-const handleReactions = (user, service: string, reaction: string, params) => {
+const handleReactions = (user, reaction, params) => {
     const services_mid = {
         "discord": handleDiscordReactions
     }
-    services_mid[service](reaction, user, params)
+    services_mid[reaction.service](reaction.name, user, {...params, ...reaction.params})
 }
 
 export default handleReactions;

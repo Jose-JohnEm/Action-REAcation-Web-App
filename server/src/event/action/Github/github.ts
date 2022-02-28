@@ -17,7 +17,7 @@ const gh_push = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", "new_push", {"repository": repo})
-        handleReactions(user, reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction, {"message": message})
     });
 };
 
@@ -50,7 +50,7 @@ const gh_pull_request = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", action, {"repository": repo})
-        handleReactions(user, reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction, {"message": message})
     });
 };
 
@@ -73,7 +73,7 @@ const gh_star = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", action, {"repository": repo})
-        handleReactions(user, reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction, {"message": message})
     });
 
 };
@@ -91,7 +91,7 @@ const gh_fork = async function (body, sender, repo) {
     let reaction;
     users.forEach(user => {
         reaction = getUserReaction(user, "github", "new_fork", {"repository": repo})
-        handleReactions(user, reaction.service, reaction.name, {"message": message})
+        handleReactions(user, reaction, {"message": message})
     });
 }
 

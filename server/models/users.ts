@@ -56,15 +56,6 @@ const userSchema = new Schema({
         },
         lastname: {
             type: String,
-        },
-        // list of user names
-        username: {
-            github: {
-                type: String,
-            },
-            discord: {
-                type: String,
-            },
         }
     },
     certification: {
