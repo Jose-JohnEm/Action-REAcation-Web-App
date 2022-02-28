@@ -1,4 +1,5 @@
 import express from 'express'
+import ngrok from 'ngrok'
 import aboutJson from './src/aboutJson'
 import mongoose from 'mongoose'
 import authenticator from './src/auth/authenticator'
@@ -24,8 +25,21 @@ mongoose.connect(dbURI)
     .then((result) => app.listen(port, successServerStarted))
     .catch((error) => console.log(error));
 
-///// Start Discord /////
-startDiscord().then(r => console.log("Area: Discord started"));
+// Sstart ngrok
+(async () => {
+    const url = await ngrok.connect(port)
+    console.log(`ngrok connected at ${url}`)
+})();
+
+// Start discord
+(async () => {
+    try {
+        await startDiscord()
+    } catch (error) {
+        console.log(error)
+    }
+})();
+
 
 ///// Add custom debug middleware /////
 app.use((req, res, next) => {
