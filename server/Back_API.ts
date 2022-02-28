@@ -7,6 +7,7 @@ import webhooks from './src/webhooks/webhooks'
 import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
+import infoJson from "./src/infoJson";
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ mongoose.connect(dbURI)
 // Sstart ngrok
 (async () => {
     const url = await ngrok.connect(port)
+    process.env.URL = url;
     console.log(`ngrok connected at ${url}`)
 })();
 
@@ -52,7 +54,7 @@ app.get('/', (req, res) => {
     res.send('Welcome !')
 })
 app.get('/about.json', aboutJson)
-app.get('/info.json', aboutJson)
+app.get('/info.json', infoJson)
 app.use('/auth', authenticator)
 app.use('/area', area)
 app.use('/webhooks', webhooks)
