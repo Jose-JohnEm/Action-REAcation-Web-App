@@ -1,20 +1,10 @@
 import express from 'express'
 import {gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
 
-
 const router = express.Router()
-const bodyParser = require('body-parser');
 
-router.route('/teams').post((req, res) => {
-    console.log(req);
+router.use(express.json());
 
-    res.status(200).json({
-        "type": "message",
-        "text": "Action Received !"
-    })
-});
-
-router.use(bodyParser.urlencoded());
 router.route('/github').post((req, res) => {
     if (!req.headers['x-github-event']) {
         console.error('Not a GitHub event !');
@@ -42,5 +32,20 @@ router.route('/github').post((req, res) => {
     events[event](body, sender, repo);
 });
 
+router.route('/pivotal').post((req, res) => {
+    res.status(200).send('Webhook received')
+    // We receive a POST request application/json
+    // display the summary
+    console.log(req.body);
+});
+
+router.route('/teams').post((req, res) => {
+    console.log(req);
+
+    res.status(200).json({
+        "type": "message",
+        "text": "Action Received !"
+    })
+});
 
 export default router
