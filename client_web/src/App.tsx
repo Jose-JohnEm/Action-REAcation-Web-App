@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header'
 import RequireAuth from './components/RequireAuth'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import MainPage from './pages/MainPage'
 
 const theme = createTheme({
   typography: {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/signin' element={< SignInPage />} />
           <Route path='/profile' element={<RequireAuth>< ProfilePage /></RequireAuth>} />
           <Route path='/resetpassword' element={<RequireAuth>< ResetPasswordPage /></RequireAuth>} />
+          <Route path='/mainpage' element={<RequireAuth>< MainPage /></RequireAuth>} />
           <Route path='*' element={< NotFoundPage />} />
         </Routes>
       </BrowserRouter>

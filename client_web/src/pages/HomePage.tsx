@@ -1,13 +1,20 @@
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Paper } from '@mui/material';
 import COLORS from '../constants/colors';
+
+const styles = {
+    paperContainer: {
+        height: 950,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/background.png'})`
+    }
+};
 
 const HomePage = () => {
     return (
-        <Box mb={2} mt={50}>
-            <Typography variant='h1' color={COLORS.DARKGRAY} align='center'>
-            Automation platform of his digital life.
-            </Typography>
-        </Box>
+        <Paper style={styles.paperContainer}>
+        </Paper>
     )
 }
 
