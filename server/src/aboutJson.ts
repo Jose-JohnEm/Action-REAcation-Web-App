@@ -4,6 +4,17 @@ const aboutJson = (req, res) => {
     // Save the file in a services variable
     const services = JSON.parse(fs.readFileSync("./services.json", "utf8"));
 
+    // Clean the json for the about.json page
+    services.forEach((service) => {
+        // For each actions of the service
+        service.actions.forEach((action) => {
+            delete action.params;
+        });
+        service.reactions.forEach((reaction) => {
+            delete reaction.params;
+        });
+    });
+
     let output = {
         client: {
             host: undefined
@@ -14,7 +25,7 @@ const aboutJson = (req, res) => {
         },
     };
 
-    output.client.host = req.ip.slice(7);
+    output.client.host = req.ip.slice(7) || "127.0.0.1";
     output.server.current_time = Math.floor(new Date().getTime() / 1000);
     output.server.services = services;
 
