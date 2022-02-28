@@ -1,10 +1,13 @@
 import express from 'express'
+import ngrok from 'ngrok'
 import aboutJson from './src/aboutJson'
 import mongoose from 'mongoose'
 import authenticator from './src/auth/authenticator'
 import webhooks from './src/webhooks/webhooks'
 import dotenv from 'dotenv'
+import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
+import infoJson from "./src/infoJson";
 
 dotenv.config()
 
@@ -23,24 +26,37 @@ mongoose.connect(dbURI)
     .then((result) => app.listen(port, successServerStarted))
     .catch((error) => console.log(error));
 
+// Sstart ngrok
+(async () => {
+    const url = await ngrok.connect(port)
+    process.env.URL = url;
+    console.log(`ngrok connected at ${url}`)
+})();
+
+// Start discord
+(async () => {
+    try {
+        await startDiscord()
+    } catch (error) {
+        console.log(error)
+    }
+})();
+
 
 ///// Add custom debug middleware /////
-
 app.use((req, res, next) => {
     console.log(req.url)
     next()
 })
 
 ///// Routes /////
-
 app.get('/', (req, res) => {
     res.send('Welcome !')
 })
 app.get('/about.json', aboutJson)
+app.get('/info.json', infoJson)
 app.use('/auth', authenticator)
+app.use('/area', area)
 app.use('/webhooks', webhooks)
-
-///// Start Discord /////
-startDiscord();
 
 export default app
