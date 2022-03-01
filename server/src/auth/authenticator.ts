@@ -1,21 +1,12 @@
-import registerAccount from './register'
-import connectAccount from './connect'
-import deleteAccount from './delete'
-import editAccount from './edit'
-
+import { deleteUser, editUser, signin, signup } from './user'
+import auth from '../middleware/auth';
 import express from 'express'
+
 const router = express.Router()
 
-const invalidMethod = (req, res) => {
-  res.status(404).json({'error': 'Invalid Method'})
-}
-
-router.route('/')
-  .get(connectAccount)
-  .post(registerAccount)
-  .put(editAccount)
-  .delete(deleteAccount)
-  .all(invalidMethod)
-
+router.post('/signin', signin);
+router.post('/signup', signup)
+router.post('/api/user/delete/', auth, deleteUser);
+router.post('/api/user/edit/', auth, editUser);
 
 export default router
