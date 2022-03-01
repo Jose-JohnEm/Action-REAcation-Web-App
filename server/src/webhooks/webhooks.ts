@@ -33,14 +33,24 @@ router.route('/github').post((req, res) => {
 });
 
 router.route('/pivotal').post((req, res) => {
-    res.status(200).send('Webhook received')
-
-    if (!req.body)
+    if (!req.body) {
+        console.error('Not a Pivotal Tracker event !');
+        res.status(400).send('Webhook Error: Invalid event type')
         return;
+    }
+    res.status(200).send('Webhook received')
     const activity = req.body;
+    console.log(activity);
+    console.log(activity.kind + " / " + activity.highlight + " / " + activity.message);
 
+    // story_update_activity as many highlighs
+    // project_membership_create_activity
     let events = {
         'story_create_activity': pt_story_create
+    }
+    if (!events[activity.kind]) {
+        console.error('Pivotal, Unsupported event type!');
+        return;
     }
     events[activity.kind](activity);
 });
