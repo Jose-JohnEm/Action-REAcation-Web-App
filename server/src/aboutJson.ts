@@ -4,22 +4,12 @@ const aboutJson = (req, res) => {
     // Save the file in a services variable
     const services = JSON.parse(fs.readFileSync("./services.json", "utf8"));
 
-    // Clean the json for the about.json page
-    services.forEach((service) => {
-        // For each actions of the service
-        service.actions.forEach((action) => {
-            delete action.params;
-        });
-        service.reactions.forEach((reaction) => {
-            delete reaction.params;
-        });
-    });
-
     let output = {
         client: {
             host: undefined
         },
         server: {
+            url: process.env.URL,
             current_time: undefined,
             services: undefined
         },
