@@ -44,8 +44,8 @@ export interface ISignUpData {
   confirmPassword: string
 }
 
-export const signUp = (body: ISignUpData) => {
-  axios
+export const signUp = async (body: ISignUpData) => {
+  await axios
     .post('http://127.0.0.1:8080/auth/signup/', body, {
       headers: {
         'Content-Type' : 'application/json',
