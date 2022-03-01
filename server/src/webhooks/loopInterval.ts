@@ -15,18 +15,16 @@ const handleIntraArea = async () => {
     for (var user of users) {
         for (var event of user.events) {
             if (event.action.service === 'intra') {
-                console.log(user.email)
                 var dict = {
                     "new_module": new_module,
                     "rm_module": rm_module,
                     "new_grade": new_grade,
-                    "new_registration": new_registration,
+                    "new_register": new_registration,
                 }
                 dict[event.action.name](user, event.action, event.reaction)
             }
         }
     }
-    console.log("lol")
 }
 
 export default handleIntraArea;

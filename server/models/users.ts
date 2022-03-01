@@ -25,13 +25,13 @@ const uToken = {
 export const action = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const reaction = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const uEvent = {

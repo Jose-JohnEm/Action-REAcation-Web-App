@@ -87,7 +87,7 @@
         }
       },
       {
-        "name": "new_registration",
+        "name": "new_register",
         "description": "A new registration upcomed",
         "params": {
           "token": "string"
