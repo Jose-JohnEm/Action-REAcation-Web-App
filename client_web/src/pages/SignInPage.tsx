@@ -4,6 +4,7 @@ import { Container, Typography, Box, TextField, Button, InputAdornment, IconButt
 import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { GoogleSignIn } from '../components/GoogleAuth'
 
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,6 +55,9 @@ const SignInPage = () => {
       <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ pt: '50%', pb: '10%' }}>
         Log in
       </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+        <GoogleSignIn />
+      </Box>
       <Divider>
         <Chip label='OR' />
       </Divider>
@@ -70,7 +74,3 @@ const SignInPage = () => {
 }
 
 export default SignInPage;
-
-//TODO: OAuth2 Github
-//TODO: OAuth2 Discord
-//TODO: OAuth2 Office365
