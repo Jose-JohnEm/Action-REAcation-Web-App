@@ -20,8 +20,8 @@ const getUserData = (req, res, next) => {
 const signin = (req, res) => {
   try {
     UserData.findOne({
-      email: req.query.email,
-      password: req.query.password,
+      email: req.body.email,
+      password: req.body.password,
     })
       .then((user) => {
         res.json({accessToken: user.certification.accessToken})
