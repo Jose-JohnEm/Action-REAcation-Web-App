@@ -7,6 +7,7 @@ import webhooks from './src/webhooks/webhooks'
 import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
+import loopInterval from './src/webhooks/loopInterval';
 
 dotenv.config()
 
@@ -24,7 +25,11 @@ const successServerStarted = () => {
 
 const dbURI = 'mongodb+srv://area_ish-ish_2022:YeO7XT8eOtbQFK9H@cluster0.4jz3r.mongodb.net/area2022?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
-    .then((result) => app.listen(port, successServerStarted))
+    .then((result) => {
+        app.listen(port, successServerStarted)
+        loopInterval()
+        setInterval(loopInterval, 15000)
+    })
     .catch((error) => console.log(error));
 
 // Sstart ngrok
