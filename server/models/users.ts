@@ -50,28 +50,22 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    data: {
-        firstname: {
-            type: String,
-        },
-        lastname: {
-            type: String,
-        }
+    firstName: {
+        type: String,
     },
-    certification: {
-        accessToken: {
-            type: String,
-            required: true,
-            default: randomCodeGenerator(16)
-        },
-        oauth: {
-            type: Array<typeof uToken>(),
-        }
+    lastName: {
+        type: String,
+    },
+    token: {
+        type: String,
+    },
+    oauth: {
+        type: String,
     },
     events: {
         type: Array<typeof uEvent>(),
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
