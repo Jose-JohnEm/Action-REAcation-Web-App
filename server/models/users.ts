@@ -56,6 +56,11 @@ const userSchema = new Schema({
         },
         lastname: {
             type: String,
+        },
+        intra: {
+            last_grade: Number,
+            last_register: Number,
+            last_module: Number,
         }
     },
     certification: {
