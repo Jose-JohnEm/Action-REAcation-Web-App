@@ -75,5 +75,52 @@
     ],
     "reactions": [
     ]
+  },
+  {
+    "name": "intra",
+    "actions": [
+      {
+        "name": "new_grade",
+        "description": "A new Grade upcomed",
+        "params": {
+          "token": "string"
+        }
+      },
+      {
+        "name": "new_register",
+        "description": "A new registration upcomed",
+        "params": {
+          "token": "string"
+        }
+      },
+      {
+        "name": "new_module",
+        "description": "You subscribbed to a module",
+        "params": {
+          "token": "string"
+        }
+      },
+      {
+        "name": "rm_module",
+        "description": "You unsubscribbed to a module",
+        "params": {
+          "token": "string"
+        }
+      }
+    ]
+  },
+  {
+    "name": "teams",
+    "actions": [
+      {
+        "name": "ping_bot",
+        "description": "The as been pinged",
+        "params": {
+          "botname": "string"
+        }
+      }
+    ],
+    "reactions": [
+    ]
   }
 ]

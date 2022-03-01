@@ -7,23 +7,29 @@ import webhooks from './src/webhooks/webhooks'
 import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
-import infoJson from "./src/infoJson";
+import loopInterval from './src/webhooks/loopInterval';
 
 dotenv.config()
 
 const app = express()
 const port = (parseInt(process.argv[2]) < 65536) ? parseInt(process.argv[2]) : 8080
 
+app.use(express.json());
 
 ///// Connect MongoDB and Server /////
 
 const successServerStarted = () => {
     console.log(`MongoDB Connected succesfully !\nExample app listening at http://localhost:${port}`)
+    console.log(`SECRET ${process.env.SECRET_JWT}`)
 }
 
 const dbURI = 'mongodb+srv://area_ish-ish_2022:YeO7XT8eOtbQFK9H@cluster0.4jz3r.mongodb.net/area2022?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
-    .then((result) => app.listen(port, successServerStarted))
+    .then((result) => {
+        app.listen(port, successServerStarted)
+        loopInterval()
+        setInterval(loopInterval, 15000)
+    })
     .catch((error) => console.log(error));
 
 // Sstart ngrok
@@ -54,7 +60,6 @@ app.get('/', (req, res) => {
     res.send('Welcome !')
 })
 app.get('/about.json', aboutJson)
-app.get('/info.json', infoJson)
 app.use('/auth', authenticator)
 app.use('/area', area)
 app.use('/webhooks', webhooks)

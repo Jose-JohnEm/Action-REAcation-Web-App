@@ -1,5 +1,6 @@
 import express from 'express'
 import {gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
+import {tm_ping} from "../event/action/Teams/teams";
 import pt_story_create from "../event/action/PivotalTracker/pivotal";
 
 const router = express.Router()
@@ -56,12 +57,30 @@ router.route('/pivotal').post((req, res) => {
 });
 
 router.route('/teams').post((req, res) => {
-    console.log(req);
-
     res.status(200).json({
         "type": "message",
         "text": "Action Received !"
     })
+    const body = req.body;
+
+    // if body.type is not message, return
+    if (body.type !== 'message')
+        return;
+
+    const name = body.from.name;
+    const botName = body.text.match(/<at>([^<]*)<\/at>/)[1];
+
+    if (!name || !botName)
+        return;
+
+    let events = {
+        'message': tm_ping
+    }
+    if (!events[body.type]) {
+        console.error('Teams, Unsupported event type!');
+        return;
+    }
+    events[body.type](body, name, botName);
 });
 
 export default router

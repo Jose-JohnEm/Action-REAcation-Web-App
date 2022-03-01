@@ -25,13 +25,13 @@ const uToken = {
 export const action = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const reaction = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const uEvent = {
@@ -50,28 +50,29 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    firstName: {
+        type: String,
+    },
     data: {
-        firstname: {
-            type: String,
-        },
-        lastname: {
-            type: String,
+        intra: {
+            last_grade: Number,
+            last_register: Number,
+            last_module: Number,
         }
     },
-    certification: {
-        accessToken: {
-            type: String,
-            required: true,
-            default: randomCodeGenerator(16)
-        },
-        oauth: {
-            type: Array<typeof uToken>(),
-        }
+    lastName: {
+        type: String,
+    },
+    token: {
+        type: String,
+    },
+    oauth: {
+        type: String,
     },
     events: {
         type: Array<typeof uEvent>(),
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
