@@ -33,7 +33,6 @@ const getModules = (autologin: string, login: string) => {
         .catch((error) => {
             console.error(error)
         })
-    return ''
 }
 
 const getMessages = (autologin: string, login: string) => {
@@ -45,14 +44,19 @@ const getMessages = (autologin: string, login: string) => {
         .catch((error) => {
             console.error(error)
         })
-        return ''
-    }
+}
     
 const dict = {
     "new_grade": "last_grade",
     "new_registration": "last_register",
     "rm_module": "last_module",
     "new_module": "last_module",
+}
+
+const new_grade = (user, action, reaction) => {
+    if (user.data.intra[dict[action.name]] !== undefined) {
+        
+    }
 }
 
 const new_module = (user, action, reaction) => {
@@ -67,11 +71,6 @@ const rm_module = (user, action, reaction) => {
     }
 }
 
-const new_grade = (user, action, reaction) => {
-    if (user.data.intra[dict[action.name]] !== undefined) {
-        
-    }
-}
 
 const new_registration = (user, action, reaction) => {
     if (user.data.intra[dict[action.name]] !== undefined) {
