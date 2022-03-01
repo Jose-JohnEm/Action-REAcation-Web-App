@@ -43,6 +43,20 @@ export async function getUserFromGithubAction(action, repo) {
     return JSON.parse(JSON.stringify(user))
 }
 
+// --- Pivotal Tracker ---
+export async function getUserFromPivotalTrackerAction(kind, project) {
+    console.log(kind + " / " + project);
+    // Find the user and wait for the response before returning
+    const user = await UserData.find({
+        'events.action.service': 'pivotaltracker',
+        'events.action.name': kind,
+        'events.action.params.projectId': project
+    })
+    if (!user)
+        return null
+    return JSON.parse(JSON.stringify(user))
+}
+
 export default {
     getUserReaction,
     getUserFromGithubAction
