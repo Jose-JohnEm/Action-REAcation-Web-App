@@ -49,38 +49,47 @@ const new_grade = async (user, action, reaction) => {
 }
 
 const new_registration = async (user, action, reaction) => {
-    // const autologin: string = action.params.token;
-    // const login: string = await getEmailFromToken(autologin)
+    const autologin: string = action.params.token;
+    const login: string = await getEmailFromToken(autologin)
 
-    // const messages = await getMessages(autologin, login)
-    // const msg = messages[0]
+    const messages = await getMessages(autologin, login)
+    const msg = messages[0]
 
-    // if (msg.class == "register") {
-    //     if (user.data.intra[dict[action.name]] !== undefined) {
-    //         var event_id = parseInt(msg.id)
-    //         if (event_id !== user.data.intra[dict[action.name]]) {
-    //             console.log("Intra Action ! :", reaction);
-    //             handleReactions(user, reaction, {"message": "You just registred to an activity"})
-    //         }
-    //         user.data.intra[dict[action.name]] = parseInt(msg.id)
-    //         user.save()
-    //     }
-    // }
+    if (msg.class == "register") {
+        if (user.data.intra[dict[action.name]] !== undefined) {
+            var event_id = parseInt(msg.id)
+            if (event_id !== user.data.intra[dict[action.name]]) {
+                console.log("Intra Action ! :", reaction);
+                handleReactions(user, reaction, {"message": msg.title.split(" <a href=")[0]})
+            }
+        }
+        user.data.intra[dict[action.name]] = parseInt(msg.id)
+        user.save()
+    }
+}
+
+const new_module = async (user, action, reaction) => {
+    const autologin: string = action.params.token;
+    const login: string = await getEmailFromToken(autologin)
+
+    const messages = await getMessages(autologin, login)
+    const msg = messages[0]
+
+    if (msg.class == "register") {
+        if (user.data.intra[dict[action.name]] !== undefined) {
+            var event_id = parseInt(msg.id)
+            if (event_id !== user.data.intra[dict[action.name]]) {
+                console.log("Intra Action ! :", reaction);
+                handleReactions(user, reaction, {"message": msg.title.split(" <a href=")[0]})
+            }
+        }
+        user.data.intra[dict[action.name]] = parseInt(msg.id)
+        user.save()
+    }
+}
+
+const rm_module = async (user, action, reaction) => {
     
 }
-
-const new_module = (user, action, reaction) => {
-    if (user.data.intra[dict[action.name]] !== undefined) {
-        
-    }
-}
-
-const rm_module = (user, action, reaction) => {
-    if (user.data.intra[dict[action.name]] !== undefined) {
-        
-    }
-}
-
-
 
 export {new_module, rm_module, new_grade, new_registration}
