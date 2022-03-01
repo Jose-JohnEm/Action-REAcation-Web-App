@@ -75,5 +75,19 @@
     ],
     "reactions": [
     ]
+  },
+  {
+    "name": "teams",
+    "actions": [
+      {
+        "name": "ping_bot",
+        "description": "The as been pinged",
+        "params": {
+          "botname": "string"
+        }
+      }
+    ],
+    "reactions": [
+    ]
   }
 ]
