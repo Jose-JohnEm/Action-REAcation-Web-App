@@ -9,12 +9,13 @@ const aboutJson = (req, res) => {
             host: undefined
         },
         server: {
+            url: process.env.URL,
             current_time: undefined,
             services: undefined
         },
     };
 
-    output.client.host = req.ip.slice(7);
+    output.client.host = req.ip.slice(7) || "127.0.0.1";
     output.server.current_time = Math.floor(new Date().getTime() / 1000);
     output.server.services = services;
 
