@@ -1,5 +1,3 @@
-import UserData from '../../models/users'
-
 import registerAccount from './register'
 import connectAccount from './connect'
 import deleteAccount from './delete'

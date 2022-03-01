@@ -1,44 +1,79 @@
 [
   {
-    "name": "facebook",
+    "name": "github",
     "actions": [
       {
-        "name": "new_message_in_group",
-        "description": "A new message is posted in the group"
+        "name": "new_star",
+        "description": "A star has been added to a repository",
+        "params": {
+          "repository": "string"
+        }
       },
       {
-        "name": "new_message_inbox",
-        "description": "A new private message is received by the user"
+        "name": "rm_star",
+        "description": "A star has been removed on a repository",
+        "params": {
+          "repository": "string"
+        }
       },
       {
-        "name": "new_like",
-        "description": "The user gains a like from one of their messages"
+        "name": "new_fork",
+        "description": "A repository has been forked",
+        "params": {
+          "repository": "string"
+        }
+      },
+      {
+        "name": "new_pull_request",
+        "description": "A new pull request has been created",
+        "params": {
+          "repository": "string"
+        }
+      },
+      {
+        "name": "closed_pull_request",
+        "description": "A pull request has been closed",
+        "params": {
+          "repository": "string"
+        }
+      },
+      {
+        "name": "new_push",
+        "description": "A new push has been made to a repository",
+        "params": {
+          "repository": "string"
+        }
       }
     ],
     "reactions": [
+    ]
+  },
+  {
+    "name": "discord",
+    "actions": [
+    ],
+    "reactions": [
       {
-        "name": "like_message",
-        "description": "The user likes a message"
+        "name": "send_a_private_message",
+        "description": "Send you a private message",
+        "params": {
+          "username": "string"
+        }
       }
     ]
   },
   {
-    "name": "intra",
+    "name": "pivotaltracker",
     "actions": [
       {
-        "name": "new_project_subscription",
-        "description": "The user signs up for a project"
+        "name": "story_create_activity",
+        "description": "A new story has been created",
+        "params": {
+          "projectId": "string"
+        }
       }
     ],
     "reactions": [
-      {
-        "name": "activity_subscribe",
-        "description": "The user signs up for an activity"
-      },
-      {
-        "name": "module_subscribe",
-        "description": "The user signs up for a unit"
-      }
     ]
   }
 ]
