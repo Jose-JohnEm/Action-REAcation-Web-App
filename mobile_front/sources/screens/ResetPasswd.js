@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Button, Caption, TextInput, Title } from 'react-native-paper';
 import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
@@ -7,7 +7,6 @@ import LogoContainer from '../components/LogoContainer';
 
 const ResetPasswdForm = ({navigation}) => {
   const [email, setEmail] = React.useState('');
-
   return (
     <View>
       <TextInput

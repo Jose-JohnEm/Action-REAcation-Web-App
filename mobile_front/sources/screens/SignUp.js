@@ -5,8 +5,11 @@ import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
 import SocialButtonGroup from '../components/SocialButtonGroup';
 import LogoContainer from '../components/LogoContainer';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../reducers/Actions/Auth';
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const [fullName, setFullName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPasswd] = React.useState('');
@@ -35,7 +38,16 @@ const SignUpForm = () => {
         onChangeText={text => setPasswd(text)}
         style={{marginBottom: 10}}
       />
-      <LargeButton onPress={() => console.log('Sign Up')} mode="contained">
+      <LargeButton onPress={() => {
+        const body = {
+          fullName: fullName,
+          email : email,
+          password: password
+        };
+        dispatch(signUp(body));
+      }}
+      mode="contained"
+      >
           Sign Up
       </LargeButton>
     </View>

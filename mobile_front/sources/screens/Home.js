@@ -28,6 +28,7 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 30,
+    paddingBottom: 5,
     flex: 1,
   },
   containerLogo: {

@@ -5,12 +5,14 @@ import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
 import SocialButtonGroup from '../components/SocialButtonGroup';
 import LogoContainer from '../components/LogoContainer';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../reducers/Actions/Auth';
 
-const SignInForm = ({navigation}) => {
+const SignInForm = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = React.useState('');
   const [password, setPasswd] = React.useState('');
 
-  console.log(navigation);
   return (
     <View>
       <TextInput
@@ -28,7 +30,15 @@ const SignInForm = ({navigation}) => {
         onChangeText={text => setPasswd(text)}
         style={{marginBottom: 10}}
       />
-      <LargeButton onPress={() => navigation.navigate('Profile')} mode="contained">
+      <LargeButton onPress={() => {
+        const body = {
+          email : email,
+          password: password
+        };
+        dispatch(signIn(body));
+      }}
+      mode="contained"
+      >
           Sign In
       </LargeButton>
     </View>
@@ -47,7 +57,7 @@ const SignIn = ({navigation}) => {
           Please sign in to your account
         </Caption>
         <SignInForm navigation={navigation}/>
-        <Button mode="text" onPress={() => navigation.push('Reset Passwd')}>Forgot password ?</Button>
+        <Button mode="text" onPress={() => navigation.navigate('Reset Passwd')}>Forgot password ?</Button>
         <SocialButtonGroup />
         <Caption style={{textAlign: 'center'}}>
           {'Don\'t have an account? '}
@@ -68,10 +78,6 @@ const styles = StyleSheet.create({
 });
 
 SignIn.propTypes = {
-  navigation: PropTypes.object,
-};
-
-SignInForm.propTypes = {
   navigation: PropTypes.object,
 };
 
