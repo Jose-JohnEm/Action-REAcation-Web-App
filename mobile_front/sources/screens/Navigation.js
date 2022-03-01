@@ -27,9 +27,8 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'white',
-    background: 'white',
-    border: 'white',
+    primary: '#0068b5',
+    accent: '#fe4500',
   },
 };
 
@@ -127,7 +126,7 @@ function Navigation() {
   }, [dispatch]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
         {isLogged == false ?
           <Stack.Screen

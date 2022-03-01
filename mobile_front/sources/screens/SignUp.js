@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, ScrollView} from 'react-native';
 import { Caption, TextInput, Title } from 'react-native-paper';
 import LargeButton from '../components/LargeButton';
 import PropTypes from 'prop-types';
@@ -10,17 +10,25 @@ import { signUp } from '../reducers/Actions/Auth';
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
-  const [fullName, setFullName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPasswd] = React.useState('');
 
   return (
     <View>
       <TextInput
-        placeholder="Full Name"
-        value={fullName}
+        placeholder="First Name"
+        value={firstName}
         mode="outlined"
-        onChangeText={text => setFullName(text)}
+        onChangeText={text => setFirstName(text)}
+        style={{marginBottom: 10}}
+      />
+      <TextInput
+        placeholder="Last Name"
+        value={lastName}
+        mode="outlined"
+        onChangeText={text => setLastName(text)}
         style={{marginBottom: 10}}
       />
       <TextInput
@@ -40,9 +48,11 @@ const SignUpForm = () => {
       />
       <LargeButton onPress={() => {
         const body = {
-          fullName: fullName,
+          firstName: firstName,
+          lastName: lastName,
           email : email,
-          password: password
+          password: password,
+          confirmPassword: password
         };
         dispatch(signUp(body));
       }}
@@ -56,9 +66,9 @@ const SignUpForm = () => {
 
 const SignUp = ({navigation}) => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <LogoContainer />
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, marginTop: 50, marginBottom: 50}}>
         <Title>
           Create New Account
         </Title>
@@ -74,7 +84,7 @@ const SignUp = ({navigation}) => {
           </Text>
         </Caption>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
