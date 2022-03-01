@@ -4,7 +4,7 @@ import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { ISignUpData } from '../reducers/actions/auth';
+import { ISignUpData, signUp } from '../reducers/actions/auth';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +32,8 @@ const SignUpForm = () => {
       confirmPassword: data.get('password') as string,
       // avatar: imageUrl
     };
-    // console.log(body);
+    console.log(body);
+    signUp(body);
   };
 
   return (

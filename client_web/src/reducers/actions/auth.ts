@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import axios from 'axios';
 
 export enum AuthType {
   SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN',
@@ -42,3 +43,18 @@ export interface ISignUpData {
   password: string,
   confirmPassword: string
 }
+
+export const signUp = (body: ISignUpData) => {
+  axios
+    .post('http://127.0.0.1:8080/auth/signup/', body, {
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err.response);
+    });
+};
