@@ -1,10 +1,19 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Button, Box, IconButton, Menu, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useTypedSelector } from '../reducers/store';
+import { AppBar, Toolbar, Button, Box, IconButton, Menu, MenuItem, ListItemText, Divider, ListItemIcon } from '@mui/material';
+import CreateIcon from '@mui/icons-material/Create';
+import ListIcon from '@mui/icons-material/List';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import COLORS from '../constants/colors';
 
 const Header = () => {
-  const isLogged = true;
+  const navigate = useNavigate();
+  const handleClick = (path: string) => navigate(path);
+
+  const { isLogged } = useTypedSelector((state) => state.auth);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -19,12 +28,12 @@ const Header = () => {
   return (
     <AppBar elevation={0} sx={{ bgcolor: COLORS.WHITE }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Box><img src='logo.png' alt='AREA logo' width='20%' /></Box>
+        <Box onClick={() => { handleClick('/'); }}><img src='logo.png' alt='AREA logo' width='20%' /></Box>
         {
           (!isLogged &&
             <Box>
-              <Button variant='text'sx={{ paddingLeft: 3, paddingRight: 3, mr: 2 }}>Sign up</Button>
-              <Button variant='contained' sx={{ bgcolor: COLORS.DARKGRAY, borderRadius: 2, paddingLeft: 3, paddingRight: 3 }}>Log in</Button>
+              <Button variant='text'sx={{ paddingLeft: 3, paddingRight: 3, mr: 2 }} onClick={() => { handleClick('/signup'); }}>Sign up</Button>
+              <Button variant='contained' sx={{ bgcolor: COLORS.DARKGRAY, borderRadius: 2, paddingLeft: 3, paddingRight: 3 }} onClick={() => { handleClick('/signin'); }}>Log in</Button>
             </Box>
           ) || (
             <Box>
@@ -32,10 +41,23 @@ const Header = () => {
                 <AccountCircle />
               </IconButton>
               <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Create</MenuItem>
-                <MenuItem onClick={handleClose}>My AREAs</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Log out</MenuItem>
+                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                  <ListItemIcon><CreateIcon /></ListItemIcon>
+                  <ListItemText>Create</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                  <ListItemIcon><ListIcon /></ListItemIcon>
+                  <ListItemText>My AREAs</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={() => { handleClick('/profile'); handleClose(); }}>
+                  <ListItemIcon><AccountBoxIcon /></ListItemIcon>
+                  <ListItemText>Profile</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                  <ListItemIcon><LogoutIcon /></ListItemIcon>
+                  <ListItemText>Log out</ListItemText>
+                </MenuItem>
               </Menu>
             </Box>
           )

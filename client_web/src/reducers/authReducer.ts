@@ -1,10 +1,14 @@
 import { AuthType, Action } from './actions/auth';
 
-const initialState = {
+interface Auth {
+  isLogged: boolean
+}
+
+const initialState: Auth = {
   isLogged: false,
 };
 
-const authReducer = (state = initialState, action: Action) => {
+const authReducer = (state: Auth = initialState, action: Action):Auth => {
   switch (action.type) {
   case AuthType.SET_USER_LOGGED_IN:
     return { ...state, isLogged: action.payload };
