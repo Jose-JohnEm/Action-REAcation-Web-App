@@ -25,13 +25,13 @@ const uToken = {
 export const action = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const reaction = {
     service: String,
     name: String,
-    params: Array<{}>()
+    params: {},
 }
 
 export const uEvent = {
@@ -56,6 +56,11 @@ const userSchema = new Schema({
         },
         lastname: {
             type: String,
+        },
+        intra: {
+            last_grade: Number,
+            last_register: Number,
+            last_module: Number,
         }
     },
     certification: {
