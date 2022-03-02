@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Switch, Link, Container, Typography, Box, TextField, Button, IconButton, Avatar } from '@mui/material';
+import { Switch, Link, Container, Typography, Box, TextField, Button, IconButton, Avatar, Grid } from '@mui/material';
 import COLORS from '../constants/colors';
+import SERVICESSTATES from '../constants/servicesProfile';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
@@ -18,9 +19,12 @@ const ProfileForm = () => {
   }, [selectedImage]);
 
   const [stateSwitch, setStateSwitch] = useState({
-    discord: true,
-    github: false,
-    office: true,
+    discord: SERVICESSTATES[0].value === 'true' ? true : false,
+    github: SERVICESSTATES[1].value === 'true' ? true : false,
+    pivotaltracker: SERVICESSTATES[2].value === 'true' ? true : false,
+    intranet: SERVICESSTATES[3].value === 'true' ? true : false,
+    timer: SERVICESSTATES[4].value === 'true' ? true : false,
+    teams: SERVICESSTATES[5].value === 'true' ? true : false,
   });
 
   const handleChangeSwitch = (event: React.ChangeEvent<any>) => {
@@ -30,18 +34,19 @@ const ProfileForm = () => {
     });
   };
 
+  SERVICESSTATES[0].value = (stateSwitch.discord === true ? 'true' : 'false');
+  SERVICESSTATES[1].value = (stateSwitch.github === true ? 'true' : 'false');
+  SERVICESSTATES[2].value = (stateSwitch.pivotaltracker === true ? 'true' : 'false');
+  SERVICESSTATES[3].value = (stateSwitch.intranet === true ? 'true' : 'false');
+  SERVICESSTATES[4].value = (stateSwitch.timer === true ? 'true' : 'false');
+  SERVICESSTATES[5].value = (stateSwitch.teams === true ? 'true' : 'false');
+
   const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const body = {
-      last_name: data.get('last_name'),
-      first_name: data.get('first_name'),
-      email: data.get('email'),
-      password: data.get('password'),
-      avatar: imageUrl
-    };
+    // const data = new FormData(event.currentTarget);
     // console.log(body);
   };
+  console.log(SERVICESSTATES[0]);
 
   return (
     <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -68,36 +73,33 @@ const ProfileForm = () => {
 
         <TextField defaultValue='hahahaha@lol.com' margin='normal' required fullWidth label='Email' name='email' inputProps={{ pattern: '^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$' }}/>
 
-        <Box mb={2} mt={2}>
-          <IconButton aria-label="Example">
-            <Icon icon="akar-icons:github-fill" style={{ color: COLORS.DARKGRAY}}/>
-            <Switch
-              checked={stateSwitch.discord}
-              onChange={handleChangeSwitch}
-              name="discord"
-              inputProps={{ 'aria-label': 'controlled' }}
-              />
-          </IconButton>
-          <IconButton aria-label="Example">
-            <Icon icon="bi:discord" style={{ color: COLORS.DARKGRAY}}/>
-          <Switch
-            checked={stateSwitch.github}
-            onChange={handleChangeSwitch}
-            name="github"
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-          </IconButton>
-          <IconButton aria-label="Example">
-            <Icon icon="mdi:microsoft-office" style={{ color: COLORS.DARKGRAY}}/>
-          <Switch
-            checked={stateSwitch.office}
-            onChange={handleChangeSwitch}
-            name="office"
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-          </IconButton>
+          <Box display="flex" justifyContent="center" alignItems="center" mb={2} mt={2} sx={{ color: COLORS.DARKGRAY }}>
+            <IconButton aria-label="discordService">
+              <Icon icon="bi:discord" style={{ color: COLORS.BLACK }}/>
+              <Switch checked={stateSwitch.discord} onChange={handleChangeSwitch} name="discord" inputProps={{ 'aria-label': 'controlled' }}/>
+            </IconButton>
+            <IconButton aria-label="githubService">
+              <Icon icon="akar-icons:github-fill" style={{ color: COLORS.BLACK }}/>
+              <Switch checked={stateSwitch.github} onChange={handleChangeSwitch} name="github" inputProps={{ 'aria-label': 'controlled' }} />
+            </IconButton>
+            <IconButton aria-label="pivotalTrackerService">
+              <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/000000/external-pivotal-tracker-a-project-management-tool-for-developers-around-the-world-logo-bold-tal-revivo.png"/>
+              <Switch checked={stateSwitch.pivotaltracker} onChange={handleChangeSwitch} name="pivotaltracker" inputProps={{ 'aria-label': 'controlled' }}/>
+            </IconButton>
+            <IconButton aria-label="teamsService">
+              <Icon icon="bxl:microsoft-teams" style={{ color: COLORS.BLACK }}/>
+              <Switch checked={stateSwitch.teams} onChange={handleChangeSwitch} name="teams" inputProps={{ 'aria-label': 'controlled' }}/>
+            </IconButton>
+            <IconButton aria-label="intranetService">
+              <Icon icon="emojione-monotone:letter-e" style={{ color: COLORS.BLACK }}/>
+              <Switch checked={stateSwitch.intranet} onChange={handleChangeSwitch} name="intranet" inputProps={{ 'aria-label': 'controlled' }}/>
+            </IconButton>
+            <IconButton aria-label="timerService">
+              <Icon icon="fluent:timer-12-filled" style={{ color: COLORS.BLACK }}/>
+              <Switch checked={stateSwitch.timer} onChange={handleChangeSwitch} name="timer" inputProps={{ 'aria-label': 'controlled' }}/>
+            </IconButton>
 
-        </Box>
+          </Box>
 
         <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
           Save Settings

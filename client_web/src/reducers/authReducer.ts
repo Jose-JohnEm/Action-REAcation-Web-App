@@ -5,7 +5,7 @@ interface Auth {
 }
 
 const initialState: Auth = {
-  isLogged: false,
+  isLogged: true,
 };
 
 const authReducer = (state: Auth = initialState, action: Action):Auth => {

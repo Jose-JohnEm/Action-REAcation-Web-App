@@ -41,11 +41,11 @@ const Header = () => {
                 <AccountCircle />
               </IconButton>
               <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                <MenuItem onClick={() => { handleClick('/mainpage'); handleClose(); }}>
                   <ListItemIcon><CreateIcon /></ListItemIcon>
                   <ListItemText>Create</ListItemText>
                 </MenuItem>
-                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                <MenuItem onClick={() => { handleClick('/mainpage'); handleClose(); }}>
                   <ListItemIcon><ListIcon /></ListItemIcon>
                   <ListItemText>My AREAs</ListItemText>
                 </MenuItem>
