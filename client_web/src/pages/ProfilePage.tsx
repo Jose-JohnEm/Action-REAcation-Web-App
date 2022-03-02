@@ -63,7 +63,8 @@ const ProfileForm = () => {
         </IconButton>
       </label>
       <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
-        <TextField defaultValue='Hereismyusername' label='Username' margin='normal' required fullWidth name='username' helperText='Only alphabetic characters and spaces/dashes' inputProps={{ pattern: '^[a-zA-Z -]+$' }} sx={{ mt: 6 }}/>
+        <TextField defaultValue='Hereismylastname' margin='normal' required fullWidth label='Last Name' name='last_name' helperText='Only alphabetic characters and spaces/dashes' inputProps={{ pattern: '^[a-zA-Z -]+$' }} sx={{ mt: 6 }}/>
+        <TextField defaultValue='Hereismyfirstname' margin='normal' required fullWidth label='First Name' name='first_name' helperText='Only alphabetic characters and spaces/dashes' inputProps={{ pattern: '^[a-zA-Z -]+$' }}/>
         <TextField defaultValue='hahahaha' variant='standard' margin='normal' required fullWidth type={'password'} label='Password' name='password' sx={{ mb: 2 }} inputProps={{ pattern: '[a-zA-Z0-9]{8,}' }} InputProps={{ readOnly: true}}/>
         <Box mb={2}>
           <Link href="/resetpassword" color="inherit" variant='subtitle2'>

@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import AreaBox from '../components/AreaBox';
 import IconButton from '@mui/material/IconButton';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { BorderColor } from '@mui/icons-material';
 
 const MyAreaCreate = () => {
@@ -33,7 +33,7 @@ const MyAreaCreate = () => {
     };
 
     const createArea = () => {
-        MYAREALIST.push({title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
+        MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
         console.log(MYAREALIST);
     };
     
@@ -154,7 +154,7 @@ const MyAreaList = () => {
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
                 My AREA
             </Typography>
-            <IconButton onClick={(event) => {setUser(MYAREALIST.length as number)}} aria-label="refresh">
+            <IconButton onClick={(event) => {setUser(user+1)}} aria-label="refresh">
                 <ReplayCircleFilledIcon sx={{ color: COLORS.WHITE }}/>
             </IconButton>
             <Divider variant="middle" style={{ borderBottomWidth: 5, marginTop: '3%', marginBottom: '3%' }} />
@@ -162,7 +162,7 @@ const MyAreaList = () => {
                 {MYAREALIST?.map(option => {
                     return (option.display === true) ? (
                         <li key={option.title}>
-                            <AreaBox title={option.title} description={option.description} />
+                            <AreaBox title={option.title} description={option.description} pos={option.pos} />
                         </li>
                     ) : (<li key={option.title}></li>);
                 })}
