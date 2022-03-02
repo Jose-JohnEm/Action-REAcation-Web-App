@@ -16,9 +16,8 @@ const addEvent = (req, res, next) => {
     next()
     return
   }
-
   UserData.findOne({
-    "certification.accessToken": req.header('Bearer')
+    token: req.header('Bearer')
   })
     .then((user) => {
         console.log(req.query.action_params)

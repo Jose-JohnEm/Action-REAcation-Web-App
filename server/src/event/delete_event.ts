@@ -9,7 +9,7 @@ const deleteEvent = (req, res, next) => {
   console.log(parseInt(req.query.id))
 
   UserData.findOne({
-    "certification.accessToken": req.header('Bearer')
+    token: req.header('Bearer')
   })
     .then((user) => {
         console.log(parseInt(req.query.id))

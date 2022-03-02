@@ -16,10 +16,10 @@ const handleIntraArea = async () => {
         for (var event of user.events) {
             if (event.action.service === 'intra') {
                 var dict = {
-                    "new_module": new_module,
-                    "rm_module": rm_module,
-                    "new_grade": new_grade,
-                    "new_register": new_registration,
+                    "new_module": await new_module,
+                    "rm_module": await rm_module,
+                    "new_grade": await new_grade,
+                    "new_register": await new_registration,
                 }
                 dict[event.action.name](user, event.action, event.reaction)
             }
