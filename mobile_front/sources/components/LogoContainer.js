@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Platform, StyleSheet, View } from 'react-native';
 
 const LogoContainer = () => {
   return (
@@ -11,7 +11,7 @@ const LogoContainer = () => {
 
 const styles = StyleSheet.create({
   container : {
-    flex: 0.5,
+    flex: Platform.OS === 'ios' ? 0.5 : 0.3,
     alignSelf: 'center',
     justifyContent: 'center'
   },

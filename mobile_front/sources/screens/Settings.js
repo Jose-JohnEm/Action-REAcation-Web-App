@@ -1,25 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Avatar, Caption, Headline, Title } from 'react-native-paper';
+import { Caption, Title } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LargeButton from '../components/LargeButton';
 
-const ProfileHeader = () => {
-  return (
-    <View style={styles.header}>
-      <Avatar.Image
-        style={{marginBottom: 10}}
-        size={150}
-        source={{
-          uri: 'http://pbs.twimg.com/profile_images/1491248062882365449/XKc1fNnA_400x400.png'
-        }} />
-      <Headline>Mehdi Zehri</Headline>
-      <Caption>mehdi.zehri@epitech.eu</Caption>
-    </View>
-  );
-};
-
-const ProfileContent = () => {
+const Settings = () => {
   return (
     <View style={styles.container}>
       <Title style={{textAlign: 'center'}}>Our Services</Title>
@@ -50,15 +35,6 @@ const ProfileContent = () => {
   );
 };
 
-const Profile = ({navigation}) => {
-  return (
-    <View style={{flex: 1}}>
-      <ProfileHeader navigation={navigation} />
-      <ProfileContent />
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     padding: 30,
@@ -66,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header : {
-    paddingTop: 20,
+    paddingTop: 10,
     flex: 0.7,
     flexDirection: 'column',
     alignItems: 'center',
@@ -74,13 +50,8 @@ const styles = StyleSheet.create({
   },
 });
 
-Profile.propTypes = {
+Settings.propTypes = {
   navigation: PropTypes.object,
 };
 
-ProfileHeader.propTypes = {
-  navigation: PropTypes.object,
-};
-
-
-export default Profile;
+export default Settings;
