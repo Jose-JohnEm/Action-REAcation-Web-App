@@ -4,6 +4,7 @@ import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { ISignUpData, signUp } from '../reducers/actions/auth';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,14 +24,16 @@ const SignUpForm = () => {
   const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const body = {
-      last_name: data.get('last_name'),
-      first_name: data.get('first_name'),
-      email: data.get('email'),
-      password: data.get('password'),
-      avatar: imageUrl
+    const body: ISignUpData = {
+      firstName: data.get('first_name') as string,
+      lastName: data.get('last_name') as string,
+      email: data.get('email') as string,
+      password: data.get('password') as string,
+      confirmPassword: data.get('password') as string,
+      // avatar: imageUrl
     };
-    // console.log(body);
+    console.log(body);
+    signUp(body);
   };
 
   return (

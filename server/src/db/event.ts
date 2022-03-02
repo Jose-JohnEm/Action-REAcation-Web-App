@@ -57,6 +57,20 @@ export async function getUserFromPivotalTrackerAction(kind, project) {
     return JSON.parse(JSON.stringify(user))
 }
 
+// --- Teams ---
+export async function getUserFromTeamsAction(action, name, botName) {
+    console.log(action + " / " + name);
+    // Find the user and wait for the response before returning
+    const user = await UserData.find({
+        'events.action.service': 'teams',
+        'events.action.name': action,
+        'events.action.params.botname': botName
+    })
+    if (!user)
+        return null
+    return JSON.parse(JSON.stringify(user))
+}
+
 export default {
     getUserReaction,
     getUserFromGithubAction

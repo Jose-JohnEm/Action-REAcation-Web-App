@@ -1,5 +1,4 @@
-import { Typography, Box, Paper } from '@mui/material';
-import COLORS from '../constants/colors';
+import { Paper } from '@mui/material';
 
 const styles = {
     paperContainer: {
