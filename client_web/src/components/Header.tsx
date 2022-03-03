@@ -8,6 +8,8 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import COLORS from '../constants/colors';
+import { useDispatch } from 'react-redux';
+import { setUserLoggedOut } from '../reducers/actions/auth';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <AppBar elevation={0} sx={{ bgcolor: COLORS.WHITE }}>
@@ -54,7 +58,7 @@ const Header = () => {
                   <ListItemText>Profile</ListItemText>
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={() => { handleClick('/'); handleClose(); }}>
+                <MenuItem onClick={() => { dispatch(setUserLoggedOut()); handleClick('/'); handleClose(); }}>
                   <ListItemIcon><LogoutIcon /></ListItemIcon>
                   <ListItemText>Log out</ListItemText>
                 </MenuItem>
