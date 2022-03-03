@@ -1,6 +1,7 @@
 import UserData from '../../models/users'
+import { Request, Response, NextFunction } from 'express';
 
-const deletaAll = (req, res, next) => {
+const deletaAll = (req: Request, res: Response, next: NextFunction) => {
   if (!req.header('Bearer')) {
     next()
     return
@@ -9,7 +10,7 @@ const deletaAll = (req, res, next) => {
     token: req.header('Bearer')
   })
     .then((user) => {
-        console.log(parseInt(req.query.id))
+        console.log(parseInt(req.query.id as string))
         user.events = []
         user.save()
             .then(result => {
@@ -22,7 +23,7 @@ const deletaAll = (req, res, next) => {
     })
 }
 
-const ifNotAccount = (req, res) => {
+const ifNotAccount = (req: Request, res: Response) => {
     res.status(500).json({error: 'No account with this token'})
 }
 

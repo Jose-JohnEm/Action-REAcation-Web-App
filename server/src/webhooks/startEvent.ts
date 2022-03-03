@@ -1,9 +1,9 @@
-import UserModel from '../../models/users'
-import {new_module, rm_module, new_grade, new_registration} from '../event/action/Intra/intra';
-import {cron_timer} from "../event/action/Timer/timer";
+import UserModel, { Iuser } from '../../models/users'
+import { new_module , rm_module, new_grade, new_registration } from '../event/action/Intra/intra';
+import { cron_timer } from "../event/action/Timer/timer";
 
 export async function startEvent() {
-    let users = await getAllUsers()
+    let users : Iuser[] = await getAllUsers()
     for (let user of users) {
         for (let event of user.events) {
             if (event.action.service === 'intra') {
@@ -19,8 +19,8 @@ export async function startEvent() {
     }
 }
 
-export async function startOneTimeEvent() {
-    let users = await getAllUsers()
+export const startOneTimeEvent = async () => {
+    let users : Iuser[] = await getAllUsers()
 
     for (let user of users) {
         for (let event of user.events) {
@@ -35,19 +35,9 @@ export async function startOneTimeEvent() {
 }
 
 export const getAllUsers = async () => {
-    const users = await UserModel.find({});
+    const users: Iuser[] = await UserModel.find({});
     if (!users) {
         throw new Error('No users found');
     }
     return users;
-}
-
-
-const getUserWithIntraService = async () => {
-    let list = await UserModel.find({
-        'events.action.service': 'intra'
-    })
-    if (!list)
-        return []
-    return list
 }

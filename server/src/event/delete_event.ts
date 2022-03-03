@@ -1,19 +1,20 @@
 import UserData from '../../models/users'
+import { Request, Response, NextFunction } from 'express';
 
-const deleteEvent = (req, res, next) => {
+const deleteEvent = (req: Request, res: Response, next: NextFunction) => {
   if (!req.header('Bearer')) {
     next()
     return
   }
   
-  console.log(parseInt(req.query.id))
+  console.log(parseInt(req.query.id as string))
 
   UserData.findOne({
     token: req.header('Bearer')
   })
     .then((user) => {
-        console.log(parseInt(req.query.id))
-        user.events.splice(parseInt(req.query.id), 1)
+        console.log(parseInt(req.query.id as string))
+        user.events.splice(parseInt(req.query.id as string), 1)
         user.save()
             .then(result => {
                 console.log('Incroyable')
@@ -27,7 +28,7 @@ const deleteEvent = (req, res, next) => {
     })
 }
 
-const ifNotAccount = (req, res) => {
+const ifNotAccount = (req: Request, res: Response) => {
     res.status(500).json({error: 'No account with this token'})
 }
 

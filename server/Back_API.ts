@@ -38,13 +38,13 @@ const successServerStarted = () => {
         // Start app
         await app.listen(port, successServerStarted)
         // Start Area
-        startArea()
+        await startArea()
     } catch (error) {
         console.log(error)
     }
 })();
 
-function startArea() {
+async function startArea() {
     // Start one time event
     startOneTimeEvent().then(() => {
         console.log("One time event started")
@@ -53,7 +53,7 @@ function startArea() {
     startEvent().then(() => {
         console.log("Loop event started")
     })
-    setInterval(startEvent, 15000)
+    setInterval(await startEvent, 15000)
 }
 
 
