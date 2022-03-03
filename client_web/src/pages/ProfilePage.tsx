@@ -46,7 +46,7 @@ const ProfileForm = () => {
     // const data = new FormData(event.currentTarget);
     // console.log(body);
   };
-  console.log(SERVICESSTATES[0]);
+  // console.log(SERVICESSTATES[0]);
 
   return (
     <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

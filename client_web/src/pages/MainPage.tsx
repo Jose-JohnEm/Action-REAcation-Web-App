@@ -47,7 +47,7 @@ const MyAreaCreate = () => {
                     </Typography>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select id='selectAService' value = {serviceAction} onChange={event => {setServiceAction(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select id='selectAService' value = {serviceAction} onChange={event => {setServiceAction(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose a Service</MenuItem>
                             {SERVICESSTATES?.map(option => {
                                 return (option.value === 'true' && option.actions.length !== 0) ? (
@@ -60,7 +60,7 @@ const MyAreaCreate = () => {
                     </Box>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {actions} onChange={event => {setActions(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {actions} onChange={event => {setActions(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose an Action</MenuItem>
                                 {SERVICESSTATES[getPos(serviceAction)].actions?.map(option => {
                                     return (
@@ -90,7 +90,7 @@ const MyAreaCreate = () => {
                     </Typography>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {serviceReaction} onChange={event => {setServiceReaction(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {serviceReaction} onChange={event => {setServiceReaction(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose a Service</MenuItem>
                             {SERVICESSTATES?.map(option => {
                                 return (option.value === 'true' && option.reactions.length !== 0) ? (
@@ -103,7 +103,7 @@ const MyAreaCreate = () => {
                     </Box>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {reactions} onChange={event => {setReactions(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {reactions} onChange={event => {setReactions(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose an Action</MenuItem>
                             {SERVICESSTATES[getPos(serviceReaction)].reactions?.map(option => {
                                 return (

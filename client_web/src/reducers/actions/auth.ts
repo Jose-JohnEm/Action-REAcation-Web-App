@@ -63,3 +63,28 @@ export const signUp = async (body: ISignUpData) => {
     return false;
   }
 };
+
+export interface ISignInData {
+  email: string,
+  password: string
+}
+
+export const signIn = async (body: ISignInData) => {
+  try {
+    const response = await axios
+      .post('http://127.0.0.1:8080/auth/signin/', body, {
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+      });
+    if (response.status === 200) {
+      // console.log(response.data.data.token);
+      localStorage.setItem('accessToken', response.data.data.token);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
