@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Switch, Link, Container, Typography, Box, TextField, Button, IconButton, Avatar, Grid } from '@mui/material';
+import { Switch, Link, Container, Typography, Box, TextField, Button, IconButton, Avatar } from '@mui/material';
 import COLORS from '../constants/colors';
 import SERVICESSTATES from '../constants/servicesProfile';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
@@ -84,7 +84,7 @@ const ProfileForm = () => {
               <Switch checked={stateSwitch.github} onChange={handleChangeSwitch} name="github" inputProps={{ 'aria-label': 'controlled' }} />
             </IconButton>
             <IconButton aria-label="pivotalTrackerService">
-              <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/000000/external-pivotal-tracker-a-project-management-tool-for-developers-around-the-world-logo-bold-tal-revivo.png"/>
+              <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/000000/external-pivotal-tracker-a-project-management-tool-for-developers-around-the-world-logo-bold-tal-revivo.png" alt="pivotaltracker icon"/>
               <Switch checked={stateSwitch.pivotaltracker} onChange={handleChangeSwitch} name="pivotaltracker" inputProps={{ 'aria-label': 'controlled' }}/>
             </IconButton>
             <IconButton aria-label="teamsService">

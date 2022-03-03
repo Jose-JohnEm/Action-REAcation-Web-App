@@ -45,16 +45,21 @@ export interface ISignUpData {
 }
 
 export const signUp = async (body: ISignUpData) => {
-  await axios
-    .post('http://127.0.0.1:8080/auth/signup/', body, {
-      headers: {
-        'Content-Type' : 'application/json',
-      },
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.error(err.response);
-    });
+  try {
+    const response = await axios
+      .post('http://127.0.0.1:8080/auth/signup/', body, {
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+      });
+    if (response.status === 200) {
+      // console.log(response.data.data.token);
+      localStorage.setItem('accessToken', response.data.data.token);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
 };

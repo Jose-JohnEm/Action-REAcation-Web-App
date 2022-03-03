@@ -6,11 +6,9 @@ import Divider from '@mui/material/Divider';
 import AreaBox from '../components/AreaBox';
 import IconButton from '@mui/material/IconButton';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-import { useState, useEffect } from 'react';
-import { BorderColor } from '@mui/icons-material';
+import { useState } from 'react';
 
 const MyAreaCreate = () => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [serviceAction, setServiceAction] = useState('');
     const [actions, setActions] = useState('');
 
@@ -18,8 +16,6 @@ const MyAreaCreate = () => {
     const [reactions, setReactions] = useState('');
 
     const [areaTitle, setAreaTitle] = useState('');
-
-    const [searchItem, setSearchItem] = useState('');
 
     const getPos = (value: string) => {
         let pos = (value === 'Discord') ? 0 : 1;
@@ -36,7 +32,7 @@ const MyAreaCreate = () => {
         MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
         console.log(MYAREALIST);
     };
-    
+
     return (
         <Box sx={{ width: '79em', height: '53em', backgroundColor: COLORS.DARKGRAY, borderRadius: 5}} >
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
@@ -152,7 +148,7 @@ const MyAreaList = () => {
     return (
         <Box sx={{ mt: '0.5em', maxHeight: '53em', width: '37em', backgroundColor: COLORS.DARKGRAY, borderRadius: "5%"}} >
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
-                My AREA
+                My AREAs
             </Typography>
             <IconButton onClick={(event) => {setUser(user+1)}} aria-label="refresh">
                 <ReplayCircleFilledIcon sx={{ color: COLORS.WHITE }}/>
