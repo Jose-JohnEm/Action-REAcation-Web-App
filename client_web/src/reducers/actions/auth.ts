@@ -53,7 +53,7 @@ export const signUp = async (body: ISignUpData) => {
         },
       });
     if (response.status === 200) {
-      // console.log(response.data.data.token);
+      localStorage.setItem('userData', JSON.stringify(response.data.data));
       localStorage.setItem('accessToken', response.data.data.token);
       return true;
     } else {
@@ -78,7 +78,11 @@ export const signIn = async (body: ISignInData) => {
         },
       });
     if (response.status === 200) {
-      // console.log(response.data.data.token);
+      localStorage.setItem('userProfile', JSON.stringify({
+        lastName: response.data.data.lastName,
+        firstName: response.data.data.firstName,
+        email: response.data.data.email
+      }));
       localStorage.setItem('accessToken', response.data.data.token);
       return true;
     } else {

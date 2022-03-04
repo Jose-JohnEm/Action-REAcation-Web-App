@@ -75,7 +75,7 @@ const MyAreaCreate = () => {
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
                         {SERVICESSTATES[getPos(serviceAction)].paramsActions?.map(option => {
                             return (
-                                <li key={option}>
+                                <li key={option} style={{ color: COLORS.GRAY }}>
                                 <TextField id={option} helperText="For this action you should enter ..." label={option} variant="standard" sx={{ml: '1em', mr: '1em', height: '6.2em'}}/>
                                 </li>
                             );
@@ -118,7 +118,7 @@ const MyAreaCreate = () => {
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
                         {SERVICESSTATES[getPos(serviceReaction)].paramsReactions?.map(option => {
                             return (
-                                <li key={option}>
+                                <li key={option} style={{ color: COLORS.GRAY }}>
                                 <TextField id={option} helperText="For this action you should enter ..." label={option} variant="standard" sx={{ml: '1em', mr: '1em', height: '6.2em'}}/>
                                 </li>
                             );
