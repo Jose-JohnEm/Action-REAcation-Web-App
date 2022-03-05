@@ -159,5 +159,18 @@
     ],
     "reactions": [
     ]
+  },
+  {
+    "name": "email",
+    "actions": [],
+    "reactions": [
+      {
+        "name": "send_an_email",
+        "description": "Send an email when triggered",
+        "params": {
+          "email": "string"
+        }
+      }
+    ]
   }
 ]
