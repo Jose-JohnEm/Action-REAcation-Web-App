@@ -1,37 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox, Grid, Link, Divider, Chip, Alert } from '@mui/material';
+import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox, Grid, Link, Divider, Chip } from '@mui/material';
 import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { GoogleSignIn } from '../components/GoogleAuth'
-import { ISignInData, signIn, setUserLoggedIn } from '../reducers/actions/auth';
-import { useDispatch } from 'react-redux';
 
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(true);
-
-  const handleSubmit = async (event: React.ChangeEvent<any>) => {
+  const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const body: ISignInData = {
-      email: data.get('email') as string,
-      password: data.get('password') as string
+    const body = {
+      email: data.get('email'),
+      password: data.get('password')
     };
     // console.log(body);
-    const response = await signIn(body);
-    if (response === true) {
-      dispatch(setUserLoggedIn());
-      setIsSuccess(true);
-      navigate('/profile');
-    } else {
-      setIsSuccess(false);
-    }
   };
 
   return (
@@ -53,7 +39,6 @@ const SignInForm = () => {
           By checking this box, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookie Policy.
         </Typography>
       }/>
-      { !isSuccess && <Alert severity='error' sx={{ mb: 2 }}>Error when sign in (wrong IDs...)</Alert> }
       <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
         Log in
       </Button>

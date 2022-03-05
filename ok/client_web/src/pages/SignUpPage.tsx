@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox, Avatar, Alert } from '@mui/material';
+import { Container, Typography, Box, TextField, Button, InputAdornment, IconButton, FormControlLabel, Checkbox, Avatar } from '@mui/material';
 import COLORS from '../constants/colors';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { ISignUpData, signUp, setUserLoggedIn } from '../reducers/actions/auth';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { ISignUpData, signUp } from '../reducers/actions/auth';
 
 const SignUpForm = () => {
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -23,11 +21,7 @@ const SignUpForm = () => {
     }
   }, [selectedImage]);
 
-  const dispatch = useDispatch();
-  const [isSuccess, setIsSuccess] = useState(true);
-  const navigate = useNavigate();
-
-  const handleSubmit = async (event: React.ChangeEvent<any>) => {
+  const handleSubmit = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body: ISignUpData = {
@@ -38,15 +32,8 @@ const SignUpForm = () => {
       confirmPassword: data.get('password') as string,
       // avatar: imageUrl
     };
-    // console.log(body);
-    const response = await signUp(body);
-    if (response === true) {
-      dispatch(setUserLoggedIn());
-      setIsSuccess(true);
-      navigate('/profile');
-    } else {
-      setIsSuccess(false);
-    }
+    console.log(body);
+    signUp(body);
   };
 
   return (
@@ -83,7 +70,6 @@ const SignUpForm = () => {
             By checking this box, you agree to our Terms. Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookie Policy.
           </Typography>
         }/>
-        { !isSuccess && <Alert severity='error' sx={{ mb: 2 }}>Error when sign up (user already exists...)</Alert> }
         <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
           Create
         </Button>

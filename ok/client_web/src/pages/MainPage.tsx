@@ -6,9 +6,11 @@ import Divider from '@mui/material/Divider';
 import AreaBox from '../components/AreaBox';
 import IconButton from '@mui/material/IconButton';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { BorderColor } from '@mui/icons-material';
 
 const MyAreaCreate = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [serviceAction, setServiceAction] = useState('');
     const [actions, setActions] = useState('');
 
@@ -16,6 +18,8 @@ const MyAreaCreate = () => {
     const [reactions, setReactions] = useState('');
 
     const [areaTitle, setAreaTitle] = useState('');
+
+    const [searchItem, setSearchItem] = useState('');
 
     const getPos = (value: string) => {
         let pos = (value === 'Discord') ? 0 : 1;
@@ -29,10 +33,10 @@ const MyAreaCreate = () => {
     };
 
     const createArea = () => {
-        MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
+        MYAREALIST.push({title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
         console.log(MYAREALIST);
     };
-
+    
     return (
         <Box sx={{ width: '79em', height: '53em', backgroundColor: COLORS.DARKGRAY, borderRadius: 5}} >
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
@@ -47,7 +51,7 @@ const MyAreaCreate = () => {
                     </Typography>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select id='selectAService' value = {serviceAction} onChange={event => {setServiceAction(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select id='selectAService' value = {serviceAction} onChange={event => {setServiceAction(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose a Service</MenuItem>
                             {SERVICESSTATES?.map(option => {
                                 return (option.value === 'true' && option.actions.length !== 0) ? (
@@ -60,7 +64,7 @@ const MyAreaCreate = () => {
                     </Box>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {actions} onChange={event => {setActions(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {actions} onChange={event => {setActions(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose an Action</MenuItem>
                                 {SERVICESSTATES[getPos(serviceAction)].actions?.map(option => {
                                     return (
@@ -75,7 +79,7 @@ const MyAreaCreate = () => {
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
                         {SERVICESSTATES[getPos(serviceAction)].paramsActions?.map(option => {
                             return (
-                                <li key={option} style={{ color: COLORS.GRAY }}>
+                                <li key={option}>
                                 <TextField id={option} helperText="For this action you should enter ..." label={option} variant="standard" sx={{ml: '1em', mr: '1em', height: '6.2em'}}/>
                                 </li>
                             );
@@ -90,7 +94,7 @@ const MyAreaCreate = () => {
                     </Typography>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {serviceReaction} onChange={event => {setServiceReaction(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {serviceReaction} onChange={event => {setServiceReaction(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose a Service</MenuItem>
                             {SERVICESSTATES?.map(option => {
                                 return (option.value === 'true' && option.reactions.length !== 0) ? (
@@ -103,7 +107,7 @@ const MyAreaCreate = () => {
                     </Box>
 
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
-                        <Select value = {reactions} onChange={event => {setReactions(event.target.value as string)}} displayEmpty variant='standard' sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
+                        <Select value = {reactions} onChange={event => {setReactions(event.target.value as string)}} displayEmpty sx={{ fontFamily: 'Open Sans', fontSize: 35, paddingTop: '0.25em', paddingBottom: '0.25em'}}>
                             <MenuItem disabled value="">Choose an Action</MenuItem>
                             {SERVICESSTATES[getPos(serviceReaction)].reactions?.map(option => {
                                 return (
@@ -118,7 +122,7 @@ const MyAreaCreate = () => {
                     <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '4em', marginTop: '4em', marginBottom: '1em', width: '30em', height: '6.2em', backgroundColor: COLORS.GRAY, borderRadius: 5 }} >
                         {SERVICESSTATES[getPos(serviceReaction)].paramsReactions?.map(option => {
                             return (
-                                <li key={option} style={{ color: COLORS.GRAY }}>
+                                <li key={option}>
                                 <TextField id={option} helperText="For this action you should enter ..." label={option} variant="standard" sx={{ml: '1em', mr: '1em', height: '6.2em'}}/>
                                 </li>
                             );
@@ -148,9 +152,9 @@ const MyAreaList = () => {
     return (
         <Box sx={{ mt: '0.5em', maxHeight: '53em', width: '37em', backgroundColor: COLORS.DARKGRAY, borderRadius: "5%"}} >
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
-                My AREAs
+                My AREA
             </Typography>
-            <IconButton onClick={(event) => {setUser(user+1)}} aria-label="refresh">
+            <IconButton onClick={(event) => {setUser(MYAREALIST.length as number)}} aria-label="refresh">
                 <ReplayCircleFilledIcon sx={{ color: COLORS.WHITE }}/>
             </IconButton>
             <Divider variant="middle" style={{ borderBottomWidth: 5, marginTop: '3%', marginBottom: '3%' }} />
@@ -158,7 +162,7 @@ const MyAreaList = () => {
                 {MYAREALIST?.map(option => {
                     return (option.display === true) ? (
                         <li key={option.title}>
-                            <AreaBox title={option.title} description={option.description} pos={option.pos} />
+                            <AreaBox title={option.title} description={option.description} />
                         </li>
                     ) : (<li key={option.title}></li>);
                 })}
