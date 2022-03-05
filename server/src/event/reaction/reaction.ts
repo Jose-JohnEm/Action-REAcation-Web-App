@@ -1,5 +1,6 @@
 import {discordPrivateMsg} from "./Discord/discord";
 import {slackPrivateMsg} from "./Slack/slack";
+import { emailSending } from "./Email/email";
 
 const handleDiscordReactions = (reaction: string, user, params) => {
     const reactions = {
@@ -22,10 +23,18 @@ const handleSlackReactions = (reaction: string, user, params) => {
     reactions[reaction](user, params)
 }
 
+const handleEmailReactions = (reaction: string, user, params) => {
+    const reactions = {
+        "send_an_email": emailSending
+    }
+    reactions[reaction](user, params)
+}
+
 const handleReactions = (user, reaction, params) => {
     const services_mid = {
         "discord": handleDiscordReactions,
-        "slack": handleSlackReactions
+        "slack": handleSlackReactions,
+        "email": handleEmailReactions,
     }
     if (!services_mid[reaction.service]) {
         console.error(`This reaction service is not supported: ${reaction.service}`);
