@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { Avatar, Caption, Headline, Title } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import LargeButton from '../components/LargeButton';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getUserData, updateUserServices } from '../reducers/Actions/UserData';
+import { getAllServices, setIcon } from '../Utils/Utils';
+
 
 const ProfileHeader = () => {
+  const {data} = useSelector(state => state.userReducer);
+
   return (
     <View style={styles.header}>
       <Avatar.Image
@@ -13,44 +21,77 @@ const ProfileHeader = () => {
         source={{
           uri: 'http://pbs.twimg.com/profile_images/1491248062882365449/XKc1fNnA_400x400.png'
         }} />
-      <Headline>Mehdi Zehri</Headline>
-      <Caption>mehdi.zehri@epitech.eu</Caption>
+      <Headline>{data.firstName} {data.lastName}</Headline>
+      <Caption>{data.email}</Caption>
     </View>
   );
 };
 
+const Item = ({ title }) => {
+  const {data} = useSelector(state => state.userReducer);
+  const services = data?.services;
+  const icon = setIcon(title);
+  const dispatch = useDispatch();
+  const updateService = (title) => {
+    const index = services.indexOf(title);
+    if (index > -1) {
+      services.splice(index, 1);
+      dispatch(updateUserServices({services: services}));
+    } else {
+      services.push(title);
+      dispatch(updateUserServices({services: services}));
+    }
+  };
+
+
+  return (
+    <LargeButton icon={icon}
+      mode={data?.services?.includes(title) ? 'contained' : 'outlined'}
+      style={styles.socialBtn}
+      onPress={() => {
+        updateService(title);
+      }}
+    >
+      {title}
+    </LargeButton>
+  );
+};
+
 const ProfileContent = () => {
+  const dispatch = useDispatch();
+  const [services, setServices] = React.useState([]);
+
+  useEffect(() => {
+    getAllServices().then((data) => setServices(data));
+    dispatch(getUserData());
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Title style={{textAlign: 'center'}}>Our Services</Title>
+      <Title style={{textAlign: 'center'}}>Services</Title>
       <Caption style={{textAlign: 'center'}}>
-        Lorem description services en balle
+        The services you subscribed
       </Caption>
-      <ScrollView>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-        <LargeButton icon="google" mode="outlined" style={styles.socialBtn}>
-          Google
-        </LargeButton>
-      </ScrollView>
+      <FlatList
+        data={services}
+        renderItem={({item}) => <Item title={item.name} />}
+        keyExtractor={item => item.name}
+      />
     </View>
   );
 };
 
 const Profile = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const refreshOnFocus = navigation.addListener('focus', () => {
+      dispatch(getUserData());
+    });
+
+    return refreshOnFocus;
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <ProfileHeader navigation={navigation} />
@@ -82,5 +123,8 @@ ProfileHeader.propTypes = {
   navigation: PropTypes.object,
 };
 
+Item.propTypes = {
+  item: PropTypes.object,
+};
 
 export default Profile;

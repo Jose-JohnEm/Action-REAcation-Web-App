@@ -7,14 +7,15 @@ const emailValidation = (email: string) => {
     return emailRegex.test(email);
 }
 
-const randomCodeGenerator = (length: number) => {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+const uToken = {
+    service: String,
+    token: String,
+}
+
+export const action = {
+    service: String,
+    name: String,
+    params: {},
 }
 
 export type action = {
@@ -78,8 +79,14 @@ const userSchema = new Schema({
     token: {
         type: String,
     },
-    oauth: {
+    github: {
         type: String,
+    },
+    office: {
+        type: String,
+    },
+    services: {
+        type: Object,
     },
     events: {
         type: Array<uEvent>(),

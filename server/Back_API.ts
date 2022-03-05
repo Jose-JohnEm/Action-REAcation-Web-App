@@ -9,6 +9,7 @@ import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
 import {startEvent, startOneTimeEvent} from './src/webhooks/startEvent';
 import {cron_timer} from "./src/event/action/Timer/timer";
+import userRouter from './src/user/route'
 
 dotenv.config()
 
@@ -79,5 +80,6 @@ app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
 app.use('/area', area)
 app.use('/webhooks', webhooks)
+app.use(userRouter);
 
 export default app
