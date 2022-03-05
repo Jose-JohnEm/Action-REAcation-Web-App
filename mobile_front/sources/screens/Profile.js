@@ -124,7 +124,7 @@ ProfileHeader.propTypes = {
 };
 
 Item.propTypes = {
-  item: PropTypes.object,
+  title: PropTypes.string,
 };
 
 export default Profile;
