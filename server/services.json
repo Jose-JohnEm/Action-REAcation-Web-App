@@ -122,5 +122,19 @@
     ],
     "reactions": [
     ]
+  },
+  {
+    "name": "timer",
+    "actions": [
+      {
+        "name": "cron_timer",
+        "description": "A cron timer",
+        "params": {
+          "timer": "string"
+        }
+      }
+    ],
+    "reactions": [
+    ]
   }
 ]

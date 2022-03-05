@@ -1,4 +1,5 @@
 import UserData from '../../models/users'
+import { Request, Response, NextFunction } from 'express';
 
 const removeEvent = (index: number, id: string) => {
     UserData.findOne({ _id: id })
@@ -11,14 +12,13 @@ const removeEvent = (index: number, id: string) => {
         .catch(e => console.error(e))
 }
 
-const addEvent = (req, res, next) => {
+const addEvent = (req: Request, res: Response, next: NextFunction) => {
   if (!req.header('Bearer')) {
     next()
     return
   }
-
   UserData.findOne({
-    "certification.accessToken": req.header('Bearer')
+    token: req.header('Bearer')
   })
     .then((user) => {
         console.log(req.query.action_params)
@@ -27,12 +27,12 @@ const addEvent = (req, res, next) => {
             action: {
                 service: req.query.action_service,
                 name: req.query.action_name,
-                params: (req.query.action_params) ? JSON.parse(decodeURI(req.query.action_params)) : []
+                params: (req.query.action_params) ? JSON.parse(decodeURI(req.query.action_params as string)) : []
             },
             reaction: {
                 service: req.query.reaction_service,
                 name: req.query.reaction_name,
-                params: (req.query.reaction_params) ? JSON.parse(decodeURI(req.query.reaction_params)) : []
+                params: (req.query.reaction_params) ? JSON.parse(decodeURI(req.query.reaction_params as string)) : []
             }
         })
         user.save()
@@ -47,7 +47,7 @@ const addEvent = (req, res, next) => {
     })
 }
 
-const ifNotAccount = (req, res) => {
+const ifNotAccount = (req: Request, res: Response) => {
     res.status(500).json({error: 'No account with this token'})
 }
 

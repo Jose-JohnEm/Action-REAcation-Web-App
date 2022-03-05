@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
-const emailValidation = (email) => {
+const emailValidation = (email: string) => {
     var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return emailRegex.test(email);
 }
@@ -17,27 +17,39 @@ const randomCodeGenerator = (length: number) => {
     return result;
 }
 
-const uToken = {
-    service: String,
-    token: String,
+export type action = {
+    service: string,
+    name: string,
+    params: any,
 }
 
-export const action = {
-    service: String,
-    name: String,
-    params: {},
+export type reaction = {
+    service: string,
+    name: string,
+    params: any,
 }
 
-export const reaction = {
-    service: String,
-    name: String,
-    params: {},
-}
-
-export const uEvent = {
-    name: String,
+export type uEvent = {
+    name: string,
     action: action,
     reaction: reaction,
+}
+
+export type Iuser = {
+    email: string,
+    password: string,
+    firstName: string,
+    data: {
+        intra: {
+            last_grade: number,
+            last_register: number,
+            last_module: number,
+        }
+    },
+    lastName: string,
+    token: string,
+    oauth: string,
+    events: uEvent[]
 }
 
 const userSchema = new Schema({
@@ -70,7 +82,7 @@ const userSchema = new Schema({
         type: String,
     },
     events: {
-        type: Array<typeof uEvent>(),
+        type: Array<uEvent>(),
     }
 }, { timestamps: true });
 
