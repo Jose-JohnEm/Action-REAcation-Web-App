@@ -1,9 +1,8 @@
 import UserModel, { Iuser } from '../../models/users'
 import { new_module , rm_module, new_grade, new_registration, reach_credit, reach_gpa } from '../event/action/Intra/intra';
-import { cron_timer } from "../event/action/Timer/timer";
 
 export async function startEvent() {
-    let users : Iuser[] = await getAllUsers()
+    let users: Iuser[] = await getAllUsers()
     for (let user of users) {
         for (let event of user.events) {
             if (event.action.service === 'intra') {
@@ -18,21 +17,6 @@ export async function startEvent() {
                 if (dict[event.action.name] instanceof Function) {
                     await dict[event.action.name](user, event.action, event.reaction)
                 }
-            }
-        }
-    }
-}
-
-export const startOneTimeEvent = async () => {
-    let users : Iuser[] = await getAllUsers()
-
-    for (let user of users) {
-        for (let event of user.events) {
-            if (event.action.service === 'timer') {
-                let dict = {
-                    "cron_timer": cron_timer,
-                }
-                dict[event.action.name](user, event.action, event.reaction)
             }
         }
     }
