@@ -1,7 +1,8 @@
 import axios from 'axios';
-import API_URL from '../../constant/Constant';
+import {API_URL} from '../../constant/Constant';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { Alert } from 'react-native';
+import { authorize } from 'react-native-app-auth';
 
 export const SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN';
 export const SET_USER_LOGGED_OUT = 'SET_USER_LOGGED_OUT';
@@ -33,13 +34,13 @@ export const setUserLoggedOut = () => {
 };
 
 export const signIn = (body) => async dispatch => {
-  await axios.post('http://10.0.2.2:8080/auth/signin', body, {
+  await axios.post(API_URL + '/auth/signin', body, {
     headers: {
       'Content-Type' : 'application/json',
     },
   })
-    .then(function(response) {
-      EncryptedStorage.setItem('accessToken', response.data.accessToken);
+    .then(async (response) => {
+      await EncryptedStorage.setItem('accessToken', response.data.token);
       dispatch(setUserLoggedIn());
     })
     .catch (err => {
@@ -61,14 +62,13 @@ export const signIn = (body) => async dispatch => {
 };
 
 export const signUp = (body) => async dispatch => {
-  await axios.post('http://10.0.2.2:8080/auth/signup', body, {
+  await axios.post(API_URL + '/auth/signup', body, {
     headers: {
       'Content-Type' : 'application/json',
     },
   })
-    .then(function(response) {
-      console.log(response.data);
-      EncryptedStorage.setItem('accessToken', response.data.accessToken);
+    .then(async (response) => {
+      await EncryptedStorage.setItem('accessToken', response.data.token);
       dispatch(setUserLoggedIn());
     })
     .catch (err => {
@@ -85,6 +85,15 @@ export const signUp = (body) => async dispatch => {
       );
       console.log(err);
       dispatch(setUserLoggedOut());
-      return false;
     });
+};
+
+export const signInOAuth = (config) => async dispatch => {
+  try {
+    const authState = await authorize(config);
+    await EncryptedStorage.setItem('accessToken', authState.accessToken);
+    dispatch(setUserLoggedIn());
+  } catch (error) {
+    console.error(error.response);
+  }
 };

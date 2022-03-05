@@ -32,6 +32,31 @@ const MyTheme = {
   },
 };
 
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      defaultscren="Profile"
+      screenOptions={{
+        header: (props) => <Header {...props} />,
+      }}>
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+};
+
+const SettingsStack = () => {
+  return (
+    <Stack.Navigator
+      defaultscren="Settings"
+      screenOptions={{
+        header: (props) => <Header {...props} />,
+      }}>
+      <Stack.Screen name="Settings" component={Settings} />
+    </Stack.Navigator>
+  );
+};
+
+
 function AuthNav() {
   return (
     <Tab.Navigator
@@ -52,8 +77,8 @@ function AuthNav() {
           ),
         }} />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           headerShown: false,
           color: '#fe4500',
@@ -63,8 +88,8 @@ function AuthNav() {
           ),
         }} />
       <Tab.Screen
-        name="Settings"
-        component={Settings}
+        name="SettingsStack"
+        component={SettingsStack}
         options={{
           headerShown: false,
           color: '#fe4500',
@@ -110,14 +135,10 @@ function Navigation() {
 
   useEffect(() => {
     const getAccessToken = async () => {
-      await EncryptedStorage.removeItem('accessToken');
       const accessToken = await EncryptedStorage.getItem('accessToken');
-      console.log(accessToken);
       if (accessToken && accessToken) {
-        console.log('oui');
         dispatch(setUserLoggedIn());
       } else {
-        console.log('oui');
         dispatch(setUserLoggedOut());
       }
     };

@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
 import loopInterval from './src/webhooks/loopInterval';
+import userRouter from './src/user/route'
 
 dotenv.config()
 
@@ -63,5 +64,6 @@ app.get('/about.json', aboutJson)
 app.use('/auth', authenticator)
 app.use('/area', area)
 app.use('/webhooks', webhooks)
+app.use(userRouter);
 
 export default app
