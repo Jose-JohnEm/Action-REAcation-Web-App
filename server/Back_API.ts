@@ -19,9 +19,6 @@ const port = (parseInt(process.argv[2]) < 65536) ? parseInt(process.argv[2]) : 8
 app.use(express.json());
 
 ///// Connect MongoDB and Server /////
-const dbURI = 'mongodb+srv://area_ish-ish_2022:YeO7XT8eOtbQFK9H@cluster0.4jz3r.mongodb.net/area2022?retryWrites=true&w=majority';
-
-
 const successServerStarted = () => {
     console.log(`MongoDB Connected succesfully !\nExample app listening at http://localhost:${port}`)
 }
@@ -36,8 +33,7 @@ const successServerStarted = () => {
         // Start slack
         await startSlackBot()
         // Start mongo
-        console.log("gokgoko");
-        await mongoose.connect(dbURI)
+        await mongoose.connect(process.env.MONGO_DB)
         // Start app
         await app.listen(port, successServerStarted)
         // Start Area
