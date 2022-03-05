@@ -33,13 +33,15 @@ const successServerStarted = () => {
         process.env.URL = url;
         console.log(`ngrok connected at ${url}`)
         // Start discord
-        await startDiscord()
+        // await startDiscord()
         // Start mongo
+        console.log("gokgoko");
         await mongoose.connect(dbURI)
         // Start app
         await app.listen(port, successServerStarted)
         // Start Area
         await startArea()
+
     } catch (error) {
         console.log(error)
     }
