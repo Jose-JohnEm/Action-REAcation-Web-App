@@ -40,7 +40,6 @@ const Item = ({ title }) => {
       dispatch(updateUserServices({services: services}));
     } else {
       services?.push(title);
-      console.log(services);
       dispatch(updateUserServices({services: services}));
     }
   };
