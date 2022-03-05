@@ -1,5 +1,5 @@
 import UserModel, { Iuser } from '../../models/users'
-import { new_module , rm_module, new_grade, new_registration } from '../event/action/Intra/intra';
+import { new_module , rm_module, new_grade, new_registration, reach_credit, reach_gpa } from '../event/action/Intra/intra';
 import { cron_timer } from "../event/action/Timer/timer";
 
 export async function startEvent() {
@@ -8,12 +8,16 @@ export async function startEvent() {
         for (let event of user.events) {
             if (event.action.service === 'intra') {
                 let dict = {
-                    "new_module": await new_module,
-                    "rm_module": await rm_module,
-                    "new_grade": await new_grade,
-                    "new_register": await new_registration,
+                    "new_module": new_module,
+                    "rm_module": rm_module,
+                    "new_grade": new_grade,
+                    "new_register": new_registration,
+                    "reach_credit": reach_credit,
+                    "reach_gpa": reach_gpa,
                 }
-                dict[event.action.name](user, event.action, event.reaction)
+                if (dict[event.action.name] instanceof Function) {
+                    await dict[event.action.name](user, event.action, event.reaction)
+                }
             }
         }
     }

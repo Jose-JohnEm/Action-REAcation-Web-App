@@ -113,6 +113,22 @@
         "params": {
           "token": "string"
         }
+      },
+      {
+        "name": "reach_credit",
+        "description": "User reached an amount of credits",
+        "params": {
+          "token": "string",
+          "target": "number"
+        }
+      },
+      {
+        "name": "reach_gpa",
+        "description": "User reached an amount of GPA",
+        "params": {
+          "token": "string",
+          "target": "number"
+        }
       }
     ]
   },

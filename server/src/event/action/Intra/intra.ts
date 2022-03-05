@@ -34,6 +34,8 @@ const dict = {
     "new_register": "last_register",
     "rm_module": "last_module",
     "new_module": "last_module",
+    "reach_credit": "last_credit",
+    "reach_gpa": "last_gpa",
 }
 
 const new_grade = async (user, action: action, reaction: reaction) => {
@@ -84,7 +86,7 @@ const new_module = async (user, action: action, reaction: reaction) => {
     if (user.data.intra[dict[action.name]] !== undefined) {
         var event_id = parseInt(l_mod.instance_id)
         if (event_id > user.data.intra[dict[action.name]]) {
-            handleReactions(user, reaction, {"message": "You just subscribed to " + l_mod.title})
+            handleReactions(user, reaction, {"message": `${login} just subscribed to ${l_mod.title}`})
         }
     }
     user.data.intra[dict[action.name]] = parseInt(l_mod.instance_id)
@@ -101,11 +103,41 @@ const rm_module = async (user, action: action, reaction: reaction) => {
     if (user.data.intra[dict[action.name]] !== undefined) {
         var event_id = parseInt(l_mod.instance_id)
         if (event_id < user.data.intra[dict[action.name]]) {
-            handleReactions(user, reaction, {"message": "You just unsubscribed to " + l_mod.title})
+            handleReactions(user, reaction, {"message": `${login} just unsubscribed to ${l_mod.title}`})
         }
     }
     user.data.intra[dict[action.name]] = parseInt(l_mod.instance_id)
     await user.save()
 }
 
-export {new_module, rm_module, new_grade, new_registration}
+const reach_credit = async (user, action: action, reaction: reaction) => {
+    const autologin: string = action.params.token;
+    const profile: IntraProfile = await getProfileFromToken(autologin)
+    const target: number = parseInt(action.params.target)
+
+    if (user.data.intra[dict[action.name]] !== undefined && user.data.intra[dict[action.name]] < target) {
+        var credits = profile.credits
+        if (credits >= target) {
+            handleReactions(user, reaction, {"message": `${profile.firstname} ${profile.lastname} reached an amount of ${profile.credits} credits !`})
+        }
+    }
+    user.data.intra[dict[action.name]] = profile.credits
+    await user.save()
+}
+
+const reach_gpa = async (user, action: action, reaction: reaction) => {
+    const autologin: string = action.params.token;
+    const profile: IntraProfile = await getProfileFromToken(autologin)
+    const target: number = parseFloat(action.params.target)
+
+    if (user.data.intra[dict[action.name]] !== undefined && user.data.intra[dict[action.name]] < target) {
+        var gpa = parseFloat(profile.gpa[0].gpa)
+        if (gpa >= target) {
+            handleReactions(user, reaction, {"message": `${profile.firstname} ${profile.lastname} reached a GPA of ${profile.gpa[0].gpa} !`})
+        }
+    }
+    user.data.intra[dict[action.name]] = parseFloat(profile.gpa[0].gpa)
+    await user.save()
+}
+
+export {new_module, rm_module, new_grade, new_registration, reach_credit, reach_gpa}
