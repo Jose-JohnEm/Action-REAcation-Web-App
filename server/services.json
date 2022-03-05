@@ -137,7 +137,7 @@
     "actions": [
       {
         "name": "ping_bot",
-        "description": "The as been pinged",
+        "description": "The bot as been pinged, bot name is required",
         "params": {
           "botname": "string"
         }
@@ -147,13 +147,13 @@
     ]
   },
   {
-    "name": "timer",
+    "name": "slack",
     "actions": [
       {
-        "name": "cron_timer",
-        "description": "A cron timer",
+        "name": "send_a_private_message",
+        "description": "Send a private message, user id is required",
         "params": {
-          "timer": "string"
+          "userid": "string"
         }
       }
     ],
