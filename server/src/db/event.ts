@@ -1,7 +1,5 @@
 import UserData from '../../models/users'
 
-// TODO: save an event to the database
-
 const haveSameData = (l1, l2) => {
 
     const obj1Length = Object.keys(l1).length;
@@ -25,6 +23,8 @@ export function getUserReaction(user, service, name, params: {}) {
             event.action.name === name &&
             haveSameData(event.action.params, params)
     })
+    if (!reaction.reaction)
+        return undefined
     return reaction.reaction
 }
 

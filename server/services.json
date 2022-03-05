@@ -66,8 +66,15 @@
     "name": "pivotaltracker",
     "actions": [
       {
-        "name": "story_create_activity",
+        "name": "story_create",
         "description": "A new story has been created",
+        "params": {
+          "projectId": "string"
+        }
+      },
+      {
+        "name": "user_add",
+        "description": "A user has been added to the project",
         "params": {
           "projectId": "string"
         }
@@ -106,6 +113,22 @@
         "params": {
           "token": "string"
         }
+      },
+      {
+        "name": "reach_credit",
+        "description": "User reached an amount of credits",
+        "params": {
+          "token": "string",
+          "target": "number"
+        }
+      },
+      {
+        "name": "reach_gpa",
+        "description": "User reached an amount of GPA",
+        "params": {
+          "token": "string",
+          "target": "number"
+        }
       }
     ]
   },
@@ -114,7 +137,7 @@
     "actions": [
       {
         "name": "ping_bot",
-        "description": "The as been pinged",
+        "description": "The bot as been pinged, bot name is required",
         "params": {
           "botname": "string"
         }
@@ -124,17 +147,30 @@
     ]
   },
   {
-    "name": "timer",
+    "name": "slack",
     "actions": [
       {
-        "name": "cron_timer",
-        "description": "A cron timer",
+        "name": "send_a_private_message",
+        "description": "Send a private message, user id is required",
         "params": {
-          "timer": "string"
+          "userid": "string"
         }
       }
     ],
     "reactions": [
+    ]
+  },
+  {
+    "name": "email",
+    "actions": [],
+    "reactions": [
+      {
+        "name": "send_an_email",
+        "description": "Send an email when triggered",
+        "params": {
+          "email": "string"
+        }
+      }
     ]
   }
 ]

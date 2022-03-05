@@ -71,6 +71,8 @@ const userSchema = new Schema({
             last_grade: Number,
             last_register: Number,
             last_module: Number,
+            last_credit: Number,
+            last_gpa: Number
         }
     },
     lastName: {
