@@ -1,61 +1,99 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Headline, TextInput } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import {Picker} from '@react-native-picker/picker';
 import LargeButton from '../../components/LargeButton';
+import { getAllServices } from '../../Utils/Utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { setParameterReaction, setReaction } from '../../reducers/Actions/Area';
 
-const ServicePicker = () => {
-  const [selectedLanguage, setSelectedLanguage] = React.useState();
+const ReactionPicker = ({selectedReaction, setSelectedReaction}) => {
+  const [services, setServices] = React.useState([]);
+
+  useEffect(() => {
+    getAllServices().then((data) => setServices(data));
+  }, []);
 
   return (
     <Picker
-      selectedValue={selectedLanguage}
-      onValueChange={(itemValue, itemIndex) =>
-        setSelectedLanguage(itemValue)
+      selectedValue={selectedReaction}
+      onValueChange={(itemValue) =>
+        setSelectedReaction(itemValue)
       }>
-      <Picker.Item label="Java" value="java" />
-      <Picker.Item label="JavaScript" value="js" />
-      <Picker.Item label="JavaScript" value="js" />
-      <Picker.Item label="JavaScript" value="js" />
-      <Picker.Item label="JavaScript" value="js" />
+      {services?.map((item) =>
+        item?.reactions?.map((picker, key) => (
+          <Picker.Item label={picker.description} value={picker.name} key={key}/>
+        ))
+      )}
     </Picker>
   );
 };
 
-const ActionParams = () => {
-  const [text, setText] = React.useState('');
+const ReactionParams = ({parameter, setParameter}) => {
+  const [label, setLabel] = React.useState('');
+  const {serviceAction} = useSelector(state => state.areaReducer);
+
+
+  useEffect(() => {
+    const getLabel = () => {
+      switch (serviceAction) {
+      case 'github':
+        return 'Your repository';
+      case 'discord':
+        return 'Your username';
+      case 'pivotaltracker':
+        return 'Your projectID';
+      case 'intra':
+        return 'Your token';
+      case 'teams':
+        return 'Your botname';
+      case 'timer':
+        return 'Your timer';
+      default:
+        break;
+      }
+    };
+    setLabel(getLabel());
+  }, []);
 
   return (
     <View>
       <TextInput
-        label="Params"
-        value={text}
+        label={label}
+        value={parameter}
         mode="outlined"
-        onChangeText={text => setText(text)}
+        onChangeText={text => setParameter(text)}
       />
     </View>
   );
 };
 
-const Reaction = () => {
+const Reaction = ({navigation}) => {
+  const [selectedReaction, setSelectedReaction] = React.useState('');
+  const [parameter, setParameter] = React.useState('');
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Headline style={styles.headline}>
-        Choose a service
-      </Headline>
-      <ServicePicker />
-      <Headline style={styles.headline}>
         Choose an action
       </Headline>
-      <ServicePicker />
+      <ReactionPicker selectedReaction={selectedReaction} setSelectedReaction={setSelectedReaction}/>
       <Headline style={styles.headline}>
         Put a parameter
       </Headline>
-      <ActionParams />
-      <LargeButton icon="google" mode="contained">
+      <ReactionParams parameter={parameter} setParameter={setParameter}/>
+      <LargeButton onPress={() => {
+        dispatch(setReaction(selectedReaction));
+        dispatch(setParameterReaction(parameter));
+        navigation.push('Confirm');
+      }}
+      mode="contained"
+      >
         Next
       </LargeButton>
+
     </View>
   );
 };
@@ -85,5 +123,14 @@ Reaction.propTypes = {
   navigation: PropTypes.object,
 };
 
+ReactionPicker.propTypes = {
+  selectedReaction: PropTypes.string.isRequired,
+  setSelectedReaction: PropTypes.func.isRequired,
+};
+
+ReactionParams.propTypes = {
+  parameter: PropTypes.string.isRequired,
+  setParameter: PropTypes.func.isRequired,
+};
 
 export default Reaction;
