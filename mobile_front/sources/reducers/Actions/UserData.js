@@ -23,7 +23,7 @@ export const getUserData = () => async dispatch => {
       payload: response.data.data,
     });
   } catch (error) {
-    console.err(error);
+    console.error(error);
     dispatch(setUserLoggedOut());
   }
 };
@@ -39,7 +39,7 @@ export const updateUserServices = (body) => async dispatch => {
     });
     dispatch(getUserData());
   } catch (error) {
-    console.err(error);
+    console.error(error);
     dispatch(setUserLoggedOut());
   }
 };
