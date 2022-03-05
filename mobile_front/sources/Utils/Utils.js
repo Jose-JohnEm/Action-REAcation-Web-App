@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Alert } from 'react-native';
 import { API_URL } from '../constant/Constant';
 
 export const getAllServices = async () => {
