@@ -29,16 +29,18 @@ const ProfileHeader = () => {
 
 const Item = ({ title }) => {
   const {data} = useSelector(state => state.userReducer);
-  const services = data?.services;
+  const services = data?.services !== undefined ? data?.services : [];
   const icon = setIcon(title);
   const dispatch = useDispatch();
+
   const updateService = (title) => {
-    const index = services.indexOf(title);
+    const index = services?.indexOf(title);
     if (index > -1) {
-      services.splice(index, 1);
+      services?.splice(index, 1);
       dispatch(updateUserServices({services: services}));
     } else {
-      services.push(title);
+      services?.push(title);
+      console.log(services);
       dispatch(updateUserServices({services: services}));
     }
   };

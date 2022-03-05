@@ -86,7 +86,7 @@ const userSchema = new Schema({
         type: String,
     },
     services: {
-        type: Object,
+        type: Array,
     },
     events: {
         type: Array<uEvent>(),
