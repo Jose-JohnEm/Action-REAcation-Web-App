@@ -1,11 +1,10 @@
 import express from 'express'
 import {gh_fork, gh_pull_request, gh_push, gh_star} from "../event/action/Github/github";
 import {tm_ping} from "../event/action/Teams/teams";
-import pt_story_create from "../event/action/PivotalTracker/pivotal";
+import {pt_story_create, pt_user_add} from "../event/action/PivotalTracker/pivotal";
 
 const router = express.Router()
 
-router.use(express.json());
 router.route('/github').post((req, res) => {
     if (!req.headers['x-github-event']) {
         console.error('Not a GitHub event !');
@@ -41,13 +40,10 @@ router.route('/pivotal').post((req, res) => {
     }
     res.status(200).send('Webhook received')
     const activity = req.body;
-    console.log(activity);
-    console.log(activity.kind + " / " + activity.highlight + " / " + activity.message);
 
-    // story_update_activity as many highlighs
-    // project_membership_create_activity
     let events = {
-        'story_create_activity': pt_story_create
+        'story_create_activity': pt_story_create,
+        'project_membership_create_activity': pt_user_add,
     }
     if (!events[activity.kind]) {
         console.error('Pivotal, Unsupported event type!');

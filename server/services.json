@@ -66,8 +66,15 @@
     "name": "pivotaltracker",
     "actions": [
       {
-        "name": "story_create_activity",
+        "name": "story_create",
         "description": "A new story has been created",
+        "params": {
+          "projectId": "string"
+        }
+      },
+      {
+        "name": "user_add",
+        "description": "A user has been added to the project",
         "params": {
           "projectId": "string"
         }

@@ -22,6 +22,7 @@ export const setUserLoggedIn = () => {
 
 export const setUserLoggedOut = () => {
   return async dispatch => {
+    await EncryptedStorage.removeItem('accessToken');
     try {
       dispatch({
         type: SET_USER_LOGGED_OUT,
