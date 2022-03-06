@@ -32,7 +32,7 @@ router.route('/github').post((req, res) => {
     events[event](body, sender, repo);
 });
 
-router.route('/pivotal').post((req, res) => {
+router.route('/pivotaltracker').post((req, res) => {
     if (!req.body) {
         console.error('Not a Pivotal Tracker event !');
         res.status(400).send('Webhook Error: Invalid event type')
