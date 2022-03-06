@@ -36,7 +36,6 @@ const MyAreaCreate = () => {
     const [paramReaction, setParamReaction] = useState('');
 
     const create = async () => {
-        MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
         const paramsActions: any = {};
         for (const key of SERVICESSTATES[getPos(serviceAction)].paramsActions) {
             paramsActions[key] = paramAction;
@@ -56,6 +55,7 @@ const MyAreaCreate = () => {
         }
         const response = await createArea(params);
         if (response === true) {
+          MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
           setIsSuccess(true);
         } else {
           setIsSuccess(false);
