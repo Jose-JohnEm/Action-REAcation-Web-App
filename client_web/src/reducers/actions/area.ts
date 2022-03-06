@@ -14,7 +14,7 @@ export const createArea = async (params: ICreateArea) => {
     const accessToken = localStorage.getItem('accessToken');
     try {
       const response = await axios
-        .post('http://127.0.0.1:8080/area', params, {
+        .post(`http://127.0.0.1:8080/area?area_name=${params.area_name}&action_service=${params.action_service}&action_name=${params.action_name}&action_params=${JSON.stringify(params.action_params)}&reaction_service=${params.reaction_service}&reaction_name=${params.reaction_name}&reaction_params=${JSON.stringify(params.reaction_params)}`, {
           headers: {
             Authorization: 'Bearer ' + accessToken,
             'Content-Type' : 'application/json',

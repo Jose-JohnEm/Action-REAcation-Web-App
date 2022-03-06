@@ -10,6 +10,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import COLORS from '../constants/colors';
 import { useDispatch } from 'react-redux';
 import { setUserLoggedOut } from '../reducers/actions/auth';
+import AndroidIcon from '@mui/icons-material/Android';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -36,6 +37,9 @@ const Header = () => {
         {
           (!isLogged &&
             <Box>
+              <IconButton onClick={() => { handleClick('/client.apk'); }} size='large' sx={{ color: COLORS.DARKGRAY, transform: 'scale(1.5)' }}>
+                <AndroidIcon />
+              </IconButton>
               <Button variant='text'sx={{ paddingLeft: 3, paddingRight: 3, mr: 2 }} onClick={() => { handleClick('/signup'); }}>Sign up</Button>
               <Button variant='contained' sx={{ bgcolor: COLORS.DARKGRAY, borderRadius: 2, paddingLeft: 3, paddingRight: 3 }} onClick={() => { handleClick('/signin'); }}>Log in</Button>
             </Box>

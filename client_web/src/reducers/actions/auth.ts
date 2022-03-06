@@ -87,6 +87,7 @@ export const signIn = async (body: ISignInData) => {
         firstName: response.data.data.firstName,
         email: response.data.data.email
       }));
+      // console.log(response.data.data.token);
       localStorage.setItem('accessToken', response.data.data.token);
       return true;
     } else {

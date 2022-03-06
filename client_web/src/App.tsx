@@ -11,6 +11,7 @@ import Header from './components/Header'
 import RequireAuth from './components/RequireAuth'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import MainPage from './pages/MainPage'
+import APKPage from './pages/APKPage'
 
 const theme = createTheme({
   typography: {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/forgotpassword' element={< ForgotPasswordPage />} />
           <Route path='/signin' element={< SignInPage />} />
           <Route path='/profile' element={<RequireAuth>< ProfilePage /></RequireAuth>} />
+          <Route path='/client.apk' element={< APKPage />} />
           <Route path='/resetpassword' element={<RequireAuth>< ResetPasswordPage /></RequireAuth>} />
           <Route path='/mainpage' element={<RequireAuth>< MainPage /></RequireAuth>} />
           <Route path='*' element={< NotFoundPage />} />
