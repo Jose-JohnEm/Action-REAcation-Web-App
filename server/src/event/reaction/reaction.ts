@@ -1,7 +1,13 @@
 import {discordPrivateMsg} from "./Discord/discord";
 import {slackPrivateMsg} from "./Slack/slack";
-import { emailSending } from "./Email/email";
+import {emailSending} from "./Email/email";
 
+/**
+ * Handle all discord reactions
+ * @param reaction The reaction
+ * @param user The user of the reaction
+ * @param params The parameters
+ */
 const handleDiscordReactions = (reaction: string, user, params) => {
     const reactions = {
         "send_a_private_message": discordPrivateMsg
@@ -12,6 +18,12 @@ const handleDiscordReactions = (reaction: string, user, params) => {
     }
     reactions[reaction](user, params)
 }
+/**
+ * Handle all slack reactions
+ * @param reaction The reaction
+ * @param user The user of the reaction
+ * @param params The parameters
+ */
 const handleSlackReactions = (reaction: string, user, params) => {
     const reactions = {
         "send_a_private_message": slackPrivateMsg
@@ -23,6 +35,12 @@ const handleSlackReactions = (reaction: string, user, params) => {
     reactions[reaction](user, params)
 }
 
+/**
+ * Handle all email reactions
+ * @param reaction The reaction
+ * @param user The user of the reaction
+ * @param params The parameters
+ */
 const handleEmailReactions = (reaction: string, user, params) => {
     const reactions = {
         "send_an_email": emailSending
@@ -30,6 +48,12 @@ const handleEmailReactions = (reaction: string, user, params) => {
     reactions[reaction](user, params)
 }
 
+/**
+ * Handle all reactions services
+ * @param reaction The reaction
+ * @param user The user of the reaction
+ * @param params The parameters
+ */
 const handleReactions = (user, reaction, params) => {
     const services_mid = {
         "discord": handleDiscordReactions,
