@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
+import MYAREALIST from '../../constants/myAreaList';
 
 export enum AuthType {
   SET_USER_LOGGED_IN = 'SET_USER_LOGGED_IN',
@@ -28,6 +29,10 @@ export const setUserLoggedIn = () => {
 };
 
 export const setUserLoggedOut = () => {
+  localStorage.clear();
+  while(MYAREALIST.length > 0) {
+    MYAREALIST.pop();
+  }
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: AuthType.SET_USER_LOGGED_OUT,
@@ -89,7 +94,6 @@ export const signIn = async (body: ISignInData) => {
         firstName: response.data.data.firstName,
         email: response.data.data.email
       }));
-      // console.log(response.data.data.token);
       localStorage.setItem('accessToken', response.data.data.token);
       return true;
     } else {

@@ -41,7 +41,7 @@ export const deleteArea = async (id: number) => {
         }
       });
     if (response.status === 200) {
-      localStorage.setItem('events', JSON.stringify(response.data.data.events));
+      localStorage.setItem('events', JSON.stringify(response.data.events));
       return true;
     } else {
       return false;
@@ -62,7 +62,7 @@ export const deleteAllAreas = async () => {
         }
       });
     if (response.status === 200) {
-      localStorage.setItem('events', JSON.stringify(response.data.data.events));
+      localStorage.setItem('events', JSON.stringify(response.data.events));
       return true;
     } else {
       return false;
