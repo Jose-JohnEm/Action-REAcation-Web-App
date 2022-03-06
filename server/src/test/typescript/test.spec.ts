@@ -7,7 +7,7 @@ describe('Test pour tester les tests', () => {
         expect(grande_val).toBeGreaterThan(petite_val)
     })
 
-    
+
     test("Test d'infériorité", () => {
         expect(petite_val).toBeLessThan(grande_val)
     })

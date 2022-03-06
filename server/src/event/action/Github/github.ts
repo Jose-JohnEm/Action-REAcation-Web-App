@@ -1,6 +1,12 @@
 import {getUserFromGithubAction, getUserReaction} from "../../../db/event";
 import handleReactions from "../../reaction/reaction";
 
+/**
+ * Github push event handler
+ * @param body Body of the event
+ * @param sender Sender of the event
+ * @param repo Repository of the event
+ */
 const gh_push = async function (body, sender, repo) {
     if (body.commits.length == 0)
         return;
@@ -21,6 +27,12 @@ const gh_push = async function (body, sender, repo) {
     });
 };
 
+/**
+ * Github pull request event handler
+ * @param body Body of the event
+ * @param sender Sender of the event
+ * @param repo Repository of the event
+ */
 const gh_pull_request = async function (body, sender, repo) {
     const state = body.action;
 
@@ -54,6 +66,12 @@ const gh_pull_request = async function (body, sender, repo) {
     });
 };
 
+/**
+ * Github star event handler
+ * @param body Body of the event
+ * @param sender Sender of the event
+ * @param repo Repository of the event
+ */
 const gh_star = async function (body, sender, repo) {
     let action = null;
     if (body.action == "created") {
@@ -78,6 +96,12 @@ const gh_star = async function (body, sender, repo) {
 
 };
 
+/**
+ * Github fork event handler
+ * @param body Body of the event
+ * @param sender Sender of the event
+ * @param repo Repository of the event
+ */
 const gh_fork = async function (body, sender, repo) {
     console.log(JSON.parse(JSON.stringify(body)))
     const users = await getUserFromGithubAction("new_fork", repo);
