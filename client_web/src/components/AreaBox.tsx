@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Typography, Switch, Box, Grid, IconButton, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MYAREALIST from '../constants/myAreaList';
+import { deleteArea } from '../reducers/actions/area';
 
 interface AreaBoxProps {
     pos: number;
@@ -15,7 +16,7 @@ const AreaBox = (props: AreaBoxProps) => {
     const [stateSwitch, setStateSwitch] = useState({
         box: true,
     });
-    
+
     const handleChangeSwitch = (event: React.ChangeEvent<any>) => {
     setStateSwitch({
         ...stateSwitch,
@@ -23,10 +24,11 @@ const AreaBox = (props: AreaBoxProps) => {
     });
     };
 
-    const disableArea = () => {
+    const disableArea = async () => {
         MYAREALIST[props.pos].display = false;
         console.log(MYAREALIST);
         console.log(props.pos);
+        await deleteArea(props.pos);
     };
 
     let colorState = stateSwitch.box ? COLORS.GREEN : COLORS.RED;

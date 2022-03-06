@@ -30,6 +30,25 @@ export const createArea = async (params: ICreateArea) => {
     }
 };
 
+export const deleteArea = async (id: number) => {
+  const accessToken = localStorage.getItem('accessToken');
+  try {
+    const response = await axios
+      .delete(`http://127.0.0.1:8080/area?id=${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + accessToken
+        }
+      });
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
 export const deleteAllAreas = async () => {
   const accessToken = localStorage.getItem('accessToken');
   try {
