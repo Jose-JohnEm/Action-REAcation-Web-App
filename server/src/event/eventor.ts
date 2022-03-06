@@ -2,7 +2,7 @@ import addEvent from './add_event'
 import deleteEvent from './delete_event'
 import deleteAllEvent from './delete_all'
 import express, {Request, Response, Router} from 'express'
-import auth from '../auth/authenticator'
+import auth from '../middleware/auth'
 
 const router: Router = express.Router()
 
