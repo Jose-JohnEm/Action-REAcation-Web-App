@@ -9,8 +9,18 @@ services:
     ports:
       - "8080:8080"
 
-  web:
-    container_name: web
+  client_mobile:
+    container_name: client_mobile
+    build:
+      context: mobile_front
+      dockerfile: Dockerfile
+    depends_on:
+      - server
+    volumes:
+      - area:/mobile_app/
+
+  client_web:
+    container_name: client_web
     build:
       context: client_web
       dockerfile: Dockerfile
@@ -18,3 +28,9 @@ services:
       - "8081:8081"
     depends_on:
       - server
+      - client_mobile
+    volumes:
+      - area:/mobile_app/
+
+volumes:
+  area:
