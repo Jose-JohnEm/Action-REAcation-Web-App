@@ -23,11 +23,7 @@ const removeEvent = (index: number, id: string) => {
  * @param res response
  * @param next next function
  */
-const addEvent = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.header('Bearer')) {
-        next()
-        return
-    }
+const addEvent = (req: Request, res: Response) => {
     UserData.findOne({
         token: req.header('Bearer')
     })
@@ -53,17 +49,9 @@ const addEvent = (req: Request, res: Response, next: NextFunction) => {
         })
         .catch((err) => {
             console.error(err)
-            next()
+            res.json({'error': "can't add event"})
+            return
         })
 }
 
-/**
- * Reply when the account does not exist
- * @param req
- * @param res
- */
-const ifNotAccount = (req: Request, res: Response) => {
-    res.status(500).json({error: 'No account with this token'})
-}
-
-export default [addEvent, ifNotAccount];
+export default addEvent;
