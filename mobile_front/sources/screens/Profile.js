@@ -21,8 +21,8 @@ const ProfileHeader = () => {
         source={{
           uri: 'http://pbs.twimg.com/profile_images/1491248062882365449/XKc1fNnA_400x400.png'
         }} />
-      <Headline>{data.firstName} {data.lastName}</Headline>
-      <Caption>{data.email}</Caption>
+      <Headline>{data?.firstName} {data?.lastName}</Headline>
+      <Caption>{data?.email}</Caption>
     </View>
   );
 };

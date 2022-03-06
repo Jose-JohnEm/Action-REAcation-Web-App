@@ -6,6 +6,7 @@ export const SET_SERVICE_ACTION = 'SET_SERVICE_ACTION';
 export const SET_SERVICE_REACTION = 'SET_SERVICE_REACTION';
 export const SET_PARAMETER_ACTION = 'SET_PARAMETER_ACTION';
 export const SET_PARAMETER_REACTION = 'SET_PARAMETER_REACTION';
+export const DELETE_AREA = 'DELETE_AREA';
 export const CLEAR_AREA = 'CLEAR_AREA';
 export const SET_TITLE = 'SET_TITLE';
 import axios from 'axios';
@@ -147,16 +148,31 @@ export const setAREA = (body) => async dispatch => {
 
   try {
     const accessToken = await EncryptedStorage.getItem('accessToken');
-    console.log('--> ' + accessToken);
-    await axios.post(url + `/area?area_name=${body.title}&action_service=${body.serviceAction}&action_name=${body.action}&action_params=${body.parameterAction}&reaction_service=${body.serviceReaction}&reaction_name=${body.reaction}&reaction_params=${body.parameterReaction}`, {
+    await axios.post(url + `/area?area_name=${body.title}&action_service=${body.serviceAction}&action_name=${body.action}&action_params=${body.parameterAction}&reaction_service=${body.serviceReaction}&reaction_name=${body.reaction}&reaction_params=${body.parameterReaction}`,
+      null, {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      });
+    dispatch(getUserData());
+  } catch (error) {
+    console.error(error);
+    dispatch(setUserLoggedOut());
+  }
+};
+export const deleteAREA = (id) => async dispatch => {
+  const url = await EncryptedStorage.getItem('url');
+
+  try {
+    const accessToken = await EncryptedStorage.getItem('accessToken');
+    await axios.delete(url + `/area?id=${id}`, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
         'Content-Type' : 'application/json',
       },
     });
-    dispatch(getUserData());
   } catch (error) {
-    console.error(error.response);
-    // dispatch(setUserLoggedOut());
+    console.error(error);
+    dispatch(setUserLoggedOut());
   }
 };
