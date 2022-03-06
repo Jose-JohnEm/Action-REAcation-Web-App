@@ -7,6 +7,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { ISignUpData, signUp, setUserLoggedIn } from '../reducers/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { getWebhooksLinks } from '../reducers/actions/area';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(true);
@@ -42,6 +43,7 @@ const SignUpForm = () => {
     const response = await signUp(body);
     if (response === true) {
       dispatch(setUserLoggedIn());
+      await getWebhooksLinks();
       setIsSuccess(true);
       navigate('/profile');
     } else {
