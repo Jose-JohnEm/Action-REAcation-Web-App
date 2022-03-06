@@ -1,3 +1,6 @@
+/**
+ * The interface for the Intra profile.
+ */
 export type IntraProfile = {
     login: string,
     title: string,
@@ -71,6 +74,9 @@ export type IntraProfile = {
     }
 }
 
+/**
+ * The interface for the Intra module.
+ */
 export type IntraModule = {
     login: string,
     title: string,
@@ -124,15 +130,13 @@ export type IntraModule = {
         title: string,
         name: string,
         count: number
-    }[]
-    ,
+    }[],
     events: object,
     credits: number,
     gpa: {
         gpa: string,
         cycle: string
-    }[]
-    ,
+    }[],
     nsstat: {
         active: number,
         idle: number,
@@ -220,8 +224,7 @@ export type IntraModule = {
         special: null,
         modifier: string,
         comment: string
-    }[]
-    ,
+    }[],
     missed: {
         module_title: string,
         acti_title: string,
@@ -231,8 +234,7 @@ export type IntraModule = {
         begin: string,
         end: string,
         categ_title: string
-    }[]
-    ,
+    }[],
     modules: [
         {
             scolaryear: number,
@@ -253,7 +255,6 @@ export type IntraModule = {
         }
     ]
 }
-
 
 export type Imsg = {
     class: string,
