@@ -7,6 +7,7 @@ import {NextFunction, Request, Response} from 'express';
  * @param res response
  * @param next next function
  */
+
 const addEvent = (req: Request, res: Response) => {
     UserData.findOne({
         token: req.header('Authorization').split('Bearer ')[1],

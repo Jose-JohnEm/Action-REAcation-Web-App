@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Switch, Container, Typography, Box, TextField, Button, IconButton, Avatar, InputAdornment } from '@mui/material';
+import { Switch, Container, Typography, Box, TextField, Button, IconButton, Avatar, InputAdornment, Alert } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import COLORS from '../constants/colors';
-import SERVICESSTATES from '../constants/servicesProfile';
+import SERVICESSTATES from '../constants/services';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
 import { ISignUpData } from '../reducers/actions/auth';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { editUser, deleteUser } from '../reducers/actions/user';
+import { setUserLoggedOut } from '../reducers/actions/auth';
+import { useDispatch } from 'react-redux';
 
 const ProfileForm = () => {
   const userProfile = JSON.parse(localStorage.getItem('userProfile') as string);
@@ -28,12 +31,13 @@ const ProfileForm = () => {
   }, [selectedImage]);
 
   const [stateSwitch, setStateSwitch] = useState({
-    discord: SERVICESSTATES[0].value === 'true' ? true : false,
-    github: SERVICESSTATES[1].value === 'true' ? true : false,
-    pivotaltracker: SERVICESSTATES[2].value === 'true' ? true : false,
-    intranet: SERVICESSTATES[3].value === 'true' ? true : false,
-    timer: SERVICESSTATES[4].value === 'true' ? true : false,
+    github: SERVICESSTATES[0].value === 'true' ? true : false,
+    slack: SERVICESSTATES[1].value === 'true' ? true : false,
+    discord: SERVICESSTATES[2].value === 'true' ? true : false,
+    pivotaltracker: SERVICESSTATES[3].value === 'true' ? true : false,
+    intra: SERVICESSTATES[4].value === 'true' ? true : false,
     teams: SERVICESSTATES[5].value === 'true' ? true : false,
+    email: SERVICESSTATES[6].value === 'true' ? true : false
   });
 
   const handleChangeSwitch = (event: React.ChangeEvent<any>) => {
@@ -43,14 +47,17 @@ const ProfileForm = () => {
     });
   };
 
-  SERVICESSTATES[0].value = (stateSwitch.discord === true ? 'true' : 'false');
-  SERVICESSTATES[1].value = (stateSwitch.github === true ? 'true' : 'false');
-  SERVICESSTATES[2].value = (stateSwitch.pivotaltracker === true ? 'true' : 'false');
-  SERVICESSTATES[3].value = (stateSwitch.intranet === true ? 'true' : 'false');
-  SERVICESSTATES[4].value = (stateSwitch.timer === true ? 'true' : 'false');
+  SERVICESSTATES[0].value = (stateSwitch.github === true ? 'true' : 'false');
+  SERVICESSTATES[1].value = (stateSwitch.slack === true ? 'true' : 'false');
+  SERVICESSTATES[2].value = (stateSwitch.discord === true ? 'true' : 'false');
+  SERVICESSTATES[3].value = (stateSwitch.pivotaltracker === true ? 'true' : 'false');
+  SERVICESSTATES[4].value = (stateSwitch.intra === true ? 'true' : 'false');
   SERVICESSTATES[5].value = (stateSwitch.teams === true ? 'true' : 'false');
+  SERVICESSTATES[6].value = (stateSwitch.email === true ? 'true' : 'false');
 
-  const handleSubmit = (event: React.ChangeEvent<any>) => {
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body: ISignUpData = {
@@ -66,6 +73,12 @@ const ProfileForm = () => {
       firstName: body.firstName,
       email: body.email
     }));
+    const response = await editUser(body);
+    if (response === true) {
+      setIsSuccess(true);
+    } else {
+      setIsSuccess(false);
+    }
   };
 
   return (
@@ -98,31 +111,36 @@ const ProfileForm = () => {
           }}
         />
         <Box display="flex" justifyContent="center" alignItems="center" mb={2} mt={2} sx={{ color: COLORS.DARKGRAY }}>
-          <IconButton aria-label="discordService">
-            <Icon icon="bi:discord" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.discord} onChange={handleChangeSwitch} name="discord" inputProps={{ 'aria-label': 'controlled' }}/>
-          </IconButton>
           <IconButton aria-label="githubService">
             <Icon icon="akar-icons:github-fill" style={{ color: COLORS.BLACK }}/>
             <Switch checked={stateSwitch.github} onChange={handleChangeSwitch} name="github" inputProps={{ 'aria-label': 'controlled' }} />
+          </IconButton>
+          <IconButton aria-label="slackService">
+            <Icon icon="akar-icons:slack-fill" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.slack} onChange={handleChangeSwitch} name="slack" inputProps={{ 'aria-label': 'controlled' }} />
+          </IconButton>
+          <IconButton aria-label="discordService">
+            <Icon icon="bi:discord" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.discord} onChange={handleChangeSwitch} name="discord" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
           <IconButton aria-label="pivotalTrackerService">
             <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/000000/external-pivotal-tracker-a-project-management-tool-for-developers-around-the-world-logo-bold-tal-revivo.png" alt="pivotaltracker icon"/>
             <Switch checked={stateSwitch.pivotaltracker} onChange={handleChangeSwitch} name="pivotaltracker" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
+          <IconButton aria-label="intranetService">
+            <Icon icon="emojione-monotone:letter-e" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.intra} onChange={handleChangeSwitch} name="intranet" inputProps={{ 'aria-label': 'controlled' }}/>
+          </IconButton>
           <IconButton aria-label="teamsService">
             <Icon icon="bxl:microsoft-teams" style={{ color: COLORS.BLACK }}/>
             <Switch checked={stateSwitch.teams} onChange={handleChangeSwitch} name="teams" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
-          <IconButton aria-label="intranetService">
-            <Icon icon="emojione-monotone:letter-e" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.intranet} onChange={handleChangeSwitch} name="intranet" inputProps={{ 'aria-label': 'controlled' }}/>
-          </IconButton>
-          <IconButton aria-label="timerService">
-            <Icon icon="fluent:timer-12-filled" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.timer} onChange={handleChangeSwitch} name="timer" inputProps={{ 'aria-label': 'controlled' }}/>
+          <IconButton aria-label="emailService">
+            <Icon icon="entypo:email" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.email} onChange={handleChangeSwitch} name="email" inputProps={{ 'aria-label': 'controlled' }} />
           </IconButton>
         </Box>
+        { isSuccess && <Alert sx={{ mb: 2 }}>Well modified user.</Alert> }
         <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
           Save Settings
         </Button>
@@ -132,6 +150,15 @@ const ProfileForm = () => {
 };
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  const handleClick = async () => {
+    const response = await deleteUser();
+    if (response === true) {
+      dispatch(setUserLoggedOut());
+    }
+  };
+
   return (
     <Container component='main' maxWidth='sm'>
       <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ mt: 12 }}>
@@ -140,7 +167,7 @@ const ProfilePage = () => {
       <Divider style={{marginTop: '3%'}} />
       <ProfileForm />
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-        <Button fullWidth variant='contained' sx={{ bgcolor: COLORS.RED }} startIcon={<DeleteIcon />} onClick={() => console.log('delete!')}>
+        <Button fullWidth variant='contained' sx={{ bgcolor: COLORS.RED }} startIcon={<DeleteIcon />} onClick={() => { handleClick(); }}>
           Delete my account
         </Button>
       </Box>
