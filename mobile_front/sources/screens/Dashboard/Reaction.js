@@ -10,6 +10,7 @@ import { setParameterReaction, setReaction } from '../../reducers/Actions/Area';
 
 const ReactionPicker = ({selectedReaction, setSelectedReaction}) => {
   const [services, setServices] = React.useState([]);
+  const {serviceReaction} = useSelector(state => state.areaReducer);
 
   useEffect(() => {
     getAllServices().then((data) => setServices(data));
@@ -22,7 +23,7 @@ const ReactionPicker = ({selectedReaction, setSelectedReaction}) => {
         setSelectedReaction(itemValue)
       }>
       {services?.map((item) =>
-        item?.reactions?.map((picker, key) => (
+         item.name == serviceReaction && item?.reactions?.map((picker, key) => (
           <Picker.Item label={picker.description} value={picker.name} key={key}/>
         ))
       )}

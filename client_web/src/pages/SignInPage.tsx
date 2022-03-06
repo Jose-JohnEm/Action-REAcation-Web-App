@@ -8,6 +8,7 @@ import { GoogleSignIn } from '../components/GoogleAuth'
 import { ISignInData, signIn, setUserLoggedIn } from '../reducers/actions/auth';
 import { useDispatch } from 'react-redux';
 import MYAREALIST from '../constants/myAreaList';
+import { getWebhooksLinks } from '../reducers/actions/area';
 
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,8 +31,9 @@ const SignInForm = () => {
       dispatch(setUserLoggedIn());
       const events = JSON.parse(localStorage.getItem('events') as string);
       for (const element of events) {
-        MYAREALIST.push({pos: MYAREALIST.length, title: element.name, description: "WHEN " + element.action.name + " in " + element.action.service  + " DO " + element.reaction.name + " in " + element.reaction.service, display: true});
+        MYAREALIST.push({mpos: MYAREALIST.length, pos: MYAREALIST.length, title: element.name, description: "WHEN " + element.action.name + " in " + element.action.service  + " DO " + element.reaction.name + " in " + element.reaction.service, display: true});
       }
+      await getWebhooksLinks();
       setIsSuccess(true);
       navigate('/profile');
     } else {

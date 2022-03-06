@@ -6,11 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MYAREALIST from '../constants/myAreaList';
 import { deleteArea } from '../reducers/actions/area';
 
-interface AreaBoxProps {
-    pos: number;
-    title: string;
-    description: string;
-}
+interface AreaBoxProps { mpos: number, pos: number, title: string, description: string, display: boolean }
 
 const AreaBox = (props: AreaBoxProps) => {
     const [stateSwitch, setStateSwitch] = useState({
@@ -25,10 +21,14 @@ const AreaBox = (props: AreaBoxProps) => {
     };
 
     const disableArea = async () => {
-        MYAREALIST[props.pos].display = false;
-        console.log(MYAREALIST);
-        console.log(props.pos);
-        await deleteArea(props.pos);
+        let p = 0;
+        for (let i = 0; i < MYAREALIST.length; i++)
+            p = (MYAREALIST[i].pos === props.pos) ? MYAREALIST[i].mpos : p;
+        MYAREALIST[p].display = false;
+        MYAREALIST.splice(p, 1);
+        await deleteArea(p);
+        for (let i = 0; i < MYAREALIST.length; i++)
+            MYAREALIST[i].mpos = (i === 0) ? 0 : MYAREALIST[i-1].mpos + 1;
     };
 
     let colorState = stateSwitch.box ? COLORS.GREEN : COLORS.RED;

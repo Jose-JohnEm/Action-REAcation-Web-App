@@ -11,6 +11,8 @@ import { createArea, deleteAllAreas } from '../reducers/actions/area';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const MyAreaCreate = () => {
+    const webhooksLinks = JSON.parse(localStorage.getItem('webhooksLinks') as string);
+
     const [serviceAction, setServiceAction] = useState('');
     const [actions, setActions] = useState('');
 
@@ -38,11 +40,11 @@ const MyAreaCreate = () => {
     const create = async () => {
         const paramsActions: any = {};
         for (const key of SERVICESSTATES[getPos(serviceAction)].paramsActions) {
-            paramsActions[key] = paramAction;
+            paramsActions[key] = paramAction.replace(/#/g,'%23');
         }
         const paramsReactions: any = {};
         for (const key of SERVICESSTATES[getPos(serviceReaction)].paramsReactions) {
-            paramsReactions[key] = paramReaction;
+            paramsReactions[key] = paramReaction.replace(/#/g,'%23');
         }
         const params = {
             area_name: areaTitle,
@@ -55,7 +57,7 @@ const MyAreaCreate = () => {
         }
         const response = await createArea(params);
         if (response === true) {
-          MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
+          MYAREALIST.push({mpos: MYAREALIST.length, pos: MYAREALIST.length, title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
           setIsSuccess(true);
         } else {
           setIsSuccess(false);
@@ -150,7 +152,21 @@ const MyAreaCreate = () => {
                 <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '1em', marginTop: '1em', marginBottom: '1em', width: '30em', backgroundColor: COLORS.MYGRAY, borderRadius: 5 }} >
                     <TextField value={areaTitle} onChange={event => {setAreaTitle(event.target.value as string)}} id="areatitle" helperText="Put a good, and short name" label="Enter your AREA name" variant="standard" sx={{ width: '25em', height: '6.2em'}}/>
                 </Box>
-                <Button type='submit' onClick={create} variant="contained" sx={{ marginLeft: '40em', marginTop: '3em', width: '7em', height: '4em', backgroundColor: COLORS.GREEN }}>Create</Button>
+                <Box sx={{ ml: 5, mt: 4 }}>
+                    {(serviceAction === 'teams' || serviceAction === 'github' || serviceAction === 'pivotaltracker') &&
+                        <Typography variant="h5" color="common.white">Use this link to continue</Typography>
+                    }
+                    {serviceAction === 'teams' &&
+                        <Typography color="common.white">{webhooksLinks.teams}</Typography>
+                    }
+                    {serviceAction === 'github' &&
+                        <Typography color="common.white">{webhooksLinks.github}</Typography>
+                    }
+                    {serviceAction === 'pivotaltracker' &&
+                        <Typography color="common.white">{webhooksLinks.pivotaltracker}</Typography>
+                    }
+                </Box>
+                <Button type='submit' onClick={create} variant="contained" sx={{ marginLeft: '7em', marginTop: '3em', width: '7em', height: '4em', backgroundColor: COLORS.GREEN }}>Create</Button>
             </Grid>
             { !isSuccess && <Alert severity='error' sx={{ mb: 2 }}>Error when creating an AREA (missing fields...)</Alert> }
         </Box>
@@ -181,7 +197,7 @@ const MyAreaList = () => {
                 {MYAREALIST?.map(option => {
                     return (option.display === true) ? (
                         <li key={option.title}>
-                            <AreaBox title={option.title} description={option.description} pos={option.pos} />
+                            <AreaBox title={option.title} description={option.description} pos={option.pos} mpos={option.pos} display={true}/>
                         </li>
                     ) : (<li key={option.title}></li>);
                 })}

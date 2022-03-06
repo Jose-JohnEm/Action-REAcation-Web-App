@@ -3,10 +3,17 @@ import COLORS from '../constants/colors';
 import AndroidIcon from '@mui/icons-material/Android';
 
 const APKPage = () => {
+    const onDownload = () => {
+        const link = document.createElement('a');
+        link.download = 'apk-release.apk';
+        link.href = './apk/app-release.apk';
+        link.click();
+    };
+
     return (
         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100vh' }}>
             <Grid item>
-                <IconButton href='http://127.0.0.1:8081/apk/apk-release.apk' target='_blank' rel='noopener noreferrer' size='large' sx={{ mt: 15, color: COLORS.DARKGRAY, transform: 'scale(25)' }}>
+                <IconButton onClick={onDownload} size='large' sx={{ mt: 15, color: COLORS.DARKGRAY, transform: 'scale(25)' }}>
                     <AndroidIcon />
                 </IconButton>
             </Grid>
