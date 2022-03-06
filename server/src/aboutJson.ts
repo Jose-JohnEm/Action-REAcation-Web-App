@@ -1,5 +1,10 @@
 import * as fs from "fs";
 
+/**
+ * About JSON
+ * @param req Request
+ * @param res Response
+ */
 const aboutJson = (req, res) => {
     // Save the file in a services variable
     const services = JSON.parse(fs.readFileSync("./services.json", "utf8"));

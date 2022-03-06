@@ -5,6 +5,9 @@ import {pt_story_create, pt_user_add} from "../event/action/PivotalTracker/pivot
 
 const router = express.Router()
 
+/**
+ * Github webhooks route
+ */
 router.route('/github').post((req, res) => {
     if (!req.headers['x-github-event']) {
         console.error('Not a GitHub event !');
@@ -32,6 +35,9 @@ router.route('/github').post((req, res) => {
     events[event](body, sender, repo);
 });
 
+/**
+ * Pivotal Tracker webhooks route
+ */
 router.route('/pivotaltracker').post((req, res) => {
     if (!req.body) {
         console.error('Not a Pivotal Tracker event !');
@@ -52,6 +58,9 @@ router.route('/pivotaltracker').post((req, res) => {
     events[activity.kind](activity);
 });
 
+/**
+ * Teams webhooks route
+ */
 router.route('/teams').post((req, res) => {
     res.status(200).json({
         "type": "message",

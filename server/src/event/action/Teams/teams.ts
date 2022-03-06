@@ -1,6 +1,12 @@
-import {getUserFromGithubAction, getUserFromTeamsAction, getUserReaction} from "../../../db/event";
+import {getUserFromTeamsAction, getUserReaction} from "../../../db/event";
 import handleReactions from "../../reaction/reaction";
 
+/**
+ * Handle the ping bot event
+ * @param body The body of the event
+ * @param name The name of the event
+ * @param botName The name of the bot
+ */
 const tm_ping = async function (body, name, botName) {
     const action = "ping_bot"
     const users = await getUserFromTeamsAction(action, name, botName);

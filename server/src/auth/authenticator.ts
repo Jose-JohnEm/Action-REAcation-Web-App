@@ -1,5 +1,4 @@
-import { signin, signup } from './user'
-import auth from '../middleware/auth';
+import {signin, signup} from './user'
 import express from 'express'
 
 const router = express.Router()

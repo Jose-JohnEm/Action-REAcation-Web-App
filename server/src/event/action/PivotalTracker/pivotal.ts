@@ -1,6 +1,10 @@
 import {getUserFromPivotalTrackerAction, getUserReaction} from "../../../db/event";
 import handleReactions from "../../reaction/reaction";
 
+/**
+ * Handle the pivotal story create event
+ * @param activity The information about the event
+ */
 export const pt_story_create = async function (activity) {
     const {project, performed_by} = activity;
     project.id = project.id.toString();
@@ -21,6 +25,10 @@ export const pt_story_create = async function (activity) {
     });
 }
 
+/**
+ * Handle the pivotal user(s) add event
+ * @param activity The information about the event
+ */
 export const pt_user_add = async function (activity) {
     const {project, performed_by} = activity;
     project.id = project.id.toString();
