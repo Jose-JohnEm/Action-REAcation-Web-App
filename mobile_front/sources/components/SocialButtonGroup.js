@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { office, signInOAuth } from '../reducers/Actions/Auth';
+import { signInGithub, signInOffice } from '../reducers/Actions/Auth';
 import LargeButton from './LargeButton';
 
 const githubConfig = {
@@ -17,11 +17,12 @@ const githubConfig = {
       'https://github.com/settings/connections/applications/130f1798e1232a9c2801'
   }
 };
+
 const officeConfig = {
   issuer: 'https://login.microsoftonline.com/901cb4ca-b862-4029-9306-e5cd0f6d9f86/v2.0',
   clientId: 'd79ed9d2-e049-4eb2-8970-f0408ffc7fc5',
   redirectUrl: 'com.areamobile://auth/',
-  scopes: ['openid', 'profile', 'email', 'offline_access'],
+  scopes: ['openid', 'profile', 'email', 'offline_access', 'User.read'],
   additionalParameters: {prompt: 'select_account'},
 };
 
@@ -33,14 +34,14 @@ const SocialButtonGroup = () => {
     <View style={styles.btnContainer}>
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <LargeButton onPress={() => {
-          dispatch(signInOAuth(githubConfig));
+          dispatch(signInGithub(githubConfig));
         }} mode="text" icon="github">
           Github
         </LargeButton>
       </View>
       <View style={{flex: 1}}>
         <LargeButton onPress={() => {
-          dispatch(signInOAuth(officeConfig));
+          dispatch(signInOffice(officeConfig));
         }} mode="text" icon="microsoft-office">
           Office
         </LargeButton>

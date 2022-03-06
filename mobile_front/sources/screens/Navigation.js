@@ -131,6 +131,7 @@ const DefaultNav = () => {
 
 function Navigation() {
   const {isLogged} = useSelector(state => state.authReducer);
+  const {data} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -142,14 +143,14 @@ function Navigation() {
         dispatch(setUserLoggedOut());
       }
     };
-
+    console.log(data);
     getAccessToken();
   }, [dispatch]);
 
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator>
-        {isLogged == false ?
+        {isLogged === false ?
           <Stack.Screen
             name="DefaultNav"
             component={DefaultNav}
