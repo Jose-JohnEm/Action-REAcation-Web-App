@@ -8,7 +8,7 @@ import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
 import startSlackBot from "./src/event/reaction/Slack/slack";
-import {startEvent} from './src/webhooks/startEvent';
+import { startEvent } from './src/webhooks/startEvent';
 import userRouter from './src/user/route'
 import cors from 'cors'
 
@@ -32,9 +32,7 @@ const successServerStarted = () => {
     try {
         if (!process.env.URL)
             process.env.URL = await ngrok.connect({
-                authtoken: process.env.NGROK_TOKEN,
                 addr: port,
-                region: 'eu'
             })
         console.log(`ngrok connected at ${process.env.URL}`)
         // Start discord

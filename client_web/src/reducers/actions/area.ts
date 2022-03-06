@@ -12,6 +12,8 @@ export interface ICreateArea {
 
 export const createArea = async (params: ICreateArea) => {
     const accessToken = localStorage.getItem('accessToken');
+
+    console.log(params);
     try {
       const response = await axios
         .post(`http://127.0.0.1:8080/area?area_name=${params.area_name}&action_service=${params.action_service}&action_name=${params.action_name}&action_params=${JSON.stringify(params.action_params)}&reaction_service=${params.reaction_service}&reaction_name=${params.reaction_name}&reaction_params=${JSON.stringify(params.reaction_params)}`,
@@ -20,13 +22,11 @@ export const createArea = async (params: ICreateArea) => {
             Authorization: 'Bearer ' + accessToken
           }
         });
-      if (response.status === 200) {
-        localStorage.setItem('events', JSON.stringify(response.data.data.events));
+        console.log(response.data.events)
+        localStorage.setItem('events', JSON.stringify(response.data.events));
         return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
+    } catch (error : any) {
+      console.error(error)
       return false;
     }
 };
