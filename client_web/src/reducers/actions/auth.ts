@@ -53,7 +53,11 @@ export const signUp = async (body: ISignUpData) => {
         },
       });
     if (response.status === 200) {
-      localStorage.setItem('userData', JSON.stringify(response.data.data));
+      localStorage.setItem('userProfile', JSON.stringify({
+        lastName: response.data.data.lastName,
+        firstName: response.data.data.firstName,
+        email: response.data.data.email
+      }));
       localStorage.setItem('accessToken', response.data.data.token);
       return true;
     } else {

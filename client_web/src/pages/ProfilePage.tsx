@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Switch, Container, Typography, Box, TextField, Button, IconButton, Avatar, InputAdornment } from '@mui/material';
+import { Switch, Container, Typography, Box, TextField, Button, IconButton, Avatar, InputAdornment, Alert } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import COLORS from '../constants/colors';
@@ -9,6 +9,9 @@ import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
 import { ISignUpData } from '../reducers/actions/auth';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { editUser, deleteUser } from '../reducers/actions/user';
+import { setUserLoggedOut } from '../reducers/actions/auth';
+import { useDispatch } from 'react-redux';
 
 const ProfileForm = () => {
   const userProfile = JSON.parse(localStorage.getItem('userProfile') as string);
@@ -50,7 +53,9 @@ const ProfileForm = () => {
   SERVICESSTATES[4].value = (stateSwitch.timer === true ? 'true' : 'false');
   SERVICESSTATES[5].value = (stateSwitch.teams === true ? 'true' : 'false');
 
-  const handleSubmit = (event: React.ChangeEvent<any>) => {
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (event: React.ChangeEvent<any>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body: ISignUpData = {
@@ -66,6 +71,12 @@ const ProfileForm = () => {
       firstName: body.firstName,
       email: body.email
     }));
+    const response = await editUser(body);
+    if (response === true) {
+      setIsSuccess(true);
+    } else {
+      setIsSuccess(false);
+    }
   };
 
   return (
@@ -123,6 +134,7 @@ const ProfileForm = () => {
             <Switch checked={stateSwitch.timer} onChange={handleChangeSwitch} name="timer" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
         </Box>
+        { isSuccess && <Alert sx={{ mb: 2 }}>Well modified user.</Alert> }
         <Button type='submit' fullWidth variant='contained' sx={{ bgcolor: COLORS.DARKGRAY }}>
           Save Settings
         </Button>
@@ -132,6 +144,15 @@ const ProfileForm = () => {
 };
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  const handleClick = async () => {
+    const response = await deleteUser();
+    if (response === true) {
+      dispatch(setUserLoggedOut());
+    }
+  };
+
   return (
     <Container component='main' maxWidth='sm'>
       <Typography variant='h3' color={COLORS.DARKGRAY} align='center' sx={{ mt: 12 }}>
@@ -140,7 +161,7 @@ const ProfilePage = () => {
       <Divider style={{marginTop: '3%'}} />
       <ProfileForm />
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-        <Button fullWidth variant='contained' sx={{ bgcolor: COLORS.RED }} startIcon={<DeleteIcon />} onClick={() => console.log('delete!')}>
+        <Button fullWidth variant='contained' sx={{ bgcolor: COLORS.RED }} startIcon={<DeleteIcon />} onClick={() => { handleClick(); }}>
           Delete my account
         </Button>
       </Box>
