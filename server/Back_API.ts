@@ -10,6 +10,7 @@ import startDiscord from "./src/event/reaction/Discord/discord";
 import startSlackBot from "./src/event/reaction/Slack/slack";
 import {startEvent} from './src/webhooks/startEvent';
 import userRouter from './src/user/route'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ const app = express()
 const port = (parseInt(process.argv[2]) < 65536) ? parseInt(process.argv[2]) : 8080
 
 app.use(express.json());
+app.use(cors());
 
 ///// Connect MongoDB and Server /////
 const successServerStarted = () => {
@@ -68,12 +70,12 @@ app.use((req, res, next) => {
 /**
  * @description Allow CORS
  */
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+//     next();
+// });
 
 /**
  * @description Add all the primary routes
