@@ -8,7 +8,7 @@ import dotenv from 'dotenv'
 import area from './src/event/eventor'
 import startDiscord from "./src/event/reaction/Discord/discord";
 import startSlackBot from "./src/event/reaction/Slack/slack";
-import { startEvent } from './src/webhooks/startEvent';
+import {startEvent} from './src/webhooks/startEvent';
 import userRouter from './src/user/route'
 import cors from 'cors'
 
@@ -18,6 +18,7 @@ const app = express()
 const port = (parseInt(process.argv[2]) < 65536) ? parseInt(process.argv[2]) : 8080
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use(cors());
 
 ///// Connect MongoDB and Server /////
