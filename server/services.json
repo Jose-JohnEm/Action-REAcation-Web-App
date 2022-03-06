@@ -149,6 +149,8 @@
   {
     "name": "slack",
     "actions": [
+    ],
+    "reactions": [
       {
         "name": "send_a_private_message",
         "description": "Send a private message, user id is required",
@@ -156,8 +158,6 @@
           "userid": "string"
         }
       }
-    ],
-    "reactions": [
     ]
   },
   {
