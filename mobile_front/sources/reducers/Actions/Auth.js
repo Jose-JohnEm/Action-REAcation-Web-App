@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {API_URL} from '../../constant/Constant';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { Alert } from 'react-native';
 import { authorize } from 'react-native-app-auth';
@@ -35,7 +34,8 @@ export const setUserLoggedOut = () => {
 };
 
 export const signIn = (body) => async dispatch => {
-  await axios.post(API_URL + '/auth/signin', body, {
+  const url = await EncryptedStorage.getItem('url');
+  await axios.post(url + '/auth/signin', body, {
     headers: {
       'Content-Type' : 'application/json',
     },
@@ -63,7 +63,9 @@ export const signIn = (body) => async dispatch => {
 };
 
 export const signUp = (body) => async dispatch => {
-  await axios.post(API_URL + '/auth/signup', body, {
+  const url = await EncryptedStorage.getItem('url');
+
+  await axios.post(url + '/auth/signup', body, {
     headers: {
       'Content-Type' : 'application/json',
     },

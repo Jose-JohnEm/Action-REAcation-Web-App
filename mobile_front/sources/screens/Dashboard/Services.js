@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { Button, Headline } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { getAllServices, setIcon } from '../../Utils/Utils';
@@ -35,7 +35,7 @@ const Services = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [services, setServices] = React.useState([]);
   const renderItem = ({ item }) => {
-    if (item.reactions?.length > 0 )
+    if (item.reactions?.length > 0)
       return (<ServicesItem navigation={navigation} name={item.name} reaction={reaction} />);
   };
 
@@ -44,15 +44,21 @@ const Services = ({navigation, route}) => {
     dispatch(getUserData());
   }, []);
 
-  console.log(data);
+  console.log(JSON.stringify(services, 0, 2));
   return (
     <View style={styles.container}>
       <Headline style={styles.headline}>
         Choose a service
       </Headline>
-      {!reaction && data?.services?.map((item, key) =>
-        <ServicesItem navigation={navigation} name={item} reaction={reaction} key={key}/>
-      )}
+      {!reaction &&
+      <ScrollView>
+        {!reaction && data?.services?.map((item, key) => {
+          if (item !== 'discord' && item !=='email' && item !=='timer' && item !=='slack')
+            return <ServicesItem navigation={navigation} name={item} reaction={reaction} key={key}/>;
+        }
+        )}
+      </ScrollView>
+      }
       {reaction &&
            <FlatList
              data={services}

@@ -45,6 +45,7 @@ const Dashboard = ({navigation}) => {
 
     return refreshOnFocus;
   }, []);
+  console.log(data);
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {API_URL} from '../../constant/Constant';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { setUserLoggedOut } from './Auth';
 import { Alert } from 'react-native';
@@ -9,9 +8,11 @@ export const GET_USER_DATA = 'GET_USER_DATA';
 export const UPDATE_USER_SERVICES = 'UPDATE_USER_SERVICES';
 
 export const getUserData = () => async dispatch => {
+  const url = await EncryptedStorage.getItem('url');
+
   try {
     const accessToken = await EncryptedStorage.getItem('accessToken');
-    const response = await axios.get(API_URL + '/user/', {
+    const response = await axios.get(url + '/user/', {
       headers: {
         Authorization: 'bearer ' + accessToken,
         'Content-Type' : 'application/json',
@@ -29,9 +30,11 @@ export const getUserData = () => async dispatch => {
 };
 
 export const updateUserServices = (body) => async dispatch => {
+  const url = await EncryptedStorage.getItem('url');
+
   try {
     const accessToken = await EncryptedStorage.getItem('accessToken');
-    await axios.post(API_URL + '/user/services/', body, {
+    await axios.post(url + '/user/services/', body, {
       headers: {
         Authorization: 'bearer ' + accessToken,
         'Content-Type' : 'application/json',
@@ -46,8 +49,9 @@ export const updateUserServices = (body) => async dispatch => {
 
 export const updateUser = ({body}) => async dispatch => {
   const accessToken = await EncryptedStorage.getItem('accessToken');
+  const url = await EncryptedStorage.getItem('url');
 
-  await axios.post(API_URL + '/user/', cleanObj(body), {
+  await axios.post(url + '/user/', cleanObj(body), {
     headers: {
       Authorization: 'bearer ' + accessToken,
       'Content-Type' : 'application/json',

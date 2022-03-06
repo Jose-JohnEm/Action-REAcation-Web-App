@@ -5,12 +5,18 @@ import {
   SET_SERVICE_REACTION,
   SET_PARAMETER_ACTION,
   SET_PARAMETER_REACTION,
-  CLEAR_AREA
+  CLEAR_AREA,
+  SET_TITLE,
+  SET_DESC_ACTION,
+  SET_DESC_REACTION
 } from './Actions/Area';
 
 const initState = {
+  title: '',
   action: '',
+  descAction : '',
   reaction: '',
+  descReaction : '',
   serviceAction: '',
   serviceReaction: '',
   parameterAction: '',
@@ -19,8 +25,14 @@ const initState = {
 
 function areaReducer(state = initState, action) {
   switch (action.type) {
+  case SET_TITLE:
+    return {...state, title: action.payload};
   case SET_ACTION:
     return {...state, action: action.payload};
+  case SET_DESC_ACTION:
+    return {...state, descAction: action.payload};
+  case SET_DESC_REACTION:
+    return {...state, descReaction: action.payload};
   case SET_REACTION:
     return {...state, reaction: action.payload};
   case SET_SERVICE_ACTION:
@@ -33,14 +45,16 @@ function areaReducer(state = initState, action) {
     return {...state, parameterReaction: action.payload};
   case CLEAR_AREA:
     return {...state,
+      title: '',
       action: '',
+      descAction : '',
       reaction: '',
+      descReaction : '',
       serviceAction: '',
       serviceReaction: '',
       parameterAction: '',
       parameterReaction: '',
     };
-  
   default:
     return state;
   }

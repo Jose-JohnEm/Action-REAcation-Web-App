@@ -48,8 +48,10 @@ const ReactionParams = ({parameter, setParameter}) => {
         return 'Your token';
       case 'teams':
         return 'Your botname';
-      case 'timer':
-        return 'Your timer';
+      case 'email':
+        return 'Your email';
+      case 'slack':
+        return 'Your userid';
       default:
         break;
       }

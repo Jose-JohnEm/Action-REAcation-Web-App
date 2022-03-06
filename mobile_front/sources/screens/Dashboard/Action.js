@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Headline, TextInput } from 'react-native-paper';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Caption, Headline, TextInput } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import {Picker} from '@react-native-picker/picker';
 import LargeButton from '../../components/LargeButton';
-import { getAllServices } from '../../Utils/Utils';
+import { getAllServices, getServerUrl } from '../../Utils/Utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAction, setParameterAction } from '../../reducers/Actions/Area';
-
+import { setAction, setParameterAction, setTitleAREA } from '../../reducers/Actions/Area';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const ActionTitle = ({title, setTitle}) => {
   return (
@@ -63,8 +63,10 @@ const ActionParams = ({parameter, setParameter}) => {
         return 'Your token';
       case 'teams':
         return 'Your botname';
-      case 'timer':
-        return 'Your timer';
+      case 'email':
+        return 'Your email';
+      case 'slack':
+        return 'Your userid';
       default:
         break;
       }
@@ -85,36 +87,60 @@ const ActionParams = ({parameter, setParameter}) => {
 };
 
 const Action = ({navigation}) => {
+  const {serviceAction} = useSelector(state => state.areaReducer);
   const [selectedAction, setSelectedAction] = React.useState('');
   const [title, setTitle] = React.useState('');
+  const [url, setUrl] = React.useState('');
   const [parameter, setParameter] = React.useState('');
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    getServerUrl().then((data) => setUrl(data));
+  }, []);
+
+  const copyToClipboard = () => {
+    Clipboard.setString(`${url}/webhooks/${serviceAction}`);
+  };
+
   return (
     <View style={styles.container}>
-      <Headline style={styles.headline}>
+      <ScrollView>
+        <Headline style={styles.headline}>
         Choose an AREAction name
-      </Headline>
-      <ActionTitle title={title} setTitle={setTitle}/>
-      <Headline style={styles.headline}>
+        </Headline>
+        <ActionTitle title={title} setTitle={setTitle}/>
+        {(serviceAction === 'github' || serviceAction === 'pivotaltracker' || serviceAction === 'teams') &&
+      <>
+        <Caption style={styles.errorCaption}>
+          { `Set this ${url}/webhooks/${serviceAction} to the webhook's parameter of the service`}
+        </Caption>
+        <TouchableOpacity onPress={copyToClipboard}>
+          <Caption style={styles.errorCaption}>Click here to copy to Clipboard</Caption>
+        </TouchableOpacity>
+      </>
+        }
+
+        <Headline style={styles.headline}>
         Choose an Action
-      </Headline>
-      <ActionPicker selectedAction={selectedAction} setSelectedAction={setSelectedAction} />
-      <Headline style={styles.headline}>
+        </Headline>
+        <ActionPicker selectedAction={selectedAction} setSelectedAction={setSelectedAction} />
+        <Headline style={styles.headline}>
         Put a parameter
-      </Headline>
-      <ActionParams parameter={parameter} setParameter={setParameter}/>
-      <LargeButton onPress={() => {
-        dispatch(setAction(selectedAction));
-        dispatch(setParameterAction(parameter));
-        navigation.push('Services', {
-          reaction : true
-        });
-      }}
-      mode="contained"
-      >
+        </Headline>
+        <ActionParams parameter={parameter} setParameter={setParameter}/>
+        <LargeButton onPress={() => {
+          dispatch(setTitleAREA(title));
+          dispatch(setAction(selectedAction));
+          dispatch(setParameterAction(parameter));
+          navigation.push('Services', {
+            reaction : true
+          });
+        }}
+        mode="contained"
+        >
         Next
-      </LargeButton>
+        </LargeButton>
+      </ScrollView>
     </View>
   );
 };
@@ -128,7 +154,10 @@ const styles = StyleSheet.create({
   headline : {
     textAlign: 'center',
     color:'#0077b6',
-    padding: 10
+  },
+  errorCaption : {
+    textAlign: 'center',
+    color:'red',
   },
   btnContainer : {
     flex: 1,
