@@ -1,10 +1,25 @@
 import axios from 'axios';
-import { API_URL } from '../constant/Constant';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const getAllServices = async () => {
+  const url = await EncryptedStorage.getItem('url');
+
   try {
-    const response = await axios.get(API_URL + '/about.json');
+    const response = await axios.get(url + '/about.json');
+    console.log(response?.data?.server.services);
     return response.data.server.services;
+  } catch (error) {
+    console.err(error);
+  }
+};
+
+export const getServerUrl = async () => {
+  const url = await EncryptedStorage.getItem('url');
+
+  try {
+    const response = await axios.get(url + '/about.json');
+    console.log(response?.data?.server.url);
+    return response.data.server.url;
   } catch (error) {
     console.err(error);
   }
@@ -20,6 +35,10 @@ export const setIcon = (icon) => {
     return 'github';
   case 'discord':
     return 'discord';
+  case 'email':
+    return 'at';
+  case 'slack':
+    return 'slack';
   default:
     return 'desktop-mac-dashboard';
   }

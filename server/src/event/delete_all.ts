@@ -7,13 +7,9 @@ import {NextFunction, Request, Response} from 'express';
  * @param res Response
  * @param next NextFunction
  */
-const deletaAll = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.header('Bearer')) {
-        next()
-        return
-    }
+const deletaAll = (req: Request, res: Response) => {
     UserData.findOne({
-        token: req.header('Bearer')
+        token: req.header('Authorization').split('Bearer ')[1],
     })
         .then((user) => {
             console.log(parseInt(req.query.id as string))
@@ -25,17 +21,8 @@ const deletaAll = (req: Request, res: Response, next: NextFunction) => {
         })
         .catch((err) => {
             console.error(err)
-            next()
+            res.json({'error':"Can't delete all events"})
         })
 }
 
-/**
- * Reply when the user is not found
- * @param req Request
- * @param res Response
- */
-const ifNotAccount = (req: Request, res: Response) => {
-    res.status(500).json({error: 'No account with this token'})
-}
-
-export default [deletaAll, ifNotAccount];
+export default deletaAll;

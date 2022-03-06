@@ -2,34 +2,14 @@ import UserData from '../../models/users'
 import {NextFunction, Request, Response} from 'express';
 
 /**
- * Remove event from database
- * @param index index of event
- * @param id id of user
- */
-const removeEvent = (index: number, id: string) => {
-    UserData.findOne({_id: id})
-        .then((user) => {
-            if (user === undefined)
-                throw new Error('User not found')
-            user.events.push()
-            user.save()
-        })
-        .catch(e => console.error(e))
-}
-
-/**
  * Add event to database
  * @param req request
  * @param res response
  * @param next next function
  */
-const addEvent = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.header('Bearer')) {
-        next()
-        return
-    }
+const addEvent = (req: Request, res: Response) => {
     UserData.findOne({
-        token: req.header('Bearer')
+        token: req.header('Authorization').split('Bearer ')[1],
     })
         .then((user) => {
             console.log(req.query.action_params)
@@ -53,17 +33,9 @@ const addEvent = (req: Request, res: Response, next: NextFunction) => {
         })
         .catch((err) => {
             console.error(err)
-            next()
+            res.json({'error': "can't add event"})
+            return
         })
 }
 
-/**
- * Reply when the account does not exist
- * @param req
- * @param res
- */
-const ifNotAccount = (req: Request, res: Response) => {
-    res.status(500).json({error: 'No account with this token'})
-}
-
-export default [addEvent, ifNotAccount];
+export default addEvent;

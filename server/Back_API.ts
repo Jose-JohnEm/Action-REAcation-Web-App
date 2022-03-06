@@ -29,7 +29,11 @@ const successServerStarted = () => {
 (async () => {
     try {
         if (!process.env.URL)
-            process.env.URL = await ngrok.connect(port)
+            process.env.URL = await ngrok.connect({
+                authtoken: process.env.NGROK_TOKEN,
+                addr: port,
+                region: 'eu'
+            })
         console.log(`ngrok connected at ${process.env.URL}`)
         // Start discord
         await startDiscord()
