@@ -53,6 +53,8 @@ export const signUp = async (body: ISignUpData) => {
         },
       });
     if (response.status === 200) {
+      console.log(response.data.data);
+      localStorage.setItem('events', JSON.stringify(response.data.data.events));
       localStorage.setItem('userProfile', JSON.stringify({
         lastName: response.data.data.lastName,
         firstName: response.data.data.firstName,
@@ -82,6 +84,8 @@ export const signIn = async (body: ISignInData) => {
         },
       });
     if (response.status === 200) {
+      console.log(response.data.data);
+      localStorage.setItem('events', JSON.stringify(response.data.data.events));
       localStorage.setItem('userProfile', JSON.stringify({
         lastName: response.data.data.lastName,
         firstName: response.data.data.firstName,
