@@ -3,7 +3,7 @@ import { Switch, Container, Typography, Box, TextField, Button, IconButton, Avat
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import COLORS from '../constants/colors';
-import SERVICESSTATES from '../constants/servicesProfile';
+import SERVICESSTATES from '../constants/services';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
@@ -31,12 +31,13 @@ const ProfileForm = () => {
   }, [selectedImage]);
 
   const [stateSwitch, setStateSwitch] = useState({
-    discord: SERVICESSTATES[0].value === 'true' ? true : false,
-    github: SERVICESSTATES[1].value === 'true' ? true : false,
-    pivotaltracker: SERVICESSTATES[2].value === 'true' ? true : false,
-    intranet: SERVICESSTATES[3].value === 'true' ? true : false,
-    timer: SERVICESSTATES[4].value === 'true' ? true : false,
+    github: SERVICESSTATES[0].value === 'true' ? true : false,
+    slack: SERVICESSTATES[1].value === 'true' ? true : false,
+    discord: SERVICESSTATES[2].value === 'true' ? true : false,
+    pivotaltracker: SERVICESSTATES[3].value === 'true' ? true : false,
+    intra: SERVICESSTATES[4].value === 'true' ? true : false,
     teams: SERVICESSTATES[5].value === 'true' ? true : false,
+    email: SERVICESSTATES[6].value === 'true' ? true : false
   });
 
   const handleChangeSwitch = (event: React.ChangeEvent<any>) => {
@@ -46,12 +47,13 @@ const ProfileForm = () => {
     });
   };
 
-  SERVICESSTATES[0].value = (stateSwitch.discord === true ? 'true' : 'false');
-  SERVICESSTATES[1].value = (stateSwitch.github === true ? 'true' : 'false');
-  SERVICESSTATES[2].value = (stateSwitch.pivotaltracker === true ? 'true' : 'false');
-  SERVICESSTATES[3].value = (stateSwitch.intranet === true ? 'true' : 'false');
-  SERVICESSTATES[4].value = (stateSwitch.timer === true ? 'true' : 'false');
+  SERVICESSTATES[0].value = (stateSwitch.github === true ? 'true' : 'false');
+  SERVICESSTATES[1].value = (stateSwitch.slack === true ? 'true' : 'false');
+  SERVICESSTATES[2].value = (stateSwitch.discord === true ? 'true' : 'false');
+  SERVICESSTATES[3].value = (stateSwitch.pivotaltracker === true ? 'true' : 'false');
+  SERVICESSTATES[4].value = (stateSwitch.intra === true ? 'true' : 'false');
   SERVICESSTATES[5].value = (stateSwitch.teams === true ? 'true' : 'false');
+  SERVICESSTATES[6].value = (stateSwitch.email === true ? 'true' : 'false');
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -109,29 +111,33 @@ const ProfileForm = () => {
           }}
         />
         <Box display="flex" justifyContent="center" alignItems="center" mb={2} mt={2} sx={{ color: COLORS.DARKGRAY }}>
-          <IconButton aria-label="discordService">
-            <Icon icon="bi:discord" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.discord} onChange={handleChangeSwitch} name="discord" inputProps={{ 'aria-label': 'controlled' }}/>
-          </IconButton>
           <IconButton aria-label="githubService">
             <Icon icon="akar-icons:github-fill" style={{ color: COLORS.BLACK }}/>
             <Switch checked={stateSwitch.github} onChange={handleChangeSwitch} name="github" inputProps={{ 'aria-label': 'controlled' }} />
+          </IconButton>
+          <IconButton aria-label="slackService">
+            <Icon icon="akar-icons:slack-fill" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.slack} onChange={handleChangeSwitch} name="slack" inputProps={{ 'aria-label': 'controlled' }} />
+          </IconButton>
+          <IconButton aria-label="discordService">
+            <Icon icon="bi:discord" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.discord} onChange={handleChangeSwitch} name="discord" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
           <IconButton aria-label="pivotalTrackerService">
             <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/000000/external-pivotal-tracker-a-project-management-tool-for-developers-around-the-world-logo-bold-tal-revivo.png" alt="pivotaltracker icon"/>
             <Switch checked={stateSwitch.pivotaltracker} onChange={handleChangeSwitch} name="pivotaltracker" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
+          <IconButton aria-label="intranetService">
+            <Icon icon="emojione-monotone:letter-e" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.intra} onChange={handleChangeSwitch} name="intranet" inputProps={{ 'aria-label': 'controlled' }}/>
+          </IconButton>
           <IconButton aria-label="teamsService">
             <Icon icon="bxl:microsoft-teams" style={{ color: COLORS.BLACK }}/>
             <Switch checked={stateSwitch.teams} onChange={handleChangeSwitch} name="teams" inputProps={{ 'aria-label': 'controlled' }}/>
           </IconButton>
-          <IconButton aria-label="intranetService">
-            <Icon icon="emojione-monotone:letter-e" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.intranet} onChange={handleChangeSwitch} name="intranet" inputProps={{ 'aria-label': 'controlled' }}/>
-          </IconButton>
-          <IconButton aria-label="timerService">
-            <Icon icon="fluent:timer-12-filled" style={{ color: COLORS.BLACK }}/>
-            <Switch checked={stateSwitch.timer} onChange={handleChangeSwitch} name="timer" inputProps={{ 'aria-label': 'controlled' }}/>
+          <IconButton aria-label="emailService">
+            <Icon icon="entypo:email" style={{ color: COLORS.BLACK }}/>
+            <Switch checked={stateSwitch.email} onChange={handleChangeSwitch} name="email" inputProps={{ 'aria-label': 'controlled' }} />
           </IconButton>
         </Box>
         { isSuccess && <Alert sx={{ mb: 2 }}>Well modified user.</Alert> }

@@ -1,12 +1,13 @@
 import { Grid, Typography, Box, Button, MenuItem, Select, TextField, Container, List } from '@mui/material';
 import COLORS from '../constants/colors';
-import SERVICESSTATES from '../constants/servicesProfile';
+import SERVICESSTATES from '../constants/services';
 import MYAREALIST from '../constants/myAreaList';
 import Divider from '@mui/material/Divider';
 import AreaBox from '../components/AreaBox';
 import IconButton from '@mui/material/IconButton';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import { useState } from 'react';
+import { createArea } from '../reducers/actions/area';
 
 const MyAreaCreate = () => {
     const [serviceAction, setServiceAction] = useState('');
@@ -18,19 +19,35 @@ const MyAreaCreate = () => {
     const [areaTitle, setAreaTitle] = useState('');
 
     const getPos = (value: string) => {
-        let pos = (value === 'Discord') ? 0 : 1;
-        pos = (value === 'Github') ? 1 : pos;
-        pos = (value === 'Pivotal Tracker') ? 2 : pos;
-        pos = (value === 'Intranet') ? 3 : pos;
-        pos = (value === 'Timer') ? 4 : pos;
-        pos = (value === 'Teams') ? 5 : pos;
-
+        let pos = (value === 'github') ? 0 : 1;
+        pos = (value === 'slack') ? 1 : pos;
+        pos = (value === 'discord') ? 2 : pos;
+        pos = (value === 'pivotaltracker') ? 3 : pos;
+        pos = (value === 'intra') ? 4 : pos;
+        pos = (value === 'teams') ? 5 : pos;
+        pos = (value === 'email') ? 6 : pos;
         return (pos);
     };
 
-    const createArea = () => {
+    const create = () => {
         MYAREALIST.push({pos: MYAREALIST.length,title: areaTitle, description: "WHEN " + actions + " in " + serviceAction + " DO " + reactions + " in " + serviceReaction, display: true});
-        console.log(MYAREALIST);
+        const params = {
+            area_name: areaTitle,
+            action_service: serviceAction,
+            action_name: actions,
+            action_params: SERVICESSTATES[getPos(serviceAction)].paramsActions,
+            reaction_service: serviceReaction,
+            reaction_name: reactions,
+            reaction_params: SERVICESSTATES[getPos(serviceReaction)].paramsReactions
+        }
+        console.log(params);
+        //const response = await createArea(params);
+        //if (response === true) {
+        //  setIsSuccess(true);
+        //} else {
+        //  setIsSuccess(false);
+        //}
+        //console.log(MYAREALIST);
     };
 
     return (
@@ -127,16 +144,12 @@ const MyAreaCreate = () => {
 
                 </Box>
             </Grid>
-
             <Grid container>
                 <Box display="flex" justifyContent="center" alignItems="center" sx={{ marginLeft: '1em', marginTop: '1em', marginBottom: '1em', width: '30em', backgroundColor: COLORS.MYGRAY, borderRadius: 5 }} >
                     <TextField value={areaTitle} onChange={event => {setAreaTitle(event.target.value as string)}} id="areatitle" helperText="Put a good, and short name" label="Enter your AREA name" variant="standard" sx={{ width: '25em', height: '6.2em'}}/>
                 </Box>
-
-
-                <Button type='submit' onClick={createArea} variant="contained" sx={{ marginLeft: '40em', marginTop: '3em', width: '7em', height: '4em', backgroundColor: COLORS.GREEN }}>Create</Button>
+                <Button type='submit' onClick={create} variant="contained" sx={{ marginLeft: '40em', marginTop: '3em', width: '7em', height: '4em', backgroundColor: COLORS.GREEN }}>Create</Button>
             </Grid>
-
         </Box>
     );
 };
