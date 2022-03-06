@@ -9,7 +9,7 @@ import {NextFunction, Request, Response} from 'express';
  */
 const deletaAll = (req: Request, res: Response) => {
     UserData.findOne({
-        token: req.header('Bearer')
+        token: req.header('Authorization').split('Bearer ')[1],
     })
         .then((user) => {
             console.log(parseInt(req.query.id as string))

@@ -11,7 +11,7 @@ const deleteEvent = (req: Request, res: Response) => {
     console.log(parseInt(req.query.id as string))
 
     UserData.findOne({
-        token: req.header('Bearer')
+        token: req.header('Authorization').split('Bearer ')[1],
     })
         .then((user) => {
             console.log(parseInt(req.query.id as string))
