@@ -14,11 +14,12 @@ export const getUserData = () => async dispatch => {
     const accessToken = await EncryptedStorage.getItem('accessToken');
     const response = await axios.get(url + '/user/', {
       headers: {
-        Authorization: 'bearer ' + accessToken,
+        Authorization: 'Bearer ' + accessToken,
         'Content-Type' : 'application/json',
       },
     });
 
+    console.log(response?.data);
     dispatch({
       type: GET_USER_DATA,
       payload: response.data.data,
@@ -36,7 +37,7 @@ export const updateUserServices = (body) => async dispatch => {
     const accessToken = await EncryptedStorage.getItem('accessToken');
     await axios.post(url + '/user/services/', body, {
       headers: {
-        Authorization: 'bearer ' + accessToken,
+        Authorization: 'Bearer ' + accessToken,
         'Content-Type' : 'application/json',
       },
     });
@@ -53,7 +54,7 @@ export const updateUser = ({body}) => async dispatch => {
 
   await axios.post(url + '/user/', cleanObj(body), {
     headers: {
-      Authorization: 'bearer ' + accessToken,
+      Authorization: 'Bearer ' + accessToken,
       'Content-Type' : 'application/json',
     },
   }).then(() => {

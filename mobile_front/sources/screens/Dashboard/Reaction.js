@@ -32,22 +32,14 @@ const ReactionPicker = ({selectedReaction, setSelectedReaction}) => {
 
 const ReactionParams = ({parameter, setParameter}) => {
   const [label, setLabel] = React.useState('');
-  const {serviceAction} = useSelector(state => state.areaReducer);
+  const {serviceReaction} = useSelector(state => state.areaReducer);
 
 
   useEffect(() => {
     const getLabel = () => {
-      switch (serviceAction) {
-      case 'github':
-        return 'Your repository';
+      switch (serviceReaction) {
       case 'discord':
         return 'Your username';
-      case 'pivotaltracker':
-        return 'Your projectID';
-      case 'intra':
-        return 'Your token';
-      case 'teams':
-        return 'Your botname';
       case 'email':
         return 'Your email';
       case 'slack':
