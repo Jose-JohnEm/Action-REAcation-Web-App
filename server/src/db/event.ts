@@ -1,7 +1,11 @@
 import UserData from '../../models/users'
 
+/**
+ * @description Compare is two params are equal
+ * @param l1
+ * @param l2
+ */
 const haveSameData = (l1, l2) => {
-
     const obj1Length = Object.keys(l1).length;
     const l2Length = Object.keys(l2).length;
 
@@ -13,7 +17,13 @@ const haveSameData = (l1, l2) => {
     return false;
 }
 
-// --- Global ---
+/**
+ * @description Get the reaction of the user
+ * @param user The user where is the reaction
+ * @param service The service of the reaction
+ * @param name The name of the reaction
+ * @param params The params of the reaction
+ */
 export function getUserReaction(user, service, name, params: {}) {
     if (!user)
         return undefined
@@ -29,7 +39,11 @@ export function getUserReaction(user, service, name, params: {}) {
 }
 
 
-// --- Github ---
+/**
+ * @description Get the users from a github action
+ * @param action The action that was done
+ * @param repo The repo where the action was done
+ */
 export async function getUserFromGithubAction(action, repo) {
     console.log(action + " / " + repo);
     // Find the user and wait for the response before returning
@@ -43,7 +57,11 @@ export async function getUserFromGithubAction(action, repo) {
     return JSON.parse(JSON.stringify(user))
 }
 
-// --- Pivotal Tracker ---
+/**
+ * @description Get the users from a pivotal tracker action
+ * @param kind The kind of the action
+ * @param project The project where the action was done
+ */
 export async function getUserFromPivotalTrackerAction(kind, project) {
     console.log(kind + " / " + project);
     // Find the user and wait for the response before returning
@@ -57,7 +75,12 @@ export async function getUserFromPivotalTrackerAction(kind, project) {
     return JSON.parse(JSON.stringify(user))
 }
 
-// --- Teams ---
+/**
+ * @description Get the users from a teams action
+ * @param action The action that was done
+ * @param name  The name of the action
+ * @param botName The name of the bot that was ping
+ */
 export async function getUserFromTeamsAction(action, name, botName) {
     console.log(action + " / " + name);
     // Find the user and wait for the response before returning

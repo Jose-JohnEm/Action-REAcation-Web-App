@@ -20,9 +20,12 @@ app.use(express.json());
 
 ///// Connect MongoDB and Server /////
 const successServerStarted = () => {
-    console.log(`MongoDB Connected succesfully !\nExample app listening at http://localhost:${port}`)
+    console.log(`MongoDB Connected succesfully !\nApp listening at http://localhost:${port}`)
 }
 
+/**
+ * @description Start all the parts of the server
+ */
 (async () => {
     try {
         if (!process.env.URL)
@@ -44,6 +47,9 @@ const successServerStarted = () => {
     }
 })();
 
+/**
+ * @description Start the area action/reaction
+ */
 async function startArea() {
     // Start loop event
     startEvent().then(async () => {
@@ -59,7 +65,9 @@ app.use((req, res, next) => {
     next()
 })
 
-///// CORS /////
+/**
+ * @description Allow CORS
+ */
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -67,7 +75,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-///// Routes /////
+/**
+ * @description Add all the primary routes
+ */
 app.get('/', (req, res) => {
     res.send('Welcome !')
 })
