@@ -6,7 +6,7 @@ const APKPage = () => {
     return (
         <Grid container direction='column' justifyContent='center' alignItems='center' sx={{ height: '100vh' }}>
             <Grid item>
-                <IconButton size='large' sx={{ mt: 15, color: COLORS.DARKGRAY, transform: 'scale(25)' }}>
+                <IconButton href='https://google.com' target='_blank' rel='noopener noreferrer' size='large' sx={{ mt: 15, color: COLORS.DARKGRAY, transform: 'scale(25)' }}>
                     <AndroidIcon />
                 </IconButton>
             </Grid>

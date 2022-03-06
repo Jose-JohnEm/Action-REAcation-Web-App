@@ -7,7 +7,8 @@ import AreaBox from '../components/AreaBox';
 import IconButton from '@mui/material/IconButton';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import { useState } from 'react';
-import { createArea } from '../reducers/actions/area';
+import { createArea, deleteAllAreas } from '../reducers/actions/area';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MyAreaCreate = () => {
     const [serviceAction, setServiceAction] = useState('');
@@ -160,6 +161,10 @@ const MyAreaList = () => {
 
     const [user, setUser] = useState(0);
 
+    const handleClick = async () => {
+        await deleteAllAreas();
+    };
+
     return (
         <Box sx={{ mt: '0.5em', maxHeight: '53em', width: '37em', backgroundColor: COLORS.DARKGRAY, borderRadius: "5%"}} >
             <Typography variant='h3' color={COLORS.WHITE} align='center' sx={{ mt: '0.2em' }}>
@@ -167,6 +172,9 @@ const MyAreaList = () => {
             </Typography>
             <IconButton onClick={(event) => {setUser(user+1)}} aria-label="refresh">
                 <ReplayCircleFilledIcon sx={{ color: COLORS.WHITE }}/>
+            </IconButton>
+            <IconButton onClick={handleClick} aria-label="refresh">
+                <DeleteIcon sx={{ color: COLORS.RED }}/>
             </IconButton>
             <Divider variant="middle" style={{ borderBottomWidth: 5, marginTop: '3%', marginBottom: '3%' }} />
             <List id='arealist' style={{maxHeight: '80%', overflow: 'auto'}}>
